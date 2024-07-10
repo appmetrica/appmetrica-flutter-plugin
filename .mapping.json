@@ -31,8 +31,6 @@
   "example/README.md":"mobile/metrika/flutter/appmetrica_plugin/example/README.md",
   "example/analysis_options.yaml":"mobile/metrika/flutter/appmetrica_plugin/example/analysis_options.yaml",
   "example/android/.gitignore":"mobile/metrika/flutter/appmetrica_plugin/example/android/.gitignore",
-  "example/android/.idea/copyright/AppMetrica.xml":"mobile/metrika/flutter/appmetrica_plugin/example/android/.idea/copyright/AppMetrica.xml",
-  "example/android/.idea/copyright/profiles_settings.xml":"mobile/metrika/flutter/appmetrica_plugin/example/android/.idea/copyright/profiles_settings.xml",
   "example/android/.pubignore":"mobile/metrika/flutter/appmetrica_plugin/example/android/.pubignore",
   "example/android/app/build.gradle":"mobile/metrika/flutter/appmetrica_plugin/example/android/app/build.gradle",
   "example/android/app/src/debug/AndroidManifest.xml":"mobile/metrika/flutter/appmetrica_plugin/example/android/app/src/debug/AndroidManifest.xml",
