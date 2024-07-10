@@ -1,0 +1,41 @@
+group "io.appmetrica.analytics.flutter"
+version "3.0.0"
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.2.0"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace = "io.appmetrica.analytics.flutter"
+    }
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 16
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation("io.appmetrica.analytics:analytics:6.5.0")
+}

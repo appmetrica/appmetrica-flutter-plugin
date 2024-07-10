@@ -1,0 +1,7 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "lib/src/*pigeon.dart"
+    - "pigeons/*.dart"
+    - "test/*.mocks.dart"

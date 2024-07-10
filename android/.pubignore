@@ -1,0 +1,17 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.idea/copyright
+.DS_Store
+/build
+/captures
+
+.arcignore
+ci
+pigeons/
+generate_pigeon.sh
+generate_mocks.sh
+Gemfile
+Gemfile.lock
