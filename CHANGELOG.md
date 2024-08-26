@@ -2,6 +2,7 @@
 
 - Added prefix `AppMetrica` to all classes to remove possible conflicts with other plugins.
 - Started using `flutter_lints` for checkstyle.
+- Added parameter `AppMetricaConfig.flutterCrashReporting`. Flutter crashes will not be handled if it is set to `false`.
 
 ## 2.1.1
 
