@@ -3,6 +3,7 @@
 - Added prefix `AppMetrica` to all classes to remove possible conflicts with other plugins.
 - Started using `flutter_lints` for checkstyle.
 - Added parameter `AppMetricaConfig.flutterCrashReporting`. Flutter crashes will not be handled if it is set to `false`.
+- Upgrade `decimal` version to `3.0.0` and align flutter version.
 
 ## 2.1.1
 
