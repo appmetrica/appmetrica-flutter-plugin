@@ -1,5 +1,14 @@
 import 'package:pigeon/pigeon.dart';
 
+@ConfigurePigeon(PigeonOptions(
+  dartOut: 'lib/src/appmetrica_api_pigeon.dart',
+  objcHeaderOut: 'ios/AppMetricaPlugin/AMAFPigeon.h',
+  objcSourceOut: 'ios/AppMetricaPlugin/AMAFPigeon.m',
+  objcOptions: ObjcOptions(prefix: 'AMAF'),
+  javaOut: 'android/src/main/java/io/appmetrica/analytics/flutter/pigeon/Pigeon.java',
+  javaOptions: JavaOptions(package: 'io.appmetrica.analytics.flutter.pigeon'),
+))
+
 class AppMetricaConfigPigeon {
   String apiKey;
 
