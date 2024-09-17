@@ -1,5 +1,9 @@
 ## 3.1.0
 
+- Native SDK versions:
+  - Android: 7.2.0
+  - iOS: 5.8
+
 ## 3.0.0
 
 - Added prefix `AppMetrica` to all classes to remove possible conflicts with other plugins.
