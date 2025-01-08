@@ -29,6 +29,9 @@ android {
 
     defaultConfig {
         minSdkVersion 21
+        manifestPlaceholders = [
+            pluginVersion: version
+        ]
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

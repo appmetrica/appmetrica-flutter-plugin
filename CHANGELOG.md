@@ -1,5 +1,7 @@
 ## 3.2.0
 
+- Add meta-data with plugin description to AndroidManifest.
+
 ## 3.1.0
 
 - Native SDK versions:
