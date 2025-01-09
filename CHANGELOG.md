@@ -1,6 +1,6 @@
 ## 3.2.0
 
-- Add meta-data with plugin description to AndroidManifest.
+- Improve statistics when using with Yandex.Ads SDK. Add meta-data with plugin description to AndroidManifest.
 
 ## 3.1.0
 
