@@ -1,5 +1,5 @@
-import 'package:appmetrica_plugin/src/appmetrica_api_pigeon.dart';
-import '../appmetrica_plugin.dart';
+import 'appmetrica_api_pigeon.dart';
+import 'appmetrica_config.dart';
 
 class AppMetricaActivationConfigHolder {
   AppMetricaActivationConfigHolder._();
@@ -53,9 +53,7 @@ class AppMetricaActivationCompleter {
     } else {
       return InitialDeepLinkHolderPigeon()
           .getInitialDeeplink()
-          .then((value) => {
-                if (value != null) {AppMetricaPigeon().reportAppOpen(value)}
-              });
+          .then((value) { if (value != null) { AppMetricaPigeon().reportAppOpen(value); } });
     }
   }
 }

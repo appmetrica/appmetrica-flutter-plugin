@@ -1,8 +1,15 @@
 import 'dart:io';
 
-import 'package:appmetrica_plugin/src/appmetrica_api_pigeon.dart';
 import 'package:stack_trace/stack_trace.dart';
-import 'package:appmetrica_plugin/appmetrica_plugin.dart';
+
+import 'ad_revenue.dart';
+import 'appmetrica_api_pigeon.dart';
+import 'appmetrica_config.dart';
+import 'error_description.dart';
+import 'location.dart';
+import 'preload_info.dart';
+import 'reporter/reporter_config.dart';
+import 'revenue.dart';
 
 extension ReceiptConverter on AppMetricaReceipt {
   ReceiptPigeon toPigeon() => ReceiptPigeon(data: data, signature: signature);

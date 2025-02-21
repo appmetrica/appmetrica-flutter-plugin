@@ -1,4 +1,4 @@
-import 'package:appmetrica_plugin/src/appmetrica_api_pigeon.dart';
+import 'appmetrica_api_pigeon.dart';
 
 /// The class to store external attribution data.
 class AppMetricaExternalAttribution {

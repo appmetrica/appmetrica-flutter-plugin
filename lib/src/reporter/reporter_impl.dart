@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:appmetrica_plugin/src/ecommerce_event.dart';
-
 import '../ad_revenue.dart';
-import '../error_description.dart';
 import '../appmetrica_api_pigeon.dart';
+import '../ecommerce_event.dart';
+import '../error_description.dart';
 import '../pigeon_converter.dart';
 import '../profile/attribute.dart';
 import '../revenue.dart';

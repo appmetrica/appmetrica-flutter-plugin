@@ -1,7 +1,6 @@
-import 'package:appmetrica_plugin/src/appmetrica_api_pigeon.dart';
-import 'package:appmetrica_plugin/src/pigeon_converter.dart';
-
+import 'appmetrica_api_pigeon.dart';
 import 'location.dart';
+import 'pigeon_converter.dart';
 import 'preload_info.dart';
 
 /// The class contains the starting configuration of the library.

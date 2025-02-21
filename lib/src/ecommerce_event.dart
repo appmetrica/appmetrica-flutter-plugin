@@ -1,5 +1,5 @@
-import 'ecommerce.dart';
 import 'appmetrica_api_pigeon.dart';
+import 'ecommerce.dart';
 
 class AppMetricaECommerceEvent {
   static const String _showScreenEventType = "show_screen_event";
