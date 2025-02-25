@@ -1,7 +1,7 @@
 ## 3.2.0
 
 - Native SDK versions:
-  - Android: 7.6.0
+  - Android: 7.7.0
   - iOS: 5.9
 - Improve statistics when using with Yandex.Ads SDK. Add meta-data with plugin description to AndroidManifest.
 
