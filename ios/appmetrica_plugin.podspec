@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'PROPRIETARY', :file => '../LICENSE' }
   s.authors          = { "Yandex LLC" => "admin@appmetrica.io" }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*', 'AppMetricaPlugin/*.{h,m}'
-  s.public_header_files = 'Classes/**/*.h', 'AppMetricaPlugin/*.h'
+  s.source_files = 'appmetrica_plugin/Sources/appmetrica_plugin/**/*.{h,m}'
+  s.public_header_files = 'appmetrica_plugin/Sources/appmetrica_plugin/include/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'AppMetricaAnalytics', '~> 5.9'
   s.static_framework = true

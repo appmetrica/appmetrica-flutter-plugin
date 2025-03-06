@@ -4,6 +4,7 @@
   - Android: 7.7.0
   - iOS: 5.9
 - Improve statistics when using with Yandex.Ads SDK. Add meta-data with plugin description to AndroidManifest.
+- Support Swift Package Manager feature
 
 ## 3.1.0
 

@@ -1,10 +1,10 @@
 
+#import "../../AMAFAppMetricaConfigConverterImplementation.h"
+#import "../../AMAFAppMetricaImplementation.h"
+#import "../../AMAFInitialDeepLinkHolderImplementation.h"
+#import "../../AMAFPigeon.h"
+#import "../../AMAFReporterImplementation.h"
 #import "AMAFAppMetricaPlugin.h"
-#import "AMAFPigeon.h"
-#import "AMAFAppMetricaImplementation.h"
-#import "AMAFReporterImplementation.h"
-#import "AMAFAppMetricaConfigConverterImplementation.h"
-#import "AMAFInitialDeepLinkHolderImplementation.h"
 
 @interface AMAFAppMetricaPlugin()
 @property(nonatomic, strong) AMAFInitialDeepLinkHolderImplementation *deeplinkHolder;

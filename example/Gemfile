@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+# run `bundle outdated` to search for new versions
+gem 'cocoapods', '1.15.2'
