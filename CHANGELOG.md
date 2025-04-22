@@ -1,8 +1,8 @@
 ## 3.2.0
 
 - Native SDK versions:
-  - Android: 7.7.0
-  - iOS: 5.9
+  - Android: 7.8.0
+  - iOS: 5.10
 - Improve statistics when using with Yandex.Ads SDK. Add meta-data with plugin description to AndroidManifest.
 - Support Swift Package Manager feature
 
