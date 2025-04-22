@@ -108,7 +108,8 @@ public class Pigeon {
     REWARDED(3),
     INTERSTITIAL(4),
     MREC(5),
-    OTHER(6);
+    APP_OPEN(6),
+    OTHER(7);
 
     final int index;
 

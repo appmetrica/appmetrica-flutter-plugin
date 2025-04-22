@@ -133,6 +133,7 @@ final adTypeToPigeon = {
   AppMetricaAdType.rewarded: AdTypePigeon.REWARDED,
   AppMetricaAdType.interstitial: AdTypePigeon.INTERSTITIAL,
   AppMetricaAdType.mrec: AdTypePigeon.MREC,
+  AppMetricaAdType.appOpen: AdTypePigeon.APP_OPEN,
   AppMetricaAdType.other: AdTypePigeon.OTHER,
 };
 

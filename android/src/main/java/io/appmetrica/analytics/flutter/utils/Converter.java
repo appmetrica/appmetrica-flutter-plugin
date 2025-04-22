@@ -521,6 +521,7 @@ public class Converter {
             put(Pigeon.AdTypePigeon.REWARDED, AdType.REWARDED);
             put(Pigeon.AdTypePigeon.INTERSTITIAL, AdType.INTERSTITIAL);
             put(Pigeon.AdTypePigeon.MREC, AdType.MREC);
+            put(Pigeon.AdTypePigeon.APP_OPEN, AdType.APP_OPEN);
             put(Pigeon.AdTypePigeon.OTHER, AdType.OTHER);
     }};
 

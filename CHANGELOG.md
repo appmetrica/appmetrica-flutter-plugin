@@ -5,6 +5,7 @@
   - iOS: 5.10
 - Improve statistics when using with Yandex.Ads SDK. Add meta-data with plugin description to AndroidManifest.
 - Support Swift Package Manager feature
+- Add `appOpen` ad type for ad revenue report.
 
 ## 3.1.0
 

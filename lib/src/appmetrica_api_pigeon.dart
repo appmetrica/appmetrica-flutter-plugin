@@ -41,6 +41,7 @@ enum AdTypePigeon {
   REWARDED,
   INTERSTITIAL,
   MREC,
+  APP_OPEN,
   OTHER,
 }
 

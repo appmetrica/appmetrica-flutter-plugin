@@ -46,5 +46,6 @@ enum AppMetricaAdType {
   rewarded,
   interstitial,
   mrec,
+  appOpen,
   other,
 }

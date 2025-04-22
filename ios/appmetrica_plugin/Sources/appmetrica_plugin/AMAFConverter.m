@@ -67,6 +67,8 @@ static NSString *const kAMAFDeviceIdHashRealKey = @"appmetrica_device_id_hash";
             return AMAAdTypeInterstitial;
         case AMAFAdTypePigeonMREC:
             return AMAAdTypeMrec;
+        case AMAFAdTypePigeonAPP_OPEN:
+            return AMAAdTypeAppOpen;
         case AMAFAdTypePigeonOTHER:
             return AMAAdTypeOther;
         default:

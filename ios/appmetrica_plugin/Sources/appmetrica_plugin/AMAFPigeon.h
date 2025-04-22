@@ -43,7 +43,8 @@ typedef NS_ENUM(NSUInteger, AMAFAdTypePigeon) {
   AMAFAdTypePigeonREWARDED = 3,
   AMAFAdTypePigeonINTERSTITIAL = 4,
   AMAFAdTypePigeonMREC = 5,
-  AMAFAdTypePigeonOTHER = 6,
+  AMAFAdTypePigeonAPP_OPEN = 6,
+  AMAFAdTypePigeonOTHER = 7,
 };
 
 typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
