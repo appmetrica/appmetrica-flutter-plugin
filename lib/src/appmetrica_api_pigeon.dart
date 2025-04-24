@@ -57,6 +57,7 @@ enum StartupParamsItemStatusPigeon {
 class AppMetricaConfigPigeon {
   AppMetricaConfigPigeon({
     required this.apiKey,
+    this.advIdentifiersTracking,
     this.anrMonitoring,
     this.anrMonitoringTimeout,
     this.appBuildNumber,
@@ -84,6 +85,8 @@ class AppMetricaConfigPigeon {
   });
 
   String apiKey;
+
+  bool? advIdentifiersTracking;
 
   bool? anrMonitoring;
 
@@ -136,6 +139,7 @@ class AppMetricaConfigPigeon {
   Object encode() {
     return <Object?>[
       apiKey,
+      advIdentifiersTracking,
       anrMonitoring,
       anrMonitoringTimeout,
       appBuildNumber,
@@ -167,34 +171,35 @@ class AppMetricaConfigPigeon {
     result as List<Object?>;
     return AppMetricaConfigPigeon(
       apiKey: result[0]! as String,
-      anrMonitoring: result[1] as bool?,
-      anrMonitoringTimeout: result[2] as int?,
-      appBuildNumber: result[3] as int?,
-      appEnvironment: (result[4] as Map<Object?, Object?>?)?.cast<String?, String?>(),
-      appOpenTrackingEnabled: result[5] as bool?,
-      appVersion: result[6] as String?,
-      crashReporting: result[7] as bool?,
-      customHosts: (result[8] as List<Object?>?)?.cast<String?>(),
-      dataSendingEnabled: result[9] as bool?,
-      deviceType: result[10] as String?,
-      dispatchPeriodSeconds: result[11] as int?,
-      errorEnvironment: (result[12] as Map<Object?, Object?>?)?.cast<String?, String?>(),
-      firstActivationAsUpdate: result[13] as bool?,
-      location: result[14] != null
-          ? LocationPigeon.decode(result[14]! as List<Object?>)
+      advIdentifiersTracking: result[1] as bool?,
+      anrMonitoring: result[2] as bool?,
+      anrMonitoringTimeout: result[3] as int?,
+      appBuildNumber: result[4] as int?,
+      appEnvironment: (result[5] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      appOpenTrackingEnabled: result[6] as bool?,
+      appVersion: result[7] as String?,
+      crashReporting: result[8] as bool?,
+      customHosts: (result[9] as List<Object?>?)?.cast<String?>(),
+      dataSendingEnabled: result[10] as bool?,
+      deviceType: result[11] as String?,
+      dispatchPeriodSeconds: result[12] as int?,
+      errorEnvironment: (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      firstActivationAsUpdate: result[14] as bool?,
+      location: result[15] != null
+          ? LocationPigeon.decode(result[15]! as List<Object?>)
           : null,
-      locationTracking: result[15] as bool?,
-      logs: result[16] as bool?,
-      maxReportsCount: result[17] as int?,
-      maxReportsInDatabaseCount: result[18] as int?,
-      nativeCrashReporting: result[19] as bool?,
-      preloadInfo: result[20] != null
-          ? PreloadInfoPigeon.decode(result[20]! as List<Object?>)
+      locationTracking: result[16] as bool?,
+      logs: result[17] as bool?,
+      maxReportsCount: result[18] as int?,
+      maxReportsInDatabaseCount: result[19] as int?,
+      nativeCrashReporting: result[20] as bool?,
+      preloadInfo: result[21] != null
+          ? PreloadInfoPigeon.decode(result[21]! as List<Object?>)
           : null,
-      revenueAutoTrackingEnabled: result[21] as bool?,
-      sessionTimeout: result[22] as int?,
-      sessionsAutoTrackingEnabled: result[23] as bool?,
-      userProfileID: result[24] as String?,
+      revenueAutoTrackingEnabled: result[22] as bool?,
+      sessionTimeout: result[23] as int?,
+      sessionsAutoTrackingEnabled: result[24] as bool?,
+      userProfileID: result[25] as String?,
     );
   }
 }
@@ -2078,6 +2083,28 @@ class AppMetricaPigeon {
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(null) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> setAdvIdentifiersTracking(bool arg_enabled) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.setAdvIdentifiersTracking', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(<Object?>[arg_enabled]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

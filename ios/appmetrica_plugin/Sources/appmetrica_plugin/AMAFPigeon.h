@@ -88,6 +88,7 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithApiKey:(NSString *)apiKey
+    advIdentifiersTracking:(nullable NSNumber *)advIdentifiersTracking
     anrMonitoring:(nullable NSNumber *)anrMonitoring
     anrMonitoringTimeout:(nullable NSNumber *)anrMonitoringTimeout
     appBuildNumber:(nullable NSNumber *)appBuildNumber
@@ -113,6 +114,7 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
     sessionsAutoTrackingEnabled:(nullable NSNumber *)sessionsAutoTrackingEnabled
     userProfileID:(nullable NSString *)userProfileID;
 @property(nonatomic, copy) NSString * apiKey;
+@property(nonatomic, strong, nullable) NSNumber * advIdentifiersTracking;
 @property(nonatomic, strong, nullable) NSNumber * anrMonitoring;
 @property(nonatomic, strong, nullable) NSNumber * anrMonitoringTimeout;
 @property(nonatomic, strong, nullable) NSNumber * appBuildNumber;
@@ -519,6 +521,7 @@ NSObject<FlutterMessageCodec> *AMAFAppMetricaPigeonGetCodec(void);
 - (void)requestStartupParamsParams:(NSArray<NSString *> *)params completion:(void (^)(AMAFStartupParamsPigeon *_Nullable, FlutterError *_Nullable))completion;
 - (void)resumeSessionWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)sendEventsBufferWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setAdvIdentifiersTrackingEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)setDataSendingEnabledEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)setLocationLocation:(nullable AMAFLocationPigeon *)location error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)setLocationTrackingEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error;

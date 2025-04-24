@@ -6,6 +6,7 @@ import 'preload_info.dart';
 /// The class contains the starting configuration of the library.
 /// Configuration parameters are applied from the moment the library is initialized. You can set:
 /// * [apiKey] — application API key;
+/// * [advIdentifiersTracking] - (Android only) indicates whether AppMetrica should include advertising identifiers withing its reports.
 /// * [anrMonitoring] - whether to capture and send reports about ANRs automatically. The default value is false.
 /// * [anrMonitoringTimeout] - the timeout in seconds at which the fact of ANR is recorded.
 /// * [appBuildNumber] - build number of application.
@@ -38,6 +39,7 @@ class AppMetricaConfig {
   static final _converter = AppMetricaConfigConverterPigeon();
 
   final String apiKey;
+  final bool? advIdentifiersTracking;
   final bool? anrMonitoring;
   final int? anrMonitoringTimeout;
   final int? appBuildNumber;
@@ -67,6 +69,7 @@ class AppMetricaConfig {
   /// Creates an AppMetrica library configuration object. [apiKey] is a required parameter.
   const AppMetricaConfig(
     this.apiKey, {
+        this.advIdentifiersTracking,
         this.anrMonitoring,
         this.anrMonitoringTimeout,
         this.appBuildNumber,

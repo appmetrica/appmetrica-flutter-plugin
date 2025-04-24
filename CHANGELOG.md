@@ -6,6 +6,7 @@
 - Improve statistics when using with Yandex.Ads SDK. Add meta-data with plugin description to AndroidManifest.
 - Support Swift Package Manager feature
 - Add `appOpen` ad type for ad revenue report.
+- Add `AppMetrica.setAdvIdentifiersTracking` method to enable/disable including advertising identifiers withing its reports.
 
 ## 3.1.0
 

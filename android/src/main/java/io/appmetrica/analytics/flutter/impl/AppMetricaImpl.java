@@ -216,6 +216,11 @@ public class AppMetricaImpl implements Pigeon.AppMetricaPigeon {
     }
 
     @Override
+    public void setAdvIdentifiersTracking(@NonNull Boolean enabled) {
+        AppMetrica.setAdvIdentifiersTracking(enabled);
+    }
+
+    @Override
     public void setDataSendingEnabled(@NonNull Boolean enabled) {
         AppMetrica.setDataSendingEnabled(enabled);
     }

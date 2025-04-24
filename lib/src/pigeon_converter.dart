@@ -85,6 +85,7 @@ extension PreloadInfoConverter on AppMetricaPreloadInfo {
 extension ConfigConverter on AppMetricaConfig {
   AppMetricaConfigPigeon toPigeon() => AppMetricaConfigPigeon(
     apiKey: apiKey,
+    advIdentifiersTracking: advIdentifiersTracking,
     anrMonitoring: anrMonitoring,
     anrMonitoringTimeout: anrMonitoringTimeout,
     appBuildNumber: appBuildNumber,

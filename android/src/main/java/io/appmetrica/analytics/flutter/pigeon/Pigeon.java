@@ -148,6 +148,16 @@ public class Pigeon {
       this.apiKey = setterArg;
     }
 
+    private @Nullable Boolean advIdentifiersTracking;
+
+    public @Nullable Boolean getAdvIdentifiersTracking() {
+      return advIdentifiersTracking;
+    }
+
+    public void setAdvIdentifiersTracking(@Nullable Boolean setterArg) {
+      this.advIdentifiersTracking = setterArg;
+    }
+
     private @Nullable Boolean anrMonitoring;
 
     public @Nullable Boolean getAnrMonitoring() {
@@ -400,6 +410,13 @@ public class Pigeon {
         return this;
       }
 
+      private @Nullable Boolean advIdentifiersTracking;
+
+      public @NonNull Builder setAdvIdentifiersTracking(@Nullable Boolean setterArg) {
+        this.advIdentifiersTracking = setterArg;
+        return this;
+      }
+
       private @Nullable Boolean anrMonitoring;
 
       public @NonNull Builder setAnrMonitoring(@Nullable Boolean setterArg) {
@@ -571,6 +588,7 @@ public class Pigeon {
       public @NonNull AppMetricaConfigPigeon build() {
         AppMetricaConfigPigeon pigeonReturn = new AppMetricaConfigPigeon();
         pigeonReturn.setApiKey(apiKey);
+        pigeonReturn.setAdvIdentifiersTracking(advIdentifiersTracking);
         pigeonReturn.setAnrMonitoring(anrMonitoring);
         pigeonReturn.setAnrMonitoringTimeout(anrMonitoringTimeout);
         pigeonReturn.setAppBuildNumber(appBuildNumber);
@@ -601,8 +619,9 @@ public class Pigeon {
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(25);
+      ArrayList<Object> toListResult = new ArrayList<Object>(26);
       toListResult.add(apiKey);
+      toListResult.add(advIdentifiersTracking);
       toListResult.add(anrMonitoring);
       toListResult.add(anrMonitoringTimeout);
       toListResult.add(appBuildNumber);
@@ -634,53 +653,55 @@ public class Pigeon {
       AppMetricaConfigPigeon pigeonResult = new AppMetricaConfigPigeon();
       Object apiKey = list.get(0);
       pigeonResult.setApiKey((String) apiKey);
-      Object anrMonitoring = list.get(1);
+      Object advIdentifiersTracking = list.get(1);
+      pigeonResult.setAdvIdentifiersTracking((Boolean) advIdentifiersTracking);
+      Object anrMonitoring = list.get(2);
       pigeonResult.setAnrMonitoring((Boolean) anrMonitoring);
-      Object anrMonitoringTimeout = list.get(2);
+      Object anrMonitoringTimeout = list.get(3);
       pigeonResult.setAnrMonitoringTimeout((anrMonitoringTimeout == null) ? null : ((anrMonitoringTimeout instanceof Integer) ? (Integer) anrMonitoringTimeout : (Long) anrMonitoringTimeout));
-      Object appBuildNumber = list.get(3);
+      Object appBuildNumber = list.get(4);
       pigeonResult.setAppBuildNumber((appBuildNumber == null) ? null : ((appBuildNumber instanceof Integer) ? (Integer) appBuildNumber : (Long) appBuildNumber));
-      Object appEnvironment = list.get(4);
+      Object appEnvironment = list.get(5);
       pigeonResult.setAppEnvironment((Map<String, String>) appEnvironment);
-      Object appOpenTrackingEnabled = list.get(5);
+      Object appOpenTrackingEnabled = list.get(6);
       pigeonResult.setAppOpenTrackingEnabled((Boolean) appOpenTrackingEnabled);
-      Object appVersion = list.get(6);
+      Object appVersion = list.get(7);
       pigeonResult.setAppVersion((String) appVersion);
-      Object crashReporting = list.get(7);
+      Object crashReporting = list.get(8);
       pigeonResult.setCrashReporting((Boolean) crashReporting);
-      Object customHosts = list.get(8);
+      Object customHosts = list.get(9);
       pigeonResult.setCustomHosts((List<String>) customHosts);
-      Object dataSendingEnabled = list.get(9);
+      Object dataSendingEnabled = list.get(10);
       pigeonResult.setDataSendingEnabled((Boolean) dataSendingEnabled);
-      Object deviceType = list.get(10);
+      Object deviceType = list.get(11);
       pigeonResult.setDeviceType((String) deviceType);
-      Object dispatchPeriodSeconds = list.get(11);
+      Object dispatchPeriodSeconds = list.get(12);
       pigeonResult.setDispatchPeriodSeconds((dispatchPeriodSeconds == null) ? null : ((dispatchPeriodSeconds instanceof Integer) ? (Integer) dispatchPeriodSeconds : (Long) dispatchPeriodSeconds));
-      Object errorEnvironment = list.get(12);
+      Object errorEnvironment = list.get(13);
       pigeonResult.setErrorEnvironment((Map<String, String>) errorEnvironment);
-      Object firstActivationAsUpdate = list.get(13);
+      Object firstActivationAsUpdate = list.get(14);
       pigeonResult.setFirstActivationAsUpdate((Boolean) firstActivationAsUpdate);
-      Object location = list.get(14);
+      Object location = list.get(15);
       pigeonResult.setLocation((location == null) ? null : LocationPigeon.fromList((ArrayList<Object>) location));
-      Object locationTracking = list.get(15);
+      Object locationTracking = list.get(16);
       pigeonResult.setLocationTracking((Boolean) locationTracking);
-      Object logs = list.get(16);
+      Object logs = list.get(17);
       pigeonResult.setLogs((Boolean) logs);
-      Object maxReportsCount = list.get(17);
+      Object maxReportsCount = list.get(18);
       pigeonResult.setMaxReportsCount((maxReportsCount == null) ? null : ((maxReportsCount instanceof Integer) ? (Integer) maxReportsCount : (Long) maxReportsCount));
-      Object maxReportsInDatabaseCount = list.get(18);
+      Object maxReportsInDatabaseCount = list.get(19);
       pigeonResult.setMaxReportsInDatabaseCount((maxReportsInDatabaseCount == null) ? null : ((maxReportsInDatabaseCount instanceof Integer) ? (Integer) maxReportsInDatabaseCount : (Long) maxReportsInDatabaseCount));
-      Object nativeCrashReporting = list.get(19);
+      Object nativeCrashReporting = list.get(20);
       pigeonResult.setNativeCrashReporting((Boolean) nativeCrashReporting);
-      Object preloadInfo = list.get(20);
+      Object preloadInfo = list.get(21);
       pigeonResult.setPreloadInfo((preloadInfo == null) ? null : PreloadInfoPigeon.fromList((ArrayList<Object>) preloadInfo));
-      Object revenueAutoTrackingEnabled = list.get(21);
+      Object revenueAutoTrackingEnabled = list.get(22);
       pigeonResult.setRevenueAutoTrackingEnabled((Boolean) revenueAutoTrackingEnabled);
-      Object sessionTimeout = list.get(22);
+      Object sessionTimeout = list.get(23);
       pigeonResult.setSessionTimeout((sessionTimeout == null) ? null : ((sessionTimeout instanceof Integer) ? (Integer) sessionTimeout : (Long) sessionTimeout));
-      Object sessionsAutoTrackingEnabled = list.get(23);
+      Object sessionsAutoTrackingEnabled = list.get(24);
       pigeonResult.setSessionsAutoTrackingEnabled((Boolean) sessionsAutoTrackingEnabled);
-      Object userProfileID = list.get(24);
+      Object userProfileID = list.get(25);
       pigeonResult.setUserProfileID((String) userProfileID);
       return pigeonResult;
     }
@@ -4042,6 +4063,8 @@ public class Pigeon {
 
     void sendEventsBuffer();
 
+    void setAdvIdentifiersTracking(@NonNull Boolean enabled);
+
     void setDataSendingEnabled(@NonNull Boolean enabled);
 
     void setLocation(@Nullable LocationPigeon location);
@@ -4719,6 +4742,30 @@ public class Pigeon {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 try {
                   api.sendEventsBuffer();
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.setAdvIdentifiersTracking", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                Boolean enabledArg = (Boolean) args.get(0);
+                try {
+                  api.setAdvIdentifiersTracking(enabledArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

@@ -84,6 +84,11 @@ public class Converter {
     public static AppMetricaConfig toNative(@NonNull final Pigeon.AppMetricaConfigPigeon pigeon) {
         final AppMetricaConfig.Builder resultBuilder = AppMetricaConfig.newConfigBuilder(pigeon.getApiKey());
 
+        final Boolean advIdentifiersTracking = pigeon.getAdvIdentifiersTracking();
+        if (advIdentifiersTracking != null) {
+            resultBuilder.withAdvIdentifiersTracking(advIdentifiersTracking);
+        }
+
         final Boolean anrMonitoring = pigeon.getAnrMonitoring();
         if (anrMonitoring != null) {
             resultBuilder.withAnrMonitoring(anrMonitoring);

@@ -12,6 +12,7 @@ import 'package:pigeon/pigeon.dart';
 class AppMetricaConfigPigeon {
   String apiKey;
 
+  bool? advIdentifiersTracking;
   bool? anrMonitoring;
   int? anrMonitoringTimeout;
   int? appBuildNumber;
@@ -325,6 +326,8 @@ abstract class AppMetricaPigeon {
   void resumeSession();
 
   void sendEventsBuffer();
+
+  void setAdvIdentifiersTracking(bool enabled);
 
   void setDataSendingEnabled(bool enabled);
 

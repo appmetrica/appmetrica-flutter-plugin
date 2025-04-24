@@ -2,6 +2,7 @@
 #import "AMAFAppMetricaImplementation.h"
 #import "AMAFConverter.h"
 #import <AppMetricaCore/AppMetricaCore.h>
+#import <AppMetricaCoreExtension/AppMetricaCoreExtension.h>
 #import <AppMetricaCrashes/AppMetricaCrashes.h>
 #import "AMAFAppMetricaActivator.h"
 
@@ -183,6 +184,11 @@
 - (void)sendEventsBufferWithError:(FlutterError **)flutterError
 {
     [AMAAppMetrica sendEventsBuffer];
+}
+
+- (void)setAdvIdentifiersTrackingEnabled:(NSNumber *)enabled error:(FlutterError **)flutterError
+{
+    [AMAAppMetrica setAdProviderEnabled:enabled];
 }
 
 - (void)setDataSendingEnabledEnabled:(NSNumber *)enabled error:(FlutterError **)error

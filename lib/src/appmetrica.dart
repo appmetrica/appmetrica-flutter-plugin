@@ -215,6 +215,9 @@ class AppMetrica {
   /// Sends saved events from the buffer.
   static Future<void> sendEventsBuffer() => _appMetrica.sendEventsBuffer();
 
+  /// Enables/disables including advertising identifiers like GAID, Huawei OAID within its reports.
+  static Future<void> setAdvIdentifiersTracking(bool enabled) => _appMetrica.setAdvIdentifiersTracking(enabled);
+
   /// Enables/disables sending statistics to the AppMetrica server.
   ///
   /// Disabling sending for the main API key also disables sending data from all reporters

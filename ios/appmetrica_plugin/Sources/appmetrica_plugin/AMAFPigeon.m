@@ -190,6 +190,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 
 @implementation AMAFAppMetricaConfigPigeon
 + (instancetype)makeWithApiKey:(NSString *)apiKey
+    advIdentifiersTracking:(nullable NSNumber *)advIdentifiersTracking
     anrMonitoring:(nullable NSNumber *)anrMonitoring
     anrMonitoringTimeout:(nullable NSNumber *)anrMonitoringTimeout
     appBuildNumber:(nullable NSNumber *)appBuildNumber
@@ -216,6 +217,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     userProfileID:(nullable NSString *)userProfileID {
   AMAFAppMetricaConfigPigeon* pigeonResult = [[AMAFAppMetricaConfigPigeon alloc] init];
   pigeonResult.apiKey = apiKey;
+  pigeonResult.advIdentifiersTracking = advIdentifiersTracking;
   pigeonResult.anrMonitoring = anrMonitoring;
   pigeonResult.anrMonitoringTimeout = anrMonitoringTimeout;
   pigeonResult.appBuildNumber = appBuildNumber;
@@ -246,30 +248,31 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   AMAFAppMetricaConfigPigeon *pigeonResult = [[AMAFAppMetricaConfigPigeon alloc] init];
   pigeonResult.apiKey = GetNullableObjectAtIndex(list, 0);
   NSAssert(pigeonResult.apiKey != nil, @"");
-  pigeonResult.anrMonitoring = GetNullableObjectAtIndex(list, 1);
-  pigeonResult.anrMonitoringTimeout = GetNullableObjectAtIndex(list, 2);
-  pigeonResult.appBuildNumber = GetNullableObjectAtIndex(list, 3);
-  pigeonResult.appEnvironment = GetNullableObjectAtIndex(list, 4);
-  pigeonResult.appOpenTrackingEnabled = GetNullableObjectAtIndex(list, 5);
-  pigeonResult.appVersion = GetNullableObjectAtIndex(list, 6);
-  pigeonResult.crashReporting = GetNullableObjectAtIndex(list, 7);
-  pigeonResult.customHosts = GetNullableObjectAtIndex(list, 8);
-  pigeonResult.dataSendingEnabled = GetNullableObjectAtIndex(list, 9);
-  pigeonResult.deviceType = GetNullableObjectAtIndex(list, 10);
-  pigeonResult.dispatchPeriodSeconds = GetNullableObjectAtIndex(list, 11);
-  pigeonResult.errorEnvironment = GetNullableObjectAtIndex(list, 12);
-  pigeonResult.firstActivationAsUpdate = GetNullableObjectAtIndex(list, 13);
-  pigeonResult.location = [AMAFLocationPigeon nullableFromList:(GetNullableObjectAtIndex(list, 14))];
-  pigeonResult.locationTracking = GetNullableObjectAtIndex(list, 15);
-  pigeonResult.logs = GetNullableObjectAtIndex(list, 16);
-  pigeonResult.maxReportsCount = GetNullableObjectAtIndex(list, 17);
-  pigeonResult.maxReportsInDatabaseCount = GetNullableObjectAtIndex(list, 18);
-  pigeonResult.nativeCrashReporting = GetNullableObjectAtIndex(list, 19);
-  pigeonResult.preloadInfo = [AMAFPreloadInfoPigeon nullableFromList:(GetNullableObjectAtIndex(list, 20))];
-  pigeonResult.revenueAutoTrackingEnabled = GetNullableObjectAtIndex(list, 21);
-  pigeonResult.sessionTimeout = GetNullableObjectAtIndex(list, 22);
-  pigeonResult.sessionsAutoTrackingEnabled = GetNullableObjectAtIndex(list, 23);
-  pigeonResult.userProfileID = GetNullableObjectAtIndex(list, 24);
+  pigeonResult.advIdentifiersTracking = GetNullableObjectAtIndex(list, 1);
+  pigeonResult.anrMonitoring = GetNullableObjectAtIndex(list, 2);
+  pigeonResult.anrMonitoringTimeout = GetNullableObjectAtIndex(list, 3);
+  pigeonResult.appBuildNumber = GetNullableObjectAtIndex(list, 4);
+  pigeonResult.appEnvironment = GetNullableObjectAtIndex(list, 5);
+  pigeonResult.appOpenTrackingEnabled = GetNullableObjectAtIndex(list, 6);
+  pigeonResult.appVersion = GetNullableObjectAtIndex(list, 7);
+  pigeonResult.crashReporting = GetNullableObjectAtIndex(list, 8);
+  pigeonResult.customHosts = GetNullableObjectAtIndex(list, 9);
+  pigeonResult.dataSendingEnabled = GetNullableObjectAtIndex(list, 10);
+  pigeonResult.deviceType = GetNullableObjectAtIndex(list, 11);
+  pigeonResult.dispatchPeriodSeconds = GetNullableObjectAtIndex(list, 12);
+  pigeonResult.errorEnvironment = GetNullableObjectAtIndex(list, 13);
+  pigeonResult.firstActivationAsUpdate = GetNullableObjectAtIndex(list, 14);
+  pigeonResult.location = [AMAFLocationPigeon nullableFromList:(GetNullableObjectAtIndex(list, 15))];
+  pigeonResult.locationTracking = GetNullableObjectAtIndex(list, 16);
+  pigeonResult.logs = GetNullableObjectAtIndex(list, 17);
+  pigeonResult.maxReportsCount = GetNullableObjectAtIndex(list, 18);
+  pigeonResult.maxReportsInDatabaseCount = GetNullableObjectAtIndex(list, 19);
+  pigeonResult.nativeCrashReporting = GetNullableObjectAtIndex(list, 20);
+  pigeonResult.preloadInfo = [AMAFPreloadInfoPigeon nullableFromList:(GetNullableObjectAtIndex(list, 21))];
+  pigeonResult.revenueAutoTrackingEnabled = GetNullableObjectAtIndex(list, 22);
+  pigeonResult.sessionTimeout = GetNullableObjectAtIndex(list, 23);
+  pigeonResult.sessionsAutoTrackingEnabled = GetNullableObjectAtIndex(list, 24);
+  pigeonResult.userProfileID = GetNullableObjectAtIndex(list, 25);
   return pigeonResult;
 }
 + (nullable AMAFAppMetricaConfigPigeon *)nullableFromList:(NSArray *)list {
@@ -278,6 +281,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList {
   return @[
     (self.apiKey ?: [NSNull null]),
+    (self.advIdentifiersTracking ?: [NSNull null]),
     (self.anrMonitoring ?: [NSNull null]),
     (self.anrMonitoringTimeout ?: [NSNull null]),
     (self.appBuildNumber ?: [NSNull null]),
@@ -2004,6 +2008,25 @@ void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObj
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         FlutterError *error;
         [api sendEventsBufferWithError:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.setAdvIdentifiersTracking"
+        binaryMessenger:binaryMessenger
+        codec:AMAFAppMetricaPigeonGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(setAdvIdentifiersTrackingEnabled:error:)], @"AMAFAppMetricaPigeon api (%@) doesn't respond to @selector(setAdvIdentifiersTrackingEnabled:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSNumber *arg_enabled = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        [api setAdvIdentifiersTrackingEnabled:arg_enabled error:&error];
         callback(wrapResult(nil, error));
       }];
     } else {
