@@ -188,7 +188,7 @@
 
 - (void)setAdvIdentifiersTrackingEnabled:(NSNumber *)enabled error:(FlutterError **)flutterError
 {
-    [AMAAppMetrica setAdProviderEnabled:enabled];
+    [AMAAppMetrica setAdProviderEnabled:enabled.boolValue];
 }
 
 - (void)setDataSendingEnabledEnabled:(NSNumber *)enabled error:(FlutterError **)error
