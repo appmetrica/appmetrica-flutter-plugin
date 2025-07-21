@@ -16,7 +16,10 @@ import 'preload_info.dart';
 /// * [crashReporting] — flag for sending information about unhandled exceptions in the platform part of the application. The default value is true;
 /// * [customHosts] - custom hosts for startup config.
 /// * [dataSendingEnabled] — indicates whether sending statistics is enabled. The default value is true;
-/// * [deviceType] - device type based on screen size: phone, tablet, TV.
+/// * [deviceType] - (Android only) device type based on screen size. Allowed values are from native android SDK from class PredefinedDeviceTypes.
+///   See https://github.com/appmetrica/appmetrica-sdk-android/blob/main/analytics/src/main/java/io/appmetrica/analytics/PredefinedDeviceTypes.java.
+///   Using other values may cause events to not appear in AppMetrica reports.
+///   Other values are only allowed if explicitly supported by official documentation.
 /// * [dispatchPeriodSeconds] - timeout for sending reports.
 /// * [errorEnvironment] — the environment of the application error in the form of a key-value pair. The environment is displayed in the crashes and errors report;
 /// * [firstActivationAsUpdate] — flag that determines if the first launch of the application is an update. The default value is false;
