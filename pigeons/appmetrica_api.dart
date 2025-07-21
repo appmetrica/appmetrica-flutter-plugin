@@ -2,8 +2,8 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/src/appmetrica_api_pigeon.dart',
-  objcHeaderOut: 'ios/appmetrica_plugin/Sources/appmetrica_plugin/AMAFPigeon.h',
-  objcSourceOut: 'ios/appmetrica_plugin/Sources/appmetrica_plugin/AMAFPigeon.m',
+  objcHeaderOut: 'ios/appmetrica_plugin/Sources/appmetrica_plugin/include/appmetrica_plugin/AMAFPigeon.h',
+  objcSourceOut: 'ios/appmetrica_plugin/Sources/appmetrica_plugin/include/appmetrica_plugin/AMAFPigeon.m',
   objcOptions: ObjcOptions(prefix: 'AMAF'),
   javaOut: 'android/src/main/java/io/appmetrica/analytics/flutter/pigeon/Pigeon.java',
   javaOptions: JavaOptions(package: 'io.appmetrica.analytics.flutter.pigeon'),

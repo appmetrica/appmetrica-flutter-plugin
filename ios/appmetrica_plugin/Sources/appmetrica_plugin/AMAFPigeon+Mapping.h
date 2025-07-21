@@ -1,6 +1,6 @@
 
 #import <Foundation/Foundation.h>
-#import "AMAFPigeon.h"
+#import "include/appmetrica_plugin/AMAFPigeon.h"
 
 @interface AMAFAppMetricaConfigPigeon (Mapping)
 
