@@ -1,10 +1,10 @@
 
 #import "AMAFAppMetricaImplementation.h"
 #import "AMAFConverter.h"
+#import "include/appmetrica_plugin/AMAFAppMetricaActivator.h"
 #import <AppMetricaCore/AppMetricaCore.h>
 #import <AppMetricaCoreExtension/AppMetricaCoreExtension.h>
 #import <AppMetricaCrashes/AppMetricaCrashes.h>
-#import "AMAFAppMetricaActivator.h"
 
 @implementation AMAFAppMetricaImplementation
 

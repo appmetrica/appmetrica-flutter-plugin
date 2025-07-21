@@ -1,7 +1,7 @@
 
+#import "../../AMAFConverter.h"
+#import "../../AMAFPigeon+Mapping.h"
 #import "AMAFAppMetricaConfigConverterImplementation.h"
-#import "AMAFConverter.h"
-#import "AMAFPigeon+Mapping.h"
 
 @implementation AMAFAppMetricaConfigConverterImplementation
 

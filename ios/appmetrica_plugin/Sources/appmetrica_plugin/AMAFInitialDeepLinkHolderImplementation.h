@@ -1,5 +1,5 @@
 
-#import "AMAFPigeon.h"
+#import "include/appmetrica_plugin/AMAFPigeon.h"
 
 @interface AMAFInitialDeepLinkHolderImplementation : NSObject <AMAFInitialDeepLinkHolderPigeon>
 

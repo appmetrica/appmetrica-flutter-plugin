@@ -1,3 +1,7 @@
+## 3.2.1
+
+- Fix `'appmetrica_plugin/AMAFAppMetricaActivator.h' file not found` error.
+
 ## 3.2.0
 
 - Native SDK versions:
