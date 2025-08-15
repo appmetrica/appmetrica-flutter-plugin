@@ -3,8 +3,10 @@
 #import "AMAFConverter.h"
 #import "include/appmetrica_plugin/AMAFAppMetricaActivator.h"
 #import <AppMetricaCore/AppMetricaCore.h>
-#import <AppMetricaCoreExtension/AppMetricaCoreExtension.h>
 #import <AppMetricaCrashes/AppMetricaCrashes.h>
+
+// TODO: Remove after iOS 5.13 release(https://nda.ya.ru/t/9qP2NxMl7Hew56)
+#import <AppMetricaCoreExtension/AppMetricaCoreExtension.h>
 
 @implementation AMAFAppMetricaImplementation
 
@@ -188,7 +190,7 @@
 
 - (void)setAdvIdentifiersTrackingEnabled:(NSNumber *)enabled error:(FlutterError **)flutterError
 {
-    [AMAAppMetrica setAdProviderEnabled:enabled.boolValue];
+    [AMAAppMetrica setAdvertisingIdentifierTrackingEnabled:enabled.boolValue];
 }
 
 - (void)setDataSendingEnabledEnabled:(NSNumber *)enabled error:(FlutterError **)error
