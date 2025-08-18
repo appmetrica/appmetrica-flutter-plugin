@@ -1,5 +1,10 @@
 ## 3.3.0
 
+- Fix `No known class method for selector 'setAdProviderEnabled:'` error.
+- Native SDK versions:
+  - Android: 7.8.0
+  - iOS: 5.12
+
 ## 3.2.1
 
 - Fix `'appmetrica_plugin/AMAFAppMetricaActivator.h' file not found` error.
