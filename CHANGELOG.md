@@ -1,3 +1,5 @@
+## 3.4.0
+
 ## 3.3.0
 
 - Fix `No known class method for selector 'setAdProviderEnabled:'` error.
