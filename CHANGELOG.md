@@ -1,5 +1,7 @@
 ## 3.4.0
 
+- Update AGP version to `8.2.0`.
+
 ## 3.3.0
 
 - Fix `No known class method for selector 'setAdProviderEnabled:'` error.
