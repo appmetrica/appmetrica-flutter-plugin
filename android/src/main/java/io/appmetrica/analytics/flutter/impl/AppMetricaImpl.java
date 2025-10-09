@@ -146,6 +146,7 @@ public class AppMetricaImpl implements Pigeon.AppMetricaPigeon {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void reportReferralUrl(@NonNull String referralUrl) {
         AppMetrica.reportReferralUrl(referralUrl);
     }
