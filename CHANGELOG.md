@@ -1,6 +1,9 @@
 ## 3.4.0
 
 - Update AGP version to `8.2.0`.
+- Native SDK versions:
+  - Android: 7.13.0
+  - iOS: 5.14
 
 ## 3.3.0
 
