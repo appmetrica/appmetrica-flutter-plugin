@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import io.appmetrica.analytics.flutter.impl.AppMetricaConfigConverterImpl;
 import io.appmetrica.analytics.flutter.impl.AppMetricaImpl;
+import io.appmetrica.analytics.flutter.impl.AppMetricaLibraryAdapterImpl;
 import io.appmetrica.analytics.flutter.impl.InitialDeepLinkHolderImpl;
 import io.appmetrica.analytics.flutter.impl.ReporterImpl;
 import io.appmetrica.analytics.flutter.pigeon.Pigeon;
@@ -17,14 +18,18 @@ public class AppMetricaPlugin implements FlutterPlugin, ActivityAware {
     @Nullable
     private AppMetricaImpl appMetrica = null;
     @Nullable
+    private AppMetricaLibraryAdapterImpl appMetricaLibraryAdapter = null;
+    @Nullable
     private InitialDeepLinkHolderImpl deeplinkHolder = null;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         appMetrica = new AppMetricaImpl(binding.getApplicationContext());
+        appMetricaLibraryAdapter = new AppMetricaLibraryAdapterImpl(binding.getApplicationContext());
         deeplinkHolder = new InitialDeepLinkHolderImpl();
 
         Pigeon.AppMetricaPigeon.setup(binding.getBinaryMessenger(), appMetrica);
+        Pigeon.AppMetricaLibraryAdapterPigeon.setup(binding.getBinaryMessenger(), appMetricaLibraryAdapter);
         Pigeon.ReporterPigeon.setup(binding.getBinaryMessenger(), new ReporterImpl(binding.getApplicationContext()));
         Pigeon.AppMetricaConfigConverterPigeon.setup(binding.getBinaryMessenger(), new AppMetricaConfigConverterImpl());
         Pigeon.InitialDeepLinkHolderPigeon.setup(binding.getBinaryMessenger(), deeplinkHolder);

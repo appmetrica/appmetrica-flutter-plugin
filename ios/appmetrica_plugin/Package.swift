@@ -21,10 +21,11 @@ let package = Package(
         .target(
             name: "appmetrica_plugin",
             dependencies: [
+                .product(name: "AppMetricaAdSupport", package: "appmetrica-sdk-ios"),
                 .product(name: "AppMetricaCore", package: "appmetrica-sdk-ios"),
                 .product(name: "AppMetricaCrashes", package: "appmetrica-sdk-ios"),
+                .product(name: "AppMetricaLibraryAdapter", package: "appmetrica-sdk-ios"),
                 .product(name: "AppMetricaWebKit", package: "appmetrica-sdk-ios"),
-                .product(name: "AppMetricaAdSupport", package: "appmetrica-sdk-ios"),
             ],
             resources: [],
             cSettings: [

@@ -1,5 +1,6 @@
 
 #import "../../AMAFAppMetricaImplementation.h"
+#import "../../AMAFAppMetricaLibraryAdapterImplementation.h"
 #import "../../AMAFInitialDeepLinkHolderImplementation.h"
 #import "../../AMAFReporterImplementation.h"
 #import "AMAFAppMetricaConfigConverterImplementation.h"
@@ -29,6 +30,7 @@
     [registrar addApplicationDelegate:instance];
 
     AMAFAppMetricaPigeonSetup(registrar.messenger, [[AMAFAppMetricaImplementation alloc] init]);
+    AMAFAppMetricaLibraryAdapterPigeonSetup(registrar.messenger, [[AMAFAppMetricaLibraryAdapterImplementation alloc] init]);
     AMAFReporterPigeonSetup(registrar.messenger, [[AMAFReporterImplementation alloc] init]);
     AMAFAppMetricaConfigConverterPigeonSetup(registrar.messenger, [[AMAFAppMetricaConfigConverterImplementation alloc] init]);
     AMAFInitialDeepLinkHolderPigeonSetup(registrar.messenger, instance.deeplinkHolder);

@@ -2146,6 +2146,33 @@ void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObj
     }
   }
 }
+NSObject<FlutterMessageCodec> *AMAFAppMetricaLibraryAdapterPigeonGetCodec(void) {
+  static FlutterStandardMessageCodec *sSharedObject = nil;
+  sSharedObject = [FlutterStandardMessageCodec sharedInstance];
+  return sSharedObject;
+}
+
+void AMAFAppMetricaLibraryAdapterPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AMAFAppMetricaLibraryAdapterPigeon> *api) {
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.subscribeForAutoCollectedData"
+        binaryMessenger:binaryMessenger
+        codec:AMAFAppMetricaLibraryAdapterPigeonGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(subscribeForAutoCollectedDataApiKey:error:)], @"AMAFAppMetricaLibraryAdapterPigeon api (%@) doesn't respond to @selector(subscribeForAutoCollectedDataApiKey:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSString *arg_apiKey = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        [api subscribeForAutoCollectedDataApiKey:arg_apiKey error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+}
 @interface AMAFReporterPigeonCodecReader : FlutterStandardReader
 @end
 @implementation AMAFReporterPigeonCodecReader

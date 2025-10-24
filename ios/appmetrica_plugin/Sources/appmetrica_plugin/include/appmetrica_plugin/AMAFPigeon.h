@@ -532,6 +532,15 @@ NSObject<FlutterMessageCodec> *AMAFAppMetricaPigeonGetCodec(void);
 
 extern void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AMAFAppMetricaPigeon> *_Nullable api);
 
+/// The codec used by AMAFAppMetricaLibraryAdapterPigeon.
+NSObject<FlutterMessageCodec> *AMAFAppMetricaLibraryAdapterPigeonGetCodec(void);
+
+@protocol AMAFAppMetricaLibraryAdapterPigeon
+- (void)subscribeForAutoCollectedDataApiKey:(NSString *)apiKey error:(FlutterError *_Nullable *_Nonnull)error;
+@end
+
+extern void AMAFAppMetricaLibraryAdapterPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AMAFAppMetricaLibraryAdapterPigeon> *_Nullable api);
+
 /// The codec used by AMAFReporterPigeon.
 NSObject<FlutterMessageCodec> *AMAFReporterPigeonGetCodec(void);
 

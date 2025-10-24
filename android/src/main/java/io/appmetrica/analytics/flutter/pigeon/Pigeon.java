@@ -4922,6 +4922,43 @@ public class Pigeon {
       }
     }
   }
+  /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
+  public interface AppMetricaLibraryAdapterPigeon {
+
+    void subscribeForAutoCollectedData(@NonNull String apiKey);
+
+    /** The codec used by AppMetricaLibraryAdapterPigeon. */
+    static @NonNull MessageCodec<Object> getCodec() {
+      return new StandardMessageCodec();
+    }
+    /**Sets up an instance of `AppMetricaLibraryAdapterPigeon` to handle messages through the `binaryMessenger`. */
+    static void setup(@NonNull BinaryMessenger binaryMessenger, @Nullable AppMetricaLibraryAdapterPigeon api) {
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.subscribeForAutoCollectedData", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                String apiKeyArg = (String) args.get(0);
+                try {
+                  api.subscribeForAutoCollectedData(apiKeyArg);
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+    }
+  }
 
   private static class ReporterPigeonCodec extends StandardMessageCodec {
     public static final ReporterPigeonCodec INSTANCE = new ReporterPigeonCodec();

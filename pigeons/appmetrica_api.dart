@@ -344,6 +344,11 @@ abstract class AppMetricaPigeon {
   void touchReporter(String apiKey);
 }
 
+@HostApi()
+abstract class AppMetricaLibraryAdapterPigeon {
+  void subscribeForAutoCollectedData(String apiKey);
+}
+
 class ReporterConfigPigeon {
   String apiKey;
 
