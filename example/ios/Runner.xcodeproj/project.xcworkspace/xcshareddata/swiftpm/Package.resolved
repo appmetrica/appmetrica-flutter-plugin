@@ -1,13 +1,13 @@
 {
-  "originHash" : "ef202932a78a7ec7ebd152a46ccec43cb2421f3dd8b271b314f40f02d5f715e2",
+  "originHash" : "9c0436074212d9969a7d6fbdb6246d0c6ec1dcbdefdaefbb53bb2477c29eb65f",
   "pins" : [
     {
       "identity" : "appmetrica-sdk-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/appmetrica/appmetrica-sdk-ios",
       "state" : {
-        "revision" : "0ef47447ea9de9ce4bd78e10d3c6da6219446cb2",
-        "version" : "5.14.0"
+        "revision" : "a5a7a0c8898395cb4090ccbb39b5da4eead2dd2f",
+        "version" : "5.15.0"
       }
     },
     {
