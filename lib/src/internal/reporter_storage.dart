@@ -1,4 +1,4 @@
-import 'reporter.dart';
+import '../reporter.dart';
 import 'reporter_impl.dart';
 
 class ReporterStorage {

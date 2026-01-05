@@ -1,14 +1,12 @@
-import 'appmetrica_api_pigeon.dart';
-
 /// The class to store external attribution data.
 class AppMetricaExternalAttribution {
-  final String _source;
-  final Map<String?, dynamic> _data;
+  final String source;
+  final Map<String?, dynamic> data;
 
   /// Creates AppsFlyer implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.appsflyer(Map<String, dynamic> attribution)
-      : _source = "appsflyer",
-        _data = attribution["payload"];
+      : source = "appsflyer",
+        data = attribution["payload"];
 
   /// Creates Adjust implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.adjust({
@@ -25,8 +23,8 @@ class AppMetricaExternalAttribution {
     String? costCurrency,
     String? fbInstallReferrer
   })
-      : _source = "adjust",
-        _data = {
+      : source = "adjust",
+        data = {
           "trackerToken": trackerToken,
           "trackerName": trackerName,
           "network": network,
@@ -43,27 +41,21 @@ class AppMetricaExternalAttribution {
 
   /// Creates Kochava implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.kochava(Map<String, dynamic> attribution)
-      : _source = "kochava",
-        _data = Map.from(attribution);
+      : source = "kochava",
+        data = Map.from(attribution);
 
   /// Creates Tenjin implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.tenjin(Map<String, dynamic> attribution)
-      : _source = "tenjin",
-        _data = Map.from(attribution);
+      : source = "tenjin",
+        data = Map.from(attribution);
 
   /// Creates AirBridge implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.airbridge(Map<dynamic, dynamic> attribution)
-      : _source = "airbridge",
-        _data = attribution.map((key, value) => MapEntry(key?.toString(), value));
+      : source = "airbridge",
+        data = attribution.map((key, value) => MapEntry(key?.toString(), value));
 
   /// Creates Singular implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.singular(Map<String, dynamic> attribution)
-      : _source = "singular",
-        _data = Map.from(attribution);
-
-  /// Serializes data to pigeon. For internal use.
-  ExternalAttributionPigeon toPigeon() => ExternalAttributionPigeon(
-      source: _source,
-      data: _data,
-  );
+      : source = "singular",
+        data = Map.from(attribution);
 }

@@ -1,10 +1,13 @@
 library appmetrica;
 
-export 'src/activation_config_holder.dart' // internal API
+export 'src/internal/activation_config_holder.dart' // internal API
     show
         AppMetricaActivationConfigHolder,
         AppMetricaActivationCompleter;
-export 'src/ad_revenue.dart'
+export 'src/internal/appmetrica_library_adapter.dart' // internal API
+    show
+        AppMetricaLibraryAdapter;
+export 'src/models/ad_revenue.dart'
     show
         AppMetricaAdRevenue,
         AppMetricaAdType;
@@ -13,18 +16,18 @@ export 'src/appmetrica.dart'
         AppMetrica,
         setUpErrorHandlingWithAppMetrica, // internal API
         setUpAppMetricaLogger; // internal API
-export 'src/appmetrica_config.dart'
+export 'src/models/appmetrica_config.dart'
     show
         AppMetricaConfig;
-export 'src/deferred_deeplink_result.dart'
+export 'src/models/deferred_deeplink_result.dart'
     show
         AppMetricaDeferredDeeplinkRequestException,
         AppMetricaDeferredDeeplinkErrorReason;
-export 'src/device_id_result.dart'
+export 'src/models/device_id_result.dart'
     show
         AppMetricaDeviceIdRequestException,
         AppMetricaDeviceIdErrorReason;
-export 'src/ecommerce.dart'
+export 'src/models/ecommerce.dart'
     show
         AppMetricaECommerceAmount,
         AppMetricaECommerceProduct,
@@ -33,37 +36,35 @@ export 'src/ecommerce.dart'
         AppMetricaECommerceScreen,
         AppMetricaECommerceCartItem,
         AppMetricaECommerceOrder,
-        AppMetricaECommerce;
-export 'src/ecommerce_event.dart'
-    show
+        AppMetricaECommerce,
         AppMetricaECommerceEvent;
-export 'src/error_description.dart'
+export 'src/models/error_description.dart'
     show
         AppMetricaErrorDescription;
-export 'src/location.dart'
+export 'src/models/location.dart'
     show
         AppMetricaLocation;
-export 'src/preload_info.dart'
+export 'src/models/preload_info.dart'
     show
         AppMetricaPreloadInfo;
-export 'src/reporter/reporter_config.dart'
+export 'src/models/reporter_config.dart'
     show
         AppMetricaReporterConfig;
-export 'src/revenue.dart'
+export 'src/models/revenue.dart'
     show
         AppMetricaRevenue,
         AppMetricaReceipt;
-export 'src/reporter/reporter.dart'
+export 'src/reporter.dart'
     show
         AppMetricaReporter;
-export 'src/startup_params.dart'
+export 'src/models/startup_params.dart'
     show
         AppMetricaStartupParamsItemStatus,
         AppMetricaStartupParamsItem,
         AppMetricaStartupParamsResult,
         AppMetricaStartupParamsReason,
         AppMetricaStartupParams;
-export 'src/profile/attribute.dart'
+export 'src/models/profile.dart'
     show
         AppMetricaBirthDateAttribute,
         AppMetricaBooleanAttribute,
@@ -75,6 +76,6 @@ export 'src/profile/attribute.dart'
         AppMetricaNumberAttribute,
         AppMetricaStringAttribute,
         AppMetricaUserProfile;
-export 'src/external_attribution.dart'
+export 'src/models/external_attribution.dart'
     show
         AppMetricaExternalAttribution;

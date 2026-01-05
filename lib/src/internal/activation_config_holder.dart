@@ -1,5 +1,5 @@
-import 'appmetrica_api_pigeon.dart';
-import 'appmetrica_config.dart';
+import '../platform/pigeon/appmetrica_api_pigeon.dart';
+import '../models/appmetrica_config.dart';
 
 class AppMetricaActivationConfigHolder {
   AppMetricaActivationConfigHolder._();

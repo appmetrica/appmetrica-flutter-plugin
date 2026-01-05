@@ -1,8 +1,8 @@
-import '../ad_revenue.dart';
-import '../ecommerce_event.dart';
-import '../error_description.dart';
-import '../profile/attribute.dart';
-import '../revenue.dart';
+import 'models/ad_revenue.dart';
+import 'models/ecommerce.dart';
+import 'models/error_description.dart';
+import 'models/profile.dart';
+import 'models/revenue.dart';
 
 abstract class AppMetricaReporter {
   Future<void> clearAppEnvironment();

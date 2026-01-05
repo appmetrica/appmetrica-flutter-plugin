@@ -1,7 +1,5 @@
 import 'package:decimal/decimal.dart';
 
-import 'ecommerce_event.dart';
-
 /// Class with cost information. You can set:
 /// * [amount] - quantity of goods, numeric value;
 /// * [currency] — units of measurement.
@@ -114,6 +112,68 @@ class AppMetricaECommerceOrder {
       {required this.identifier, required this.items, this.payload});
 }
 
+/// E-Commerce event for reporting to AppMetrica.
+class AppMetricaECommerceEvent {
+  static const String _showScreenEventType = "show_screen_event";
+  static const String _showProductCardEventType = "show_product_card_event";
+  static const String _showProductDetailsEventType = "show_product_details_event";
+  static const String _addCartItemEventType = "add_cart_item_event";
+  static const String _removeCartItemEventType = "remove_cart_item_event";
+  static const String _beginCheckoutEventType = "begin_checkout_event";
+  static const String _purchaseEventType = "purchase_event";
+
+  final String _eventType;
+  final AppMetricaECommerceCartItem? _cartItem;
+  final AppMetricaECommerceOrder? _order;
+  final AppMetricaECommerceProduct? _product;
+  final AppMetricaECommerceReferrer? _referrer;
+  final AppMetricaECommerceScreen? _screen;
+
+  AppMetricaECommerceEvent._(this._eventType, this._cartItem, this._order,
+      this._product, this._referrer, this._screen);
+
+  AppMetricaECommerceEvent._showScreenEvent(AppMetricaECommerceScreen screen)
+      : this._(_showScreenEventType, null, null, null, null, screen);
+
+  AppMetricaECommerceEvent._showProductCardEvent(
+      AppMetricaECommerceProduct product, AppMetricaECommerceScreen screen)
+      : this._(_showProductCardEventType, null, null, product, null, screen);
+
+  AppMetricaECommerceEvent._showProductDetailsEvent(
+      AppMetricaECommerceProduct product, AppMetricaECommerceReferrer? referrer)
+      : this._(_showProductDetailsEventType, null, null, product, referrer, null);
+
+  AppMetricaECommerceEvent._addCartItemEvent(AppMetricaECommerceCartItem cartItem)
+      : this._(_addCartItemEventType, cartItem, null, null, null, null);
+
+  AppMetricaECommerceEvent._removeCartItemEvent(AppMetricaECommerceCartItem cartItem)
+      : this._(_removeCartItemEventType, cartItem, null, null, null, null);
+
+  AppMetricaECommerceEvent._beginCheckoutEvent(AppMetricaECommerceOrder order)
+      : this._(_beginCheckoutEventType, null, order, null, null, null);
+
+  AppMetricaECommerceEvent._purchaseEvent(AppMetricaECommerceOrder order)
+      : this._(_purchaseEventType, null, order, null, null, null);
+
+  /// Event type identifier. Used by converters.
+  String get eventType => _eventType;
+
+  /// Cart item for cart events. Used by converters.
+  AppMetricaECommerceCartItem? get cartItem => _cartItem;
+
+  /// Order for checkout/purchase events. Used by converters.
+  AppMetricaECommerceOrder? get order => _order;
+
+  /// Product for product-related events. Used by converters.
+  AppMetricaECommerceProduct? get product => _product;
+
+  /// Referrer for product details events. Used by converters.
+  AppMetricaECommerceReferrer? get referrer => _referrer;
+
+  /// Screen for screen/product card events. Used by converters.
+  AppMetricaECommerceScreen? get screen => _screen;
+}
+
 /// Class for creating E-Commerce events of various types.
 class AppMetricaECommerce {
   AppMetricaECommerce._();
@@ -122,7 +182,7 @@ class AppMetricaECommerce {
   ///
   /// Use it to inform about the opening of a page, for example: a list of products, a search, the main page.
   static AppMetricaECommerceEvent showScreenEvent(AppMetricaECommerceScreen screen) {
-    return ECommerceConstructors.showScreenEvent(screen);
+    return AppMetricaECommerceEvent._showScreenEvent(screen);
   }
 
   /// Creates an E-Commerce event ShowProductCardEvent.
@@ -130,7 +190,7 @@ class AppMetricaECommerce {
   /// Use it to report the viewing of the product card among others in the list.
   static AppMetricaECommerceEvent showProductCardEvent(
       AppMetricaECommerceProduct product, AppMetricaECommerceScreen screen) {
-    return ECommerceConstructors.showProductCardEvent(product, screen);
+    return AppMetricaECommerceEvent._showProductCardEvent(product, screen);
   }
 
   /// Creates an E-Commerce event ShowProductDetailsEvent.
@@ -138,34 +198,34 @@ class AppMetricaECommerce {
   /// Use it to report a product page view.
   static AppMetricaECommerceEvent showProductDetailsEvent(
       AppMetricaECommerceProduct product, AppMetricaECommerceReferrer? referrer) {
-    return ECommerceConstructors.showProductDetailsEvent(product, referrer);
+    return AppMetricaECommerceEvent._showProductDetailsEvent(product, referrer);
   }
 
   /// Creates an E-Commerce event AddCartItemEvent.
   ///
   /// Use it to inform about the addition of an item to the cart.
   static AppMetricaECommerceEvent addCartItemEvent(AppMetricaECommerceCartItem cartItem) {
-    return ECommerceConstructors.addCartItemEvent(cartItem);
+    return AppMetricaECommerceEvent._addCartItemEvent(cartItem);
   }
 
   /// Creates E-Commerce RemoveCartItemEvent events.
-
+  ///
   /// Use it to report the removal of an item from the cart.
   static AppMetricaECommerceEvent removeCartItemEvent(AppMetricaECommerceCartItem cartItem) {
-    return ECommerceConstructors.removeCartItemEvent(cartItem);
+    return AppMetricaECommerceEvent._removeCartItemEvent(cartItem);
   }
 
   /// Creates E-Commerce events BeginCheckoutEvent.
-
+  ///
   /// Use it to inform about the start of the purchase.
   static AppMetricaECommerceEvent beginCheckoutEvent(AppMetricaECommerceOrder order) {
-    return ECommerceConstructors.beginCheckoutEvent(order);
+    return AppMetricaECommerceEvent._beginCheckoutEvent(order);
   }
 
   /// Creates E-Commerce PurchaseEvent events.
-
+  ///
   /// Use it to inform about the completion of the purchase.
   static AppMetricaECommerceEvent purchaseEvent(AppMetricaECommerceOrder order) {
-    return ECommerceConstructors.purchaseEvent(order);
+    return AppMetricaECommerceEvent._purchaseEvent(order);
   }
 }

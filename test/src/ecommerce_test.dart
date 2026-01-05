@@ -1,6 +1,6 @@
-import 'package:appmetrica_plugin/src/ecommerce.dart';
-import 'package:appmetrica_plugin/src/ecommerce_event.dart';
-import 'package:appmetrica_plugin/src/appmetrica_api_pigeon.dart';
+import 'package:appmetrica_plugin/src/models/ecommerce.dart';
+import 'package:appmetrica_plugin/src/platform/converters/ecommerce_converter.dart';
+import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

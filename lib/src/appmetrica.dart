@@ -5,24 +5,35 @@ import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
-import 'activation_config_holder.dart';
-import 'ad_revenue.dart';
-import 'appmetrica_api_pigeon.dart';
-import 'appmetrica_config.dart';
-import 'deferred_deeplink_result.dart';
-import 'ecommerce_event.dart';
-import 'error_description.dart';
-import 'external_attribution.dart';
-import 'location.dart';
-import 'logging.dart';
-import 'pigeon_converter.dart';
-import 'profile/attribute.dart';
-import 'reporter/reporter.dart';
-import 'reporter/reporter_config.dart';
-import 'reporter/reporter_storage.dart';
-import 'revenue.dart';
-import 'startup_params.dart';
-import 'to_dart_converter.dart';
+import 'internal/activation_config_holder.dart';
+import 'internal/reporter_storage.dart';
+import 'internal/service_locator.dart';
+import 'internal/utils.dart';
+import 'models/ad_revenue.dart';
+import 'models/appmetrica_config.dart';
+import 'models/deferred_deeplink_result.dart';
+import 'models/ecommerce.dart';
+import 'models/error_description.dart';
+import 'models/external_attribution.dart';
+import 'models/location.dart';
+import 'models/profile.dart';
+import 'models/reporter_config.dart';
+import 'models/revenue.dart';
+import 'models/startup_params.dart';
+import 'platform/converters/ad_revenue_converter.dart';
+import 'platform/converters/appmetrica_config_converter.dart';
+import 'platform/converters/deferred_deeplink_result_converter.dart';
+import 'platform/converters/ecommerce_converter.dart';
+import 'platform/converters/error_description_converter.dart';
+import 'platform/converters/external_attribution_converter.dart';
+import 'platform/converters/location_converter.dart';
+import 'platform/converters/profile_converter.dart';
+import 'platform/converters/reporter_config_converter.dart';
+import 'platform/converters/revenue_converter.dart';
+import 'platform/converters/startup_params_converter.dart';
+import 'platform/pigeon/appmetrica_api_pigeon.dart';
+import 'platform/platform_bridge.dart';
+import 'reporter.dart';
 
 /// The class contains methods for working with the library.
 class AppMetrica {
@@ -30,18 +41,20 @@ class AppMetrica {
 
   static final _reporterStorage = ReporterStorage();
 
-  static final AppMetricaPigeon _appMetrica = AppMetricaPigeon();
+  static PlatformBridge get _platform => AppMetricaServiceLocator.platformBridge;
 
-  static final _logger = Logger("$appMetricaRootLoggerName.MainFacade");
+  static const _appMetricaRootLoggerName = "AppMetricaPlugin";
+
+  static final _logger = Logger("$_appMetricaRootLoggerName.MainFacade");
 
   /// Initializes the library in the application with the initial configuration [config].
   static Future<void> activate(AppMetricaConfig config) async {
     if (config.logs == true) {
-      setUpAppMetricaLogger(appMetricaRootLogger);
+      setUpAppMetricaLogger(Logger(_appMetricaRootLoggerName));
     }
     setUpErrorHandlingWithAppMetrica(config);
     var activationCompleter = AppMetricaActivationCompleter(config);
-    return _appMetrica.activate(config.toPigeon()).then(
+    return _platform.activate(config.toPigeon()).then(
         activationCompleter.complete,
         onError: activationCompleter.onError
     );
@@ -51,40 +64,40 @@ class AppMetrica {
   ///
   /// The reporter must be activated with a configuration that contains an API key different from the API key of the application.
   static Future<void> activateReporter(AppMetricaReporterConfig config) =>
-      _appMetrica.activateReporter(config.toPigeon());
+      _platform.activateReporter(config.toPigeon());
 
   static Future<void> clearAppEnvironment() =>
-      _appMetrica.clearAppEnvironment();
+      _platform.clearAppEnvironment();
 
   static Future<void> enableActivityAutoTracking() =>
-      _appMetrica.enableActivityAutoTracking();
+      _platform.enableActivityAutoTracking();
 
   /// Returns deviceId
-  static Future<String?> get deviceId => _appMetrica.getDeviceId();
+  static Future<String?> get deviceId => _platform.getDeviceId();
 
   /// Returns the API level of the library (Android).
-  static Future<int> get libraryApiLevel => _appMetrica.getLibraryApiLevel();
+  static Future<int> get libraryApiLevel => _platform.getLibraryApiLevel();
 
   /// Returns the current version of the AppMetrica library.
-  static Future<String> get libraryVersion => _appMetrica.getLibraryVersion();
+  static Future<String> get libraryVersion => _platform.getLibraryVersion();
 
   /// Returns an object that implements the Reporter interface for the specified [apiKey].
   ///
   /// Used to send statistics using an API key different from the app's API key.
   static AppMetricaReporter getReporter(String apiKey) {
-    _appMetrica.touchReporter(apiKey).ignore();
+    _platform.touchReporter(apiKey).ignore();
     return _reporterStorage.getReporter(apiKey);
   }
 
-  static Future<String?> get uuid => _appMetrica.getUuid();
+  static Future<String?> get uuid => _platform.getUuid();
 
   /// Suspends the current foreground session.
   ///
   /// Use the method only when session auto-tracking is disabled [AppMetricaConfig.sessionsAutoTracking].
-  static Future<void> pauseSession() => _appMetrica.pauseSession();
+  static Future<void> pauseSession() => _platform.pauseSession();
 
   static Future<void> putAppEnvironmentValue(String key, String? value) {
-    return _appMetrica.putAppEnvironmentValue(key, value);
+    return _platform.putAppEnvironmentValue(key, value);
   }
 
   /// Adds a [key]-[value] pair to or deletes it from the application error environment. The environment is shown in the crash and error report.
@@ -95,76 +108,76 @@ class AppMetrica {
   /// * Total size (sum {len(key) + len(value)} for (key, value) in error_environment) - 4500 characters.
   /// * If a new pair exceeds the total size, it will be ignored.
   static Future<void> putErrorEnvironmentValue(String key, String? value) =>
-      _appMetrica.putErrorEnvironmentValue(key, value);
+      _platform.putErrorEnvironmentValue(key, value);
 
   /// Sends information about ad revenue.
   static Future<void> reportAdRevenue(AppMetricaAdRevenue adRevenue) =>
-      _appMetrica.reportAdRevenue(adRevenue.toPigeon());
+      _platform.reportAdRevenue(adRevenue.toPigeon());
 
   /// Sends a message about opening the application using [deeplink].
   static Future<void> reportAppOpen(String deeplink) =>
-      _appMetrica.reportAppOpen(deeplink);
+      _platform.reportAppOpen(deeplink);
 
   /// Sends a message about an e-commerce event.
   static Future<void> reportECommerce(AppMetricaECommerceEvent event) =>
-      _appMetrica.reportECommerce(event.toPigeon());
+      _platform.reportECommerce(event.toPigeon());
 
   /// Sends an error message [message] with the description [errorDescription].
   /// If there is no [errorDescription] description, the current stacktrace will be automatically added.
   static Future<void> reportError(
       {String? message, AppMetricaErrorDescription? errorDescription}) =>
-      _appMetrica.reportError(
+      _platform.reportError(
           errorDescription.tryToAddCurrentTrace().toPigeon(), message);
 
   /// Sends an error message with its own identifier [groupId]. Errors in reports are grouped by it.
   static Future<void> reportErrorWithGroup(String groupId,
       {AppMetricaErrorDescription? errorDescription, String? message}) =>
-      _appMetrica.reportErrorWithGroup(
+      _platform.reportErrorWithGroup(
           groupId, errorDescription?.toPigeon(), message);
 
   /// Sends an event message with a short name or description of the event [eventName].
   static Future<void> reportEvent(String eventName) =>
-      _appMetrica.reportEvent(eventName);
+      _platform.reportEvent(eventName);
 
   /// Sends an event message in JSON format [attributesJson] as a string and a short name or description of the event [eventName].
   static Future<void> reportEventWithJson(
       String eventName, String? attributesJson) =>
-      _appMetrica.reportEventWithJson(eventName, attributesJson);
+      _platform.reportEventWithJson(eventName, attributesJson);
 
   /// Sends an event message as a set of attributes [attributes] Map and a short name or description of the event [eventName].
   static Future<void> reportEventWithMap(
       String eventName, Map<String, Object>? attributes) =>
-      _appMetrica.reportEventWithJson(eventName, attributes != null ? jsonEncode(attributes) : null);
+      _platform.reportEventWithJson(eventName, attributes != null ? jsonEncode(attributes) : null);
 
   /// Sets the [referralUrl] of the application installation.
   ///
   /// The method can be used to track some traffic sources.
   static Future<void> reportReferralUrl(String referralUrl) =>
-      _appMetrica.reportReferralUrl(referralUrl);
+      _platform.reportReferralUrl(referralUrl);
 
   /// Sends the purchase information to the AppMetrica server.
   static Future<void> reportRevenue(AppMetricaRevenue revenue) =>
-      _appMetrica.reportRevenue(revenue.toPigeon());
+      _platform.reportRevenue(revenue.toPigeon());
 
   /// Sends an event with an unhandled exception [errorDescription].
   static Future<void> reportUnhandledException(
       AppMetricaErrorDescription errorDescription) =>
-      _appMetrica.reportUnhandledException(errorDescription.toPigeon());
+      _platform.reportUnhandledException(errorDescription.toPigeon());
 
   /// Sends information about updating the user profile using the [userProfile] parameter.
   static Future<void> reportUserProfile(AppMetricaUserProfile userProfile) =>
-      _appMetrica.reportUserProfile(userProfile.toPigeon());
+      _platform.reportUserProfile(userProfile.toPigeon());
 
   /// Requests a deferred deeplink.
   ///
   /// Relevant only for Android. For iOS, it returns the unknown error.
   static Future<String> requestDeferredDeeplink() =>
-      _appMetrica.requestDeferredDeeplink().then((value) {
+      _platform.requestDeferredDeeplink().then((value) {
         final error = value.error;
         if (error != null &&
             error.reason != AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR) {
           throw AppMetricaDeferredDeeplinkRequestException(
-              _deferredDeeplinkErrorToDart(error.reason),
+              error.reason.toDart(),
               error.description,
               error.message);
         } else if (value.deeplink == null) {
@@ -181,12 +194,12 @@ class AppMetrica {
   ///
   /// Relevant only for Android. For iOS, it returns the unknown error.
   static Future<Map<String, String>> requestDeferredDeeplinkParameters() =>
-      _appMetrica.requestDeferredDeeplinkParameters().then((value) {
+      _platform.requestDeferredDeeplinkParameters().then((value) {
         final error = value.error;
         if (error != null &&
             error.reason != AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR) {
           throw AppMetricaDeferredDeeplinkRequestException(
-              _deferredDeeplinkErrorToDart(error.reason),
+              error.reason.toDart(),
               error.description,
               error.message);
         } else if (value.parameters == null) {
@@ -204,45 +217,45 @@ class AppMetrica {
   ///
   /// Possible values of params can be found in [AppMetricaStartupParams] class.
   static Future<AppMetricaStartupParams> requestStartupParams(List<String>? params)  =>
-      _appMetrica.requestStartupParams(params ?? [])
+      _platform.requestStartupParams(params ?? [])
           .then((value) => value.toDart());
 
   /// Resumes the foreground session or creates a new one if the session timeout has expired.
   ///
   /// Use the method only when session auto-tracking is disabled [AppMetricaConfig.sessionsAutoTracking].
-  static Future<void> resumeSession() => _appMetrica.resumeSession();
+  static Future<void> resumeSession() => _platform.resumeSession();
 
   /// Sends saved events from the buffer.
-  static Future<void> sendEventsBuffer() => _appMetrica.sendEventsBuffer();
+  static Future<void> sendEventsBuffer() => _platform.sendEventsBuffer();
 
   /// Enables/disables including advertising identifiers like GAID, Huawei OAID within its reports.
-  static Future<void> setAdvIdentifiersTracking(bool enabled) => _appMetrica.setAdvIdentifiersTracking(enabled);
+  static Future<void> setAdvIdentifiersTracking(bool enabled) => _platform.setAdvIdentifiersTracking(enabled);
 
   /// Enables/disables sending statistics to the AppMetrica server.
   ///
   /// Disabling sending for the main API key also disables sending data from all reporters
   /// that were initialized with another API key.
   static Future<void> setDataSendingEnabled(bool enabled) =>
-      _appMetrica.setDataSendingEnabled(enabled);
+      _platform.setDataSendingEnabled(enabled);
 
   /// Sets its own device location information using the [location] parameter.
   static Future<void> setLocation(AppMetricaLocation? location) =>
-      _appMetrica.setLocation(location?.toPigeon());
+      _platform.setLocation(location?.toPigeon());
 
   /// Enables/disables sending device location information using the [enabled].
   /// The default value for Android is false, for iOS is true.
   static Future<void> setLocationTracking(bool enabled) =>
-      _appMetrica.setLocationTracking(enabled);
+      _platform.setLocationTracking(enabled);
 
   /// Sets the ID for the user profile using the [userProfileID] parameter.
   ///
   /// If Profile Id sending is not configured, predefined attributes are not displayed in the web interface.
   static Future<void> setUserProfileID(String? userProfileID) =>
-      _appMetrica.setUserProfileID(userProfileID);
+      _platform.setUserProfileID(userProfileID);
 
   static Future<void> reportExternalAttribution(
       AppMetricaExternalAttribution externalAttribution) =>
-      _appMetrica.reportExternalAttribution(externalAttribution.toPigeon());
+      _platform.reportExternalAttribution(externalAttribution.toPigeon());
 
   // utilitary methods
 
@@ -255,7 +268,7 @@ class AppMetrica {
     }, (Object err, StackTrace stack) {
       _logger.warning("error caught by Zone", err, stack);
       if (AppMetricaActivationConfigHolder.lastActivationConfig != null) {
-        _appMetrica.reportUnhandledException(convertErrorDetails(
+        _platform.reportUnhandledException(convertErrorDetails(
             err.runtimeType.toString(),
             err.toString(),
             stack
@@ -278,7 +291,7 @@ void setUpErrorHandlingWithAppMetrica(AppMetricaConfig config) {
   final prev = FlutterError.onError;
   FlutterError.onError = (FlutterErrorDetails details) async {
     AppMetrica._logger.warning("error caught by handler ${details.summary}", details.exception, details.stack);
-    await AppMetrica._appMetrica.reportUnhandledException(convertErrorDetails(
+    await AppMetrica._platform.reportUnhandledException(convertErrorDetails(
         details.exception.runtimeType.toString(),
         details.summary.toString(),
         details.stack));
@@ -301,20 +314,4 @@ void setUpAppMetricaLogger(Logger logger) {
         zone: event.zone,
         level: event.level.value);
   });
-}
-
-AppMetricaDeferredDeeplinkErrorReason _deferredDeeplinkErrorToDart(
-    AppMetricaDeferredDeeplinkReasonPigeon error) {
-  switch (error) {
-    case AppMetricaDeferredDeeplinkReasonPigeon.NOT_A_FIRST_LAUNCH:
-      return AppMetricaDeferredDeeplinkErrorReason.notAFirstLaunch;
-    case AppMetricaDeferredDeeplinkReasonPigeon.PARSE_ERROR:
-      return AppMetricaDeferredDeeplinkErrorReason.parseError;
-    case AppMetricaDeferredDeeplinkReasonPigeon.UNKNOWN:
-      return AppMetricaDeferredDeeplinkErrorReason.unknown;
-    case AppMetricaDeferredDeeplinkReasonPigeon.NO_REFERRER:
-      return AppMetricaDeferredDeeplinkErrorReason.noReferrer;
-    default:
-      return AppMetricaDeferredDeeplinkErrorReason.unknown;
-  }
 }

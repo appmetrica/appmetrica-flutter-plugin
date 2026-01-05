@@ -1,5 +1,5 @@
-import 'appmetrica_api_pigeon.dart';
-import 'startup_params.dart';
+import '../../models/startup_params.dart';
+import '../pigeon/appmetrica_api_pigeon.dart';
 
 extension StartupParamsItemStatusConverter on StartupParamsItemStatusPigeon {
   AppMetricaStartupParamsItemStatus toDart() {

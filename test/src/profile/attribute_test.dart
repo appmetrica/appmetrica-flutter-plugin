@@ -1,5 +1,6 @@
-import 'package:appmetrica_plugin/src/appmetrica_api_pigeon.dart';
-import 'package:appmetrica_plugin/src/profile/attribute.dart';
+import 'package:appmetrica_plugin/src/models/profile.dart';
+import 'package:appmetrica_plugin/src/platform/converters/profile_converter.dart';
+import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _UserProfileMatcher extends Matcher {

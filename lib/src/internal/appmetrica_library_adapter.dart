@@ -1,4 +1,4 @@
-import 'appmetrica_api_pigeon.dart';
+import '../platform/pigeon/appmetrica_api_pigeon.dart';
 
 class AppMetricaLibraryAdapter {
   AppMetricaLibraryAdapter._();
