@@ -90,6 +90,24 @@ class AppMetricaStringAttribute extends _ValueAttribute<String> {
   AppMetricaStringAttribute.withValueReset(key) : super(key, null, false, true);
 }
 
+class AppMetricaPhoneHashAttribute extends UserProfileAttribute {
+  final List<String?>? values;
+
+  AppMetricaPhoneHashAttribute.withPhoneValues(this.values);
+}
+
+class AppMetricaEmailHashAttribute extends UserProfileAttribute {
+  final List<String?>? values;
+
+  AppMetricaEmailHashAttribute.withEmailValues(this.values);
+}
+
+class AppMetricaTelegramLoginHashAttribute extends UserProfileAttribute {
+  final List<String?>? values;
+
+  AppMetricaTelegramLoginHashAttribute.withTelegramLoginValues(this.values);
+}
+
 class AppMetricaUserProfile {
   final List<UserProfileAttribute> attributes;
 

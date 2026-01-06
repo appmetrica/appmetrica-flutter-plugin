@@ -895,6 +895,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     day:(nullable NSNumber *)day
     age:(nullable NSNumber *)age
     genderValue:(AMAFGenderPigeon)genderValue
+    stringValues:(nullable NSArray<NSString *> *)stringValues
     ifUndefined:(nullable NSNumber *)ifUndefined
     reset:(nullable NSNumber *)reset
     type:(AMAFUserProfileAttributeType)type {
@@ -908,6 +909,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   pigeonResult.day = day;
   pigeonResult.age = age;
   pigeonResult.genderValue = genderValue;
+  pigeonResult.stringValues = stringValues;
   pigeonResult.ifUndefined = ifUndefined;
   pigeonResult.reset = reset;
   pigeonResult.type = type;
@@ -925,9 +927,10 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   pigeonResult.day = GetNullableObjectAtIndex(list, 6);
   pigeonResult.age = GetNullableObjectAtIndex(list, 7);
   pigeonResult.genderValue = [GetNullableObjectAtIndex(list, 8) integerValue];
-  pigeonResult.ifUndefined = GetNullableObjectAtIndex(list, 9);
-  pigeonResult.reset = GetNullableObjectAtIndex(list, 10);
-  pigeonResult.type = [GetNullableObjectAtIndex(list, 11) integerValue];
+  pigeonResult.stringValues = GetNullableObjectAtIndex(list, 9);
+  pigeonResult.ifUndefined = GetNullableObjectAtIndex(list, 10);
+  pigeonResult.reset = GetNullableObjectAtIndex(list, 11);
+  pigeonResult.type = [GetNullableObjectAtIndex(list, 12) integerValue];
   return pigeonResult;
 }
 + (nullable AMAFUserProfileAttributePigeon *)nullableFromList:(NSArray *)list {
@@ -944,6 +947,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     (self.day ?: [NSNull null]),
     (self.age ?: [NSNull null]),
     @(self.genderValue),
+    (self.stringValues ?: [NSNull null]),
     (self.ifUndefined ?: [NSNull null]),
     (self.reset ?: [NSNull null]),
     @(self.type),

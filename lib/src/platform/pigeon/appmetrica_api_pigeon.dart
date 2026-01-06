@@ -25,6 +25,9 @@ enum UserProfileAttributeType {
   NOTIFICATION_ENABLED,
   NUMBER,
   STRING,
+  PHONE_HASH,
+  EMAIL_HASH,
+  TELEGRAM_LOGIN_HASH,
 }
 
 enum GenderPigeon {
@@ -841,6 +844,7 @@ class UserProfileAttributePigeon {
     this.day,
     this.age,
     this.genderValue,
+    this.stringValues,
     this.ifUndefined,
     this.reset,
     this.type,
@@ -864,6 +868,8 @@ class UserProfileAttributePigeon {
 
   GenderPigeon? genderValue;
 
+  List<String?>? stringValues;
+
   bool? ifUndefined;
 
   bool? reset;
@@ -881,6 +887,7 @@ class UserProfileAttributePigeon {
       day,
       age,
       genderValue?.index,
+      stringValues,
       ifUndefined,
       reset,
       type?.index,
@@ -901,10 +908,11 @@ class UserProfileAttributePigeon {
       genderValue: result[8] != null
           ? GenderPigeon.values[result[8]! as int]
           : null,
-      ifUndefined: result[9] as bool?,
-      reset: result[10] as bool?,
-      type: result[11] != null
-          ? UserProfileAttributeType.values[result[11]! as int]
+      stringValues: (result[9] as List<Object?>?)?.cast<String?>(),
+      ifUndefined: result[10] as bool?,
+      reset: result[11] as bool?,
+      type: result[12] != null
+          ? UserProfileAttributeType.values[result[12]! as int]
           : null,
     );
   }

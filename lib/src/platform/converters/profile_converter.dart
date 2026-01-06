@@ -18,6 +18,9 @@ extension UserProfileAttributeConverter on UserProfileAttribute {
     if (attr is AppMetricaBooleanAttribute) return attr._toPigeon();
     if (attr is AppMetricaNumberAttribute) return attr._toPigeon();
     if (attr is AppMetricaStringAttribute) return attr._toPigeon();
+    if (attr is AppMetricaPhoneHashAttribute) return attr._toPigeon();
+    if (attr is AppMetricaEmailHashAttribute) return attr._toPigeon();
+    if (attr is AppMetricaTelegramLoginHashAttribute) return attr._toPigeon();
     throw UnimplementedError('Unknown attribute type: $runtimeType');
   }
 }
@@ -94,6 +97,24 @@ extension on AppMetricaStringAttribute {
     ..stringValue = value
     ..ifUndefined = ifUndefined
     ..reset = reset;
+}
+
+extension on AppMetricaPhoneHashAttribute {
+  UserProfileAttributePigeon _toPigeon() => UserProfileAttributePigeon(key: "")
+    ..type = UserProfileAttributeType.PHONE_HASH
+    ..stringValues = values;
+}
+
+extension on AppMetricaEmailHashAttribute {
+  UserProfileAttributePigeon _toPigeon() => UserProfileAttributePigeon(key: "")
+    ..type = UserProfileAttributeType.EMAIL_HASH
+    ..stringValues = values;
+}
+
+extension on AppMetricaTelegramLoginHashAttribute {
+  UserProfileAttributePigeon _toPigeon() => UserProfileAttributePigeon(key: "")
+    ..type = UserProfileAttributeType.TELEGRAM_LOGIN_HASH
+    ..stringValues = values;
 }
 
 const _genderToPigeon = {

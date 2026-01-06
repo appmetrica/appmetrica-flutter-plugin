@@ -27,6 +27,9 @@ typedef NS_ENUM(NSUInteger, AMAFUserProfileAttributeType) {
   AMAFUserProfileAttributeTypeNOTIFICATION_ENABLED = 5,
   AMAFUserProfileAttributeTypeNUMBER = 6,
   AMAFUserProfileAttributeTypeSTRING = 7,
+  AMAFUserProfileAttributeTypePHONE_HASH = 8,
+  AMAFUserProfileAttributeTypeEMAIL_HASH = 9,
+  AMAFUserProfileAttributeTypeTELEGRAM_LOGIN_HASH = 10,
 };
 
 typedef NS_ENUM(NSUInteger, AMAFGenderPigeon) {
@@ -360,6 +363,7 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
     day:(nullable NSNumber *)day
     age:(nullable NSNumber *)age
     genderValue:(AMAFGenderPigeon)genderValue
+    stringValues:(nullable NSArray<NSString *> *)stringValues
     ifUndefined:(nullable NSNumber *)ifUndefined
     reset:(nullable NSNumber *)reset
     type:(AMAFUserProfileAttributeType)type;
@@ -372,6 +376,7 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
 @property(nonatomic, strong, nullable) NSNumber * day;
 @property(nonatomic, strong, nullable) NSNumber * age;
 @property(nonatomic, assign) AMAFGenderPigeon genderValue;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * stringValues;
 @property(nonatomic, strong, nullable) NSNumber * ifUndefined;
 @property(nonatomic, strong, nullable) NSNumber * reset;
 @property(nonatomic, assign) AMAFUserProfileAttributeType type;

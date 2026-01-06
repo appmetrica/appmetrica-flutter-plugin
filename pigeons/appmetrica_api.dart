@@ -173,6 +173,9 @@ enum UserProfileAttributeType {
   NOTIFICATION_ENABLED,
   NUMBER,
   STRING,
+  PHONE_HASH,
+  EMAIL_HASH,
+  TELEGRAM_LOGIN_HASH,
 }
 
 enum GenderPigeon {
@@ -192,6 +195,7 @@ class UserProfileAttributePigeon {
   final int? day;
   final int? age;
   final GenderPigeon? genderValue;
+  final List<String?>? stringValues;
   final bool? ifUndefined;
   final bool? reset;
   final UserProfileAttributeType? type;

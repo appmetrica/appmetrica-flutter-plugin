@@ -69,12 +69,15 @@ export 'src/models/profile.dart'
         AppMetricaBirthDateAttribute,
         AppMetricaBooleanAttribute,
         AppMetricaCounterAttribute,
-        AppMetricaGenderAttribute,
+        AppMetricaEmailHashAttribute,
         AppMetricaGender,
+        AppMetricaGenderAttribute,
         AppMetricaNameAttribute,
         AppMetricaNotificationEnabledAttribute,
         AppMetricaNumberAttribute,
+        AppMetricaPhoneHashAttribute,
         AppMetricaStringAttribute,
+        AppMetricaTelegramLoginHashAttribute,
         AppMetricaUserProfile;
 export 'src/models/external_attribution.dart'
     show

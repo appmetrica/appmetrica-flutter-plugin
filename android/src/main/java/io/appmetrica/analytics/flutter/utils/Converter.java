@@ -31,6 +31,7 @@ import io.appmetrica.analytics.profile.UserProfile;
 import io.appmetrica.analytics.profile.UserProfileUpdate;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
@@ -475,6 +476,26 @@ public class Converter {
                         }
                         break;
                     }
+
+                    case PHONE_HASH: {
+                        final List<String> values = attributePigeon.getStringValues();
+                        userProfileUpdates.add(Attribute.phoneHash().withPhoneValues(filterNonNull(values)));
+                        break;
+                    }
+
+                    case EMAIL_HASH: {
+                        final List<String> values = attributePigeon.getStringValues();
+                        userProfileUpdates.add(Attribute.emailHash().withEmailValues(filterNonNull(values)));
+                        break;
+                    }
+
+                    case TELEGRAM_LOGIN_HASH: {
+                        final List<String> values = attributePigeon.getStringValues();
+                        userProfileUpdates.add(
+                            Attribute.telegramLoginHash().withTelegramLoginValues(filterNonNull(values))
+                        );
+                        break;
+                    }
                 }
             }
         }
@@ -762,5 +783,20 @@ public class Converter {
             externalAttributionSourceMapping.get(pigeon.getSource()),
             new JSONObject(pigeon.getData()).toString()
         );
+    }
+
+    @NonNull
+    private static List<String> filterNonNull(@Nullable List<String> list) {
+        if (list == null) {
+            return Collections.emptyList();
+        }
+
+        final List<String> nonNullValues = new ArrayList<>();
+        for (final String value : list) {
+            if (value != null) {
+                nonNullValues.add(value);
+            }
+        }
+        return nonNullValues;
     }
 }

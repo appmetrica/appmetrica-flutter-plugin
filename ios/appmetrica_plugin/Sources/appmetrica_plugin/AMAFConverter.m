@@ -448,6 +448,18 @@ static NSString *const kAMAFDeviceIdHashRealKey = @"appmetrica_device_id_hash";
                 }
                 break;
             }
+            case AMAFUserProfileAttributeTypePHONE_HASH: {
+                profileUpdate = [[AMAProfileAttribute phoneHash] withPhoneValues:attribute.stringValues];
+                break;
+            }
+            case AMAFUserProfileAttributeTypeEMAIL_HASH: {
+                profileUpdate = [[AMAProfileAttribute emailHash] withEmailValues:attribute.stringValues];
+                break;
+            }
+            case AMAFUserProfileAttributeTypeTELEGRAM_LOGIN_HASH: {
+                profileUpdate = [[AMAProfileAttribute telegramLoginHash] withTelegramLoginValues:attribute.stringValues];
+                break;
+            }
         }
 
         if (profileUpdate != nil) {

@@ -79,7 +79,10 @@ public class Pigeon {
     NAME(4),
     NOTIFICATION_ENABLED(5),
     NUMBER(6),
-    STRING(7);
+    STRING(7),
+    PHONE_HASH(8),
+    EMAIL_HASH(9),
+    TELEGRAM_LOGIN_HASH(10);
 
     final int index;
 
@@ -2667,6 +2670,16 @@ public class Pigeon {
       this.genderValue = setterArg;
     }
 
+    private @Nullable List<String> stringValues;
+
+    public @Nullable List<String> getStringValues() {
+      return stringValues;
+    }
+
+    public void setStringValues(@Nullable List<String> setterArg) {
+      this.stringValues = setterArg;
+    }
+
     private @Nullable Boolean ifUndefined;
 
     public @Nullable Boolean getIfUndefined() {
@@ -2765,6 +2778,13 @@ public class Pigeon {
         return this;
       }
 
+      private @Nullable List<String> stringValues;
+
+      public @NonNull Builder setStringValues(@Nullable List<String> setterArg) {
+        this.stringValues = setterArg;
+        return this;
+      }
+
       private @Nullable Boolean ifUndefined;
 
       public @NonNull Builder setIfUndefined(@Nullable Boolean setterArg) {
@@ -2797,6 +2817,7 @@ public class Pigeon {
         pigeonReturn.setDay(day);
         pigeonReturn.setAge(age);
         pigeonReturn.setGenderValue(genderValue);
+        pigeonReturn.setStringValues(stringValues);
         pigeonReturn.setIfUndefined(ifUndefined);
         pigeonReturn.setReset(reset);
         pigeonReturn.setType(type);
@@ -2806,7 +2827,7 @@ public class Pigeon {
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(12);
+      ArrayList<Object> toListResult = new ArrayList<Object>(13);
       toListResult.add(key);
       toListResult.add(doubleValue);
       toListResult.add(stringValue);
@@ -2816,6 +2837,7 @@ public class Pigeon {
       toListResult.add(day);
       toListResult.add(age);
       toListResult.add(genderValue == null ? null : genderValue.index);
+      toListResult.add(stringValues);
       toListResult.add(ifUndefined);
       toListResult.add(reset);
       toListResult.add(type == null ? null : type.index);
@@ -2842,11 +2864,13 @@ public class Pigeon {
       pigeonResult.setAge((age == null) ? null : ((age instanceof Integer) ? (Integer) age : (Long) age));
       Object genderValue = list.get(8);
       pigeonResult.setGenderValue(genderValue == null ? null : GenderPigeon.values()[(int) genderValue]);
-      Object ifUndefined = list.get(9);
+      Object stringValues = list.get(9);
+      pigeonResult.setStringValues((List<String>) stringValues);
+      Object ifUndefined = list.get(10);
       pigeonResult.setIfUndefined((Boolean) ifUndefined);
-      Object reset = list.get(10);
+      Object reset = list.get(11);
       pigeonResult.setReset((Boolean) reset);
-      Object type = list.get(11);
+      Object type = list.get(12);
       pigeonResult.setType(type == null ? null : UserProfileAttributeType.values()[(int) type]);
       return pigeonResult;
     }
