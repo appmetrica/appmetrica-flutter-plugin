@@ -994,17 +994,17 @@ public class Pigeon {
       this.reason = setterArg;
     }
 
-    private @NonNull String description;
+    private @NonNull String errorDescription;
 
-    public @NonNull String getDescription() {
-      return description;
+    public @NonNull String getErrorDescription() {
+      return errorDescription;
     }
 
-    public void setDescription(@NonNull String setterArg) {
+    public void setErrorDescription(@NonNull String setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"description\" is null.");
+        throw new IllegalStateException("Nonnull field \"errorDescription\" is null.");
       }
-      this.description = setterArg;
+      this.errorDescription = setterArg;
     }
 
     private @Nullable String message;
@@ -1029,10 +1029,10 @@ public class Pigeon {
         return this;
       }
 
-      private @Nullable String description;
+      private @Nullable String errorDescription;
 
-      public @NonNull Builder setDescription(@NonNull String setterArg) {
-        this.description = setterArg;
+      public @NonNull Builder setErrorDescription(@NonNull String setterArg) {
+        this.errorDescription = setterArg;
         return this;
       }
 
@@ -1046,7 +1046,7 @@ public class Pigeon {
       public @NonNull AppMetricaDeferredDeeplinkErrorPigeon build() {
         AppMetricaDeferredDeeplinkErrorPigeon pigeonReturn = new AppMetricaDeferredDeeplinkErrorPigeon();
         pigeonReturn.setReason(reason);
-        pigeonReturn.setDescription(description);
+        pigeonReturn.setErrorDescription(errorDescription);
         pigeonReturn.setMessage(message);
         return pigeonReturn;
       }
@@ -1056,7 +1056,7 @@ public class Pigeon {
     ArrayList<Object> toList() {
       ArrayList<Object> toListResult = new ArrayList<Object>(3);
       toListResult.add(reason == null ? null : reason.index);
-      toListResult.add(description);
+      toListResult.add(errorDescription);
       toListResult.add(message);
       return toListResult;
     }
@@ -1065,8 +1065,8 @@ public class Pigeon {
       AppMetricaDeferredDeeplinkErrorPigeon pigeonResult = new AppMetricaDeferredDeeplinkErrorPigeon();
       Object reason = list.get(0);
       pigeonResult.setReason(reason == null ? null : AppMetricaDeferredDeeplinkReasonPigeon.values()[(int) reason]);
-      Object description = list.get(1);
-      pigeonResult.setDescription((String) description);
+      Object errorDescription = list.get(1);
+      pigeonResult.setErrorDescription((String) errorDescription);
       Object message = list.get(2);
       pigeonResult.setMessage((String) message);
       return pigeonResult;

@@ -57,7 +57,7 @@ class PreloadInfoPigeon {
 
 class AppMetricaDeferredDeeplinkErrorPigeon {
   AppMetricaDeferredDeeplinkReasonPigeon reason;
-  String description;
+  String errorDescription;
   String? message;
 }
 

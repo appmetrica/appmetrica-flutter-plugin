@@ -178,7 +178,7 @@ class AppMetrica {
             error.reason != AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR) {
           throw AppMetricaDeferredDeeplinkRequestException(
               error.reason.toDart(),
-              error.description,
+              error.errorDescription,
               error.message);
         } else if (value.deeplink == null) {
           throw AppMetricaDeferredDeeplinkRequestException(
@@ -200,7 +200,7 @@ class AppMetrica {
             error.reason != AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR) {
           throw AppMetricaDeferredDeeplinkRequestException(
               error.reason.toDart(),
-              error.description,
+              error.errorDescription,
               error.message);
         } else if (value.parameters == null) {
           throw AppMetricaDeferredDeeplinkRequestException(

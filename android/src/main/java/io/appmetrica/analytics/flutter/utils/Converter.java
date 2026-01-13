@@ -711,7 +711,7 @@ public class Converter {
                 .setError(new Pigeon.AppMetricaDeferredDeeplinkErrorPigeon.Builder()
                     .setReason(errorPigeon)
                     .setMessage(messageArg)
-                    .setDescription(errorDescriptionPigeon)
+                    .setErrorDescription(errorDescriptionPigeon)
                     .build()
                 )
                 .build();
@@ -760,7 +760,7 @@ public class Converter {
                 .setError(new Pigeon.AppMetricaDeferredDeeplinkErrorPigeon.Builder()
                     .setReason(errorPigeon)
                     .setMessage(messageArg)
-                    .setDescription(errorDescriptionPigeon)
+                    .setErrorDescription(errorDescriptionPigeon)
                     .build()
                 )
                 .build();

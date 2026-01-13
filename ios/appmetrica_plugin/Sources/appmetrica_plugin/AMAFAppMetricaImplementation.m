@@ -149,7 +149,7 @@
 - (void)requestDeferredDeeplinkWithCompletion:(void(^)(AMAFAppMetricaDeferredDeeplinkPigeon *, FlutterError *))flutterCompletion
 {
     AMAFAppMetricaDeferredDeeplinkErrorPigeon *error = [AMAFAppMetricaDeferredDeeplinkErrorPigeon makeWithReason:AMAFAppMetricaDeferredDeeplinkReasonPigeonUNKNOWN
-                                                                                                     description:@""
+                                                                                                errorDescription:@""
                                                                                                          message:nil];
     flutterCompletion([AMAFAppMetricaDeferredDeeplinkPigeon makeWithDeeplink:nil
                                                                        error:error], nil);
@@ -158,7 +158,7 @@
 - (void)requestDeferredDeeplinkParametersWithCompletion:(void(^)(AMAFAppMetricaDeferredDeeplinkParametersPigeon *, FlutterError *))flutterCompletion
 {
     AMAFAppMetricaDeferredDeeplinkErrorPigeon *error = [AMAFAppMetricaDeferredDeeplinkErrorPigeon makeWithReason:AMAFAppMetricaDeferredDeeplinkReasonPigeonUNKNOWN
-                                                                                                     description:@""
+                                                                                                errorDescription:@""
                                                                                                          message:nil];
     flutterCompletion([AMAFAppMetricaDeferredDeeplinkParametersPigeon makeWithParameters:nil
                                                                                    error:error], nil);

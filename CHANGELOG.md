@@ -1,5 +1,7 @@
 ## 3.5.0
 
+- Fix crash on call `requestDeferredDeeplink`.
+
 ## 3.4.0
 
 - Update AGP version to `8.2.0`.

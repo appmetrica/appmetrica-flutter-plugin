@@ -389,19 +389,19 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 
 @implementation AMAFAppMetricaDeferredDeeplinkErrorPigeon
 + (instancetype)makeWithReason:(AMAFAppMetricaDeferredDeeplinkReasonPigeon)reason
-    description:(NSString *)description
+    errorDescription:(NSString *)errorDescription
     message:(nullable NSString *)message {
   AMAFAppMetricaDeferredDeeplinkErrorPigeon* pigeonResult = [[AMAFAppMetricaDeferredDeeplinkErrorPigeon alloc] init];
   pigeonResult.reason = reason;
-  pigeonResult.description = description;
+  pigeonResult.errorDescription = errorDescription;
   pigeonResult.message = message;
   return pigeonResult;
 }
 + (AMAFAppMetricaDeferredDeeplinkErrorPigeon *)fromList:(NSArray *)list {
   AMAFAppMetricaDeferredDeeplinkErrorPigeon *pigeonResult = [[AMAFAppMetricaDeferredDeeplinkErrorPigeon alloc] init];
   pigeonResult.reason = [GetNullableObjectAtIndex(list, 0) integerValue];
-  pigeonResult.description = GetNullableObjectAtIndex(list, 1);
-  NSAssert(pigeonResult.description != nil, @"");
+  pigeonResult.errorDescription = GetNullableObjectAtIndex(list, 1);
+  NSAssert(pigeonResult.errorDescription != nil, @"");
   pigeonResult.message = GetNullableObjectAtIndex(list, 2);
   return pigeonResult;
 }
@@ -411,7 +411,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList {
   return @[
     @(self.reason),
-    (self.description ?: [NSNull null]),
+    (self.errorDescription ?: [NSNull null]),
     (self.message ?: [NSNull null]),
   ];
 }

@@ -178,10 +178,10 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithReason:(AMAFAppMetricaDeferredDeeplinkReasonPigeon)reason
-    description:(NSString *)description
+    errorDescription:(NSString *)errorDescription
     message:(nullable NSString *)message;
 @property(nonatomic, assign) AMAFAppMetricaDeferredDeeplinkReasonPigeon reason;
-@property(nonatomic, copy) NSString * description;
+@property(nonatomic, copy) NSString * errorDescription;
 @property(nonatomic, copy, nullable) NSString * message;
 @end
 

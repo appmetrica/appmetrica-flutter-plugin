@@ -292,20 +292,20 @@ class PreloadInfoPigeon {
 class AppMetricaDeferredDeeplinkErrorPigeon {
   AppMetricaDeferredDeeplinkErrorPigeon({
     required this.reason,
-    required this.description,
+    required this.errorDescription,
     this.message,
   });
 
   AppMetricaDeferredDeeplinkReasonPigeon reason;
 
-  String description;
+  String errorDescription;
 
   String? message;
 
   Object encode() {
     return <Object?>[
       reason.index,
-      description,
+      errorDescription,
       message,
     ];
   }
@@ -314,7 +314,7 @@ class AppMetricaDeferredDeeplinkErrorPigeon {
     result as List<Object?>;
     return AppMetricaDeferredDeeplinkErrorPigeon(
       reason: AppMetricaDeferredDeeplinkReasonPigeon.values[result[0]! as int],
-      description: result[1]! as String,
+      errorDescription: result[1]! as String,
       message: result[2] as String?,
     );
   }
