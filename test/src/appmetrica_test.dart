@@ -356,7 +356,7 @@ void main() {
         (_) => Future.value(AppMetricaDeferredDeeplinkPigeon(
           error: AppMetricaDeferredDeeplinkErrorPigeon(
             reason: AppMetricaDeferredDeeplinkReasonPigeon.NOT_A_FIRST_LAUNCH,
-            description: 'Not first launch',
+            errorDescription: 'Not first launch',
             message: 'Error message',
           ),
         )),
@@ -398,7 +398,7 @@ void main() {
         (_) => Future.value(AppMetricaDeferredDeeplinkParametersPigeon(
           error: AppMetricaDeferredDeeplinkErrorPigeon(
             reason: AppMetricaDeferredDeeplinkReasonPigeon.NO_REFERRER,
-            description: 'No referrer',
+            errorDescription: 'No referrer',
             message: 'Error',
           ),
         )),
