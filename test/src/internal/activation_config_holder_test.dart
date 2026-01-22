@@ -34,7 +34,7 @@ void main() {
     });
 
     test('setting lastActivationConfig marks as activated', () {
-      const config = AppMetricaConfig('test-api-key');
+      const AppMetricaConfig config = AppMetricaConfig('test-api-key');
 
       AppMetricaActivationConfigHolder.lastActivationConfig = config;
 
@@ -43,7 +43,7 @@ void main() {
     });
 
     test('setting lastActivationConfig to null keeps activated as true', () {
-      const config = AppMetricaConfig('test-api-key');
+      const AppMetricaConfig config = AppMetricaConfig('test-api-key');
       AppMetricaActivationConfigHolder.lastActivationConfig = config;
 
       AppMetricaActivationConfigHolder.lastActivationConfig = null;
@@ -54,11 +54,11 @@ void main() {
 
     test('activationListener is called when config is set', () {
       AppMetricaConfig? receivedConfig;
-      AppMetricaActivationConfigHolder.activationListener = (config) {
+      AppMetricaActivationConfigHolder.activationListener = (AppMetricaConfig? config) {
         receivedConfig = config;
       };
 
-      const config = AppMetricaConfig('listener-test-key');
+      const AppMetricaConfig config = AppMetricaConfig('listener-test-key');
       AppMetricaActivationConfigHolder.lastActivationConfig = config;
 
       expect(receivedConfig, config);
@@ -71,7 +71,7 @@ void main() {
       bool listenerCalled = false;
       AppMetricaConfig? receivedConfig = const AppMetricaConfig('placeholder');
 
-      AppMetricaActivationConfigHolder.activationListener = (config) {
+      AppMetricaActivationConfigHolder.activationListener = (AppMetricaConfig? config) {
         listenerCalled = true;
         receivedConfig = config;
       };
@@ -88,12 +88,12 @@ void main() {
 
   group('AppMetricaActivationCompleter', () {
     test('complete sets lastActivationConfig', () async {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'completer-test-key',
         sessionsAutoTrackingEnabled: false,
         appOpenTrackingEnabled: false,
       );
-      final completer = AppMetricaActivationCompleter(config);
+      final AppMetricaActivationCompleter completer = AppMetricaActivationCompleter(config);
 
       await completer.complete(null);
 
@@ -101,9 +101,9 @@ void main() {
     });
 
     test('onError sets lastActivationConfig to null', () {
-      const config = AppMetricaConfig('error-test-key');
+      const AppMetricaConfig config = AppMetricaConfig('error-test-key');
       AppMetricaActivationConfigHolder.lastActivationConfig = config;
-      final completer = AppMetricaActivationCompleter(config);
+      final AppMetricaActivationCompleter completer = AppMetricaActivationCompleter(config);
 
       expect(
         () => completer.onError(Exception('Test error'), StackTrace.empty),
@@ -114,8 +114,8 @@ void main() {
     });
 
     test('onError does not throw when error is null', () {
-      const config = AppMetricaConfig('null-error-test-key');
-      final completer = AppMetricaActivationCompleter(config);
+      const AppMetricaConfig config = AppMetricaConfig('null-error-test-key');
+      final AppMetricaActivationCompleter completer = AppMetricaActivationCompleter(config);
 
       // Should not throw
       completer.onError(null, StackTrace.empty);
@@ -124,14 +124,14 @@ void main() {
     });
 
     test('complete returns the passed value', () async {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'return-value-test',
         sessionsAutoTrackingEnabled: false,
         appOpenTrackingEnabled: false,
       );
-      final completer = AppMetricaActivationCompleter(config);
+      final AppMetricaActivationCompleter completer = AppMetricaActivationCompleter(config);
 
-      final result = await completer.complete('test-value');
+      final String result = await completer.complete('test-value');
 
       expect(result, 'test-value');
     });

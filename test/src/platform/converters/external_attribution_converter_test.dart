@@ -1,12 +1,13 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appmetrica_plugin/src/platform/converters/external_attribution_converter.dart';
+import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ExternalAttributionConverter', () {
     group('Adjust attribution', () {
       test('converts with all fields', () {
-        final attribution = AppMetricaExternalAttribution.adjust(
+        final AppMetricaExternalAttribution attribution = AppMetricaExternalAttribution.adjust(
           trackerToken: 'token123',
           trackerName: 'TrackerName',
           network: 'facebook',
@@ -21,7 +22,7 @@ void main() {
           fbInstallReferrer: 'fb_referrer',
         );
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'adjust');
         expect(pigeon.data['trackerToken'], 'token123');
@@ -39,9 +40,9 @@ void main() {
       });
 
       test('converts with minimal fields', () {
-        final attribution = AppMetricaExternalAttribution.adjust();
+        final AppMetricaExternalAttribution attribution = AppMetricaExternalAttribution.adjust();
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'adjust');
         expect(pigeon.data['trackerToken'], null);
@@ -49,11 +50,11 @@ void main() {
       });
 
       test('converts with numeric cost amount', () {
-        final attribution = AppMetricaExternalAttribution.adjust(
+        final AppMetricaExternalAttribution attribution = AppMetricaExternalAttribution.adjust(
           costAmount: 99.99,
         );
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.data['costAmount'], 99.99);
       });
@@ -61,18 +62,18 @@ void main() {
 
     group('AppsFlyer attribution', () {
       test('converts appsflyer attribution', () {
-        final attributionData = {
-          'payload': {
+        final Map<String, dynamic> attributionData = <String, dynamic>{
+          'payload': <String, String>{
             'campaign': 'test_campaign',
             'media_source': 'facebook',
             'af_status': 'Non-organic',
           }
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.appsflyer(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'appsflyer');
         expect(pigeon.data['campaign'], 'test_campaign');
@@ -83,16 +84,16 @@ void main() {
 
     group('Kochava attribution', () {
       test('converts kochava attribution', () {
-        final attributionData = {
+        final Map<String, dynamic> attributionData = <String, dynamic>{
           'campaign': 'kochava_campaign',
           'tracker': 'kochava_tracker',
           'network': 'google',
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.kochava(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'kochava');
         expect(pigeon.data['campaign'], 'kochava_campaign');
@@ -101,10 +102,10 @@ void main() {
       });
 
       test('converts empty kochava attribution', () {
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.kochava(<String, dynamic>{});
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'kochava');
         expect(pigeon.data, isEmpty);
@@ -113,15 +114,15 @@ void main() {
 
     group('Tenjin attribution', () {
       test('converts tenjin attribution', () {
-        final attributionData = {
+        final Map<String, dynamic> attributionData = <String, dynamic>{
           'campaign_id': 'tenjin_campaign',
           'ad_network': 'unity',
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.tenjin(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'tenjin');
         expect(pigeon.data['campaign_id'], 'tenjin_campaign');
@@ -131,15 +132,15 @@ void main() {
 
     group('AirBridge attribution', () {
       test('converts airbridge attribution', () {
-        final attributionData = {
+        final Map<String, dynamic> attributionData = <String, dynamic>{
           'campaign': 'airbridge_campaign',
           'channel': 'organic',
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.airbridge(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'airbridge');
         expect(pigeon.data['campaign'], 'airbridge_campaign');
@@ -147,15 +148,15 @@ void main() {
       });
 
       test('converts airbridge with dynamic keys', () {
-        final attributionData = <dynamic, dynamic>{
+        final Map<dynamic, dynamic> attributionData = <dynamic, dynamic>{
           123: 'numeric_key_value',
           'string_key': 'string_value',
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.airbridge(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'airbridge');
         expect(pigeon.data['123'], 'numeric_key_value');
@@ -165,16 +166,16 @@ void main() {
 
     group('Singular attribution', () {
       test('converts singular attribution', () {
-        final attributionData = {
+        final Map<String, dynamic> attributionData = <String, dynamic>{
           'campaign': 'singular_campaign',
           'source': 'facebook',
           'is_organic': false,
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.singular(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'singular');
         expect(pigeon.data['campaign'], 'singular_campaign');
@@ -183,20 +184,20 @@ void main() {
       });
 
       test('converts singular with nested data', () {
-        final attributionData = {
+        final Map<String, dynamic> attributionData = <String, dynamic>{
           'campaign': 'singular_campaign',
-          'extra': {
+          'extra': <String, String>{
             'nested_key': 'nested_value',
           },
         };
 
-        final attribution =
+        final AppMetricaExternalAttribution attribution =
             AppMetricaExternalAttribution.singular(attributionData);
 
-        final pigeon = attribution.toPigeon();
+        final ExternalAttributionPigeon pigeon = attribution.toPigeon();
 
         expect(pigeon.source, 'singular');
-        expect(pigeon.data['extra'], {'nested_key': 'nested_value'});
+        expect(pigeon.data['extra'], <String, String>{'nested_key': 'nested_value'});
       });
     });
   });

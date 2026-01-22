@@ -6,7 +6,7 @@ class AppMetricaExternalAttribution {
   /// Creates AppsFlyer implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.appsflyer(Map<String, dynamic> attribution)
       : source = "appsflyer",
-        data = attribution["payload"];
+        data = Map<String?, dynamic>.from(attribution["payload"]);
 
   /// Creates Adjust implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.adjust({
@@ -24,7 +24,7 @@ class AppMetricaExternalAttribution {
     String? fbInstallReferrer
   })
       : source = "adjust",
-        data = {
+        data = <String?, dynamic>{
           "trackerToken": trackerToken,
           "trackerName": trackerName,
           "network": network,
@@ -42,20 +42,20 @@ class AppMetricaExternalAttribution {
   /// Creates Kochava implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.kochava(Map<String, dynamic> attribution)
       : source = "kochava",
-        data = Map.from(attribution);
+        data = Map<String?, dynamic>.from(attribution);
 
   /// Creates Tenjin implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.tenjin(Map<String, dynamic> attribution)
       : source = "tenjin",
-        data = Map.from(attribution);
+        data = Map<String?, dynamic>.from(attribution);
 
   /// Creates AirBridge implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.airbridge(Map<dynamic, dynamic> attribution)
       : source = "airbridge",
-        data = attribution.map((key, value) => MapEntry(key?.toString(), value));
+        data = attribution.map((dynamic key, dynamic value) => MapEntry<String?, dynamic>(key?.toString(), value));
 
   /// Creates Singular implementation of AppMetricaExternalAttribution.
   AppMetricaExternalAttribution.singular(Map<String, dynamic> attribution)
       : source = "singular",
-        data = Map.from(attribution);
+        data = Map<String?, dynamic>.from(attribution);
 }

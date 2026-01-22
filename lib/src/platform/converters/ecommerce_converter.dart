@@ -33,9 +33,9 @@ extension ECommercePriceConverter on AppMetricaECommercePrice {
   ECommercePricePigeon toPigeon() => _findConverter(AppMetricaECommercePrice)(this);
 }
 
-Function _findConverter<I, O>(type) => eCommerceConverters[type]!;
+Function _findConverter<I, O>(Type type) => eCommerceConverters[type]!;
 
-final eCommerceConverters = <Type, Function>{
+final Map<Type, Function> eCommerceConverters = <Type, Function>{
   AppMetricaECommerceEvent: (AppMetricaECommerceEvent event) => ECommerceEventPigeon(
       eventType: event.eventType,
       cartItem: event.cartItem?.toPigeon(),
@@ -67,12 +67,12 @@ final eCommerceConverters = <Type, Function>{
       referrer: cartItem.referrer?.toPigeon()),
   AppMetricaECommerceOrder: (AppMetricaECommerceOrder order) => ECommerceOrderPigeon(
       identifier: order.identifier,
-      items: order.items.map((e) => e.toPigeon()).toList(),
+      items: order.items.map((AppMetricaECommerceCartItem e) => e.toPigeon()).toList(),
       payload: order.payload),
   AppMetricaECommerceAmount: (AppMetricaECommerceAmount amount) => ECommerceAmountPigeon(
       amount: amount.amount.toString(), currency: amount.currency),
   AppMetricaECommercePrice: (AppMetricaECommercePrice price) => ECommercePricePigeon(
       fiat: price.fiat.toPigeon(),
       internalComponents:
-          price.internalComponents?.map((e) => e.toPigeon()).toList())
+          price.internalComponents?.map((AppMetricaECommerceAmount e) => e.toPigeon()).toList())
 };

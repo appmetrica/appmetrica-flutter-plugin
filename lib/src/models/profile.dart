@@ -37,10 +37,10 @@ class AppMetricaBirthDateAttribute extends UserProfileAttribute {
 }
 
 class AppMetricaBooleanAttribute extends _ValueAttribute<bool> {
-  AppMetricaBooleanAttribute.withValue(key, value, {ifUndefined = false})
+  AppMetricaBooleanAttribute.withValue(String key, bool value, {bool ifUndefined = false})
       : super(key, value, ifUndefined, false);
 
-  AppMetricaBooleanAttribute.withValueReset(key) : super(key, null, false, true);
+  AppMetricaBooleanAttribute.withValueReset(String key) : super(key, null, false, true);
 }
 
 class AppMetricaCounterAttribute extends UserProfileAttribute {
@@ -51,7 +51,7 @@ class AppMetricaCounterAttribute extends UserProfileAttribute {
 }
 
 class AppMetricaGenderAttribute extends _ValueAttribute<AppMetricaGender> {
-  AppMetricaGenderAttribute.withValue(value) : super("", value, false, false);
+  AppMetricaGenderAttribute.withValue(AppMetricaGender value) : super("", value, false, false);
 
   AppMetricaGenderAttribute.withValueReset() : super("", null, false, true);
 }
@@ -63,31 +63,31 @@ enum AppMetricaGender {
 }
 
 class AppMetricaNameAttribute extends AppMetricaStringAttribute {
-  AppMetricaNameAttribute.withValue(value)
+  AppMetricaNameAttribute.withValue(String value)
       : super.withValue("", value, ifUndefined: false);
 
   AppMetricaNameAttribute.withValueReset() : super.withValueReset("");
 }
 
 class AppMetricaNotificationEnabledAttribute extends AppMetricaBooleanAttribute {
-  AppMetricaNotificationEnabledAttribute.withValue(value)
+  AppMetricaNotificationEnabledAttribute.withValue(bool value)
       : super.withValue("", value, ifUndefined: false);
 
   AppMetricaNotificationEnabledAttribute.withValueReset() : super.withValueReset("");
 }
 
 class AppMetricaNumberAttribute extends _ValueAttribute<double> {
-  AppMetricaNumberAttribute.withValue(key, value, {ifUndefined = false})
+  AppMetricaNumberAttribute.withValue(String key, double value, {bool ifUndefined = false})
       : super(key, value, ifUndefined, false);
 
-  AppMetricaNumberAttribute.withValueReset(key) : super(key, null, false, true);
+  AppMetricaNumberAttribute.withValueReset(String key) : super(key, null, false, true);
 }
 
 class AppMetricaStringAttribute extends _ValueAttribute<String> {
-  AppMetricaStringAttribute.withValue(key, value, {ifUndefined = false})
+  AppMetricaStringAttribute.withValue(String key, String value, {bool ifUndefined = false})
       : super(key, value, ifUndefined, false);
 
-  AppMetricaStringAttribute.withValueReset(key) : super(key, null, false, true);
+  AppMetricaStringAttribute.withValueReset(String key) : super(key, null, false, true);
 }
 
 class AppMetricaPhoneHashAttribute extends UserProfileAttribute {

@@ -39,13 +39,13 @@ import 'reporter.dart';
 class AppMetrica {
   AppMetrica._();
 
-  static final _reporterStorage = ReporterStorage();
+  static final ReporterStorage _reporterStorage = ReporterStorage();
 
   static PlatformBridge get _platform => AppMetricaServiceLocator.platformBridge;
 
-  static const _appMetricaRootLoggerName = "AppMetricaPlugin";
+  static const String _appMetricaRootLoggerName = "AppMetricaPlugin";
 
-  static final _logger = Logger("$_appMetricaRootLoggerName.MainFacade");
+  static final Logger _logger = Logger("$_appMetricaRootLoggerName.MainFacade");
 
   /// Initializes the library in the application with the initial configuration [config].
   static Future<void> activate(AppMetricaConfig config) async {
@@ -53,7 +53,7 @@ class AppMetrica {
       setUpAppMetricaLogger(Logger(_appMetricaRootLoggerName));
     }
     setUpErrorHandlingWithAppMetrica(config);
-    var activationCompleter = AppMetricaActivationCompleter(config);
+    AppMetricaActivationCompleter activationCompleter = AppMetricaActivationCompleter(config);
     return _platform.activate(config.toPigeon()).then(
         activationCompleter.complete,
         onError: activationCompleter.onError
@@ -172,8 +172,8 @@ class AppMetrica {
   ///
   /// Relevant only for Android. For iOS, it returns the unknown error.
   static Future<String> requestDeferredDeeplink() =>
-      _platform.requestDeferredDeeplink().then((value) {
-        final error = value.error;
+      _platform.requestDeferredDeeplink().then((AppMetricaDeferredDeeplinkPigeon value) {
+        final AppMetricaDeferredDeeplinkErrorPigeon? error = value.error;
         if (error != null &&
             error.reason != AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR) {
           throw AppMetricaDeferredDeeplinkRequestException(
@@ -194,8 +194,8 @@ class AppMetrica {
   ///
   /// Relevant only for Android. For iOS, it returns the unknown error.
   static Future<Map<String, String>> requestDeferredDeeplinkParameters() =>
-      _platform.requestDeferredDeeplinkParameters().then((value) {
-        final error = value.error;
+      _platform.requestDeferredDeeplinkParameters().then((AppMetricaDeferredDeeplinkParametersPigeon value) {
+        final AppMetricaDeferredDeeplinkErrorPigeon? error = value.error;
         if (error != null &&
             error.reason != AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR) {
           throw AppMetricaDeferredDeeplinkRequestException(
@@ -209,7 +209,7 @@ class AppMetrica {
               error?.message);
         } else {
           return value.parameters!
-              .map((key, value) => MapEntry(key as String, value as String));
+              .map((Object? key, Object? value) => MapEntry<String, String>(key as String, value as String));
         }
       });
 
@@ -217,8 +217,8 @@ class AppMetrica {
   ///
   /// Possible values of params can be found in [AppMetricaStartupParams] class.
   static Future<AppMetricaStartupParams> requestStartupParams(List<String>? params)  =>
-      _platform.requestStartupParams(params ?? [])
-          .then((value) => value.toDart());
+      _platform.requestStartupParams(params ?? <String>[])
+          .then((StartupParamsPigeon value) => value.toDart());
 
   /// Resumes the foreground session or creates a new one if the session timeout has expired.
   ///
@@ -278,7 +278,7 @@ class AppMetrica {
   }
 }
 
-var _crashHandlingActivated = false;
+bool _crashHandlingActivated = false;
 
 void setUpErrorHandlingWithAppMetrica(AppMetricaConfig config) {
   if (config.flutterCrashReporting == false) {
@@ -288,7 +288,7 @@ void setUpErrorHandlingWithAppMetrica(AppMetricaConfig config) {
     return;
   }
   _crashHandlingActivated = true;
-  final prev = FlutterError.onError;
+  final void Function(FlutterErrorDetails)? prev = FlutterError.onError;
   FlutterError.onError = (FlutterErrorDetails details) async {
     AppMetrica._logger.warning("error caught by handler ${details.summary}", details.exception, details.stack);
     await AppMetrica._platform.reportUnhandledException(convertErrorDetails(
@@ -304,7 +304,7 @@ void setUpErrorHandlingWithAppMetrica(AppMetricaConfig config) {
 void setUpAppMetricaLogger(Logger logger) {
   hierarchicalLoggingEnabled = true;
   logger.level = Level.ALL;
-  logger.onRecord.listen((event) {
+  logger.onRecord.listen((LogRecord event) {
     log(event.message,
         error: event.error,
         stackTrace: event.stackTrace,

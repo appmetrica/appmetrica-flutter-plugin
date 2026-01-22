@@ -37,7 +37,7 @@ extension StartupParamsResultConverter on StartupParamsResultPigeon {
     return AppMetricaStartupParamsResult(
       deviceId: deviceId,
       deviceIdHash: deviceIdHash,
-      parameters: parameters?.map((key, value) => MapEntry(
+      parameters: parameters?.map((String? key, StartupParamsItemPigeon? value) => MapEntry<String?, AppMetricaStartupParamsItem?>(
           key,
           value?.toDart()
       )),

@@ -39,7 +39,7 @@ import 'preload_info.dart';
 /// * [sessionsAutoTrackingEnabled] — indicates automatic collection and sending of information about the sessions of the application user. The default value is true;
 /// * [userProfileID] — user profile ID;
 class AppMetricaConfig {
-  static final _converter = AppMetricaConfigConverterPigeon();
+  static final AppMetricaConfigConverterPigeon _converter = AppMetricaConfigConverterPigeon();
 
   final String apiKey;
   final bool? advIdentifiersTracking;

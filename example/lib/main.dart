@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final version = await AppMetrica.libraryVersion;
+                    final String version = await AppMetrica.libraryVersion;
                     _showSnackBar(context, "Library version $version");
                   },
                   child: const Text('Get library version'),
@@ -118,7 +118,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _showSnackBar(BuildContext context, String content) {
-    final scaffold = ScaffoldMessenger.of(context);
+    final ScaffoldMessengerState scaffold = ScaffoldMessenger.of(context);
     scaffold.hideCurrentSnackBar();
     scaffold.showSnackBar(
       SnackBar(

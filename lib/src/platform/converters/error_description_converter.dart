@@ -15,14 +15,14 @@ ErrorDetailsPigeon convertErrorDetails(
         exceptionClass: clazz,
         message: msg,
         dartVersion: Platform.version,
-        backtrace: stack != null ? convertErrorStackTrace(stack) : []);
+        backtrace: stack != null ? convertErrorStackTrace(stack) : <StackTraceElementPigeon>[]);
 
 List<StackTraceElementPigeon> convertErrorStackTrace(StackTrace stack) {
-  final backtrace = Trace.from(stack).frames.map((element) {
-    final firstDot = element.member?.indexOf(".") ?? -1;
-    final className =
+  final Iterable<StackTraceElementPigeon> backtrace = Trace.from(stack).frames.map((Frame element) {
+    final int firstDot = element.member?.indexOf(".") ?? -1;
+    final String? className =
     firstDot >= 0 ? element.member?.substring(0, firstDot) : null;
-    final methodName = element.member?.substring(firstDot + 1);
+    final String? methodName = element.member?.substring(firstDot + 1);
     return StackTraceElementPigeon(
         className: className ?? "",
         methodName: methodName ?? "",

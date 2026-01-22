@@ -3,12 +3,12 @@ import '../pigeon/appmetrica_api_pigeon.dart';
 
 extension UserProfileConverter on AppMetricaUserProfile {
   UserProfilePigeon toPigeon() => UserProfilePigeon(
-      attributes: attributes.map((e) => e.toPigeon()).toList(growable: false));
+      attributes: attributes.map((UserProfileAttribute e) => e.toPigeon()).toList(growable: false));
 }
 
 extension UserProfileAttributeConverter on UserProfileAttribute {
   UserProfileAttributePigeon toPigeon() {
-    final attr = this;
+    final UserProfileAttribute attr = this;
     // Order matters: more specific types (subclasses) must come first
     if (attr is AppMetricaNameAttribute) return attr._toPigeon();
     if (attr is AppMetricaNotificationEnabledAttribute) return attr._toPigeon();
@@ -117,7 +117,7 @@ extension on AppMetricaTelegramLoginHashAttribute {
     ..stringValues = values;
 }
 
-const _genderToPigeon = {
+const Map<AppMetricaGender, GenderPigeon> _genderToPigeon = <AppMetricaGender, GenderPigeon>{
   AppMetricaGender.male: GenderPigeon.MALE,
   AppMetricaGender.female: GenderPigeon.FEMALE,
   AppMetricaGender.other: GenderPigeon.OTHER,

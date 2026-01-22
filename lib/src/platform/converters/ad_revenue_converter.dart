@@ -1,7 +1,7 @@
 import '../../models/ad_revenue.dart';
 import '../pigeon/appmetrica_api_pigeon.dart';
 
-final adTypeToPigeon = {
+final Map<AppMetricaAdType, AdTypePigeon> adTypeToPigeon = <AppMetricaAdType, AdTypePigeon>{
   AppMetricaAdType.unknown: AdTypePigeon.UNKNOWN,
   AppMetricaAdType.native: AdTypePigeon.NATIVE,
   AppMetricaAdType.banner: AdTypePigeon.BANNER,

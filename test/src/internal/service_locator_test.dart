@@ -12,14 +12,14 @@ void main() {
 
   group('AppMetricaServiceLocator.platformBridge', () {
     test('returns PigeonPlatformBridge by default', () {
-      final bridge = AppMetricaServiceLocator.platformBridge;
+      final PlatformBridge bridge = AppMetricaServiceLocator.platformBridge;
 
       expect(bridge, isA<PigeonPlatformBridge>());
     });
 
     test('returns same instance on multiple calls', () {
-      final bridge1 = AppMetricaServiceLocator.platformBridge;
-      final bridge2 = AppMetricaServiceLocator.platformBridge;
+      final PlatformBridge bridge1 = AppMetricaServiceLocator.platformBridge;
+      final PlatformBridge bridge2 = AppMetricaServiceLocator.platformBridge;
 
       expect(identical(bridge1, bridge2), true);
     });
@@ -27,14 +27,14 @@ void main() {
 
   group('AppMetricaServiceLocator.reporterBridge', () {
     test('returns PigeonReporterBridge by default', () {
-      final bridge = AppMetricaServiceLocator.reporterBridge;
+      final ReporterPlatformBridge bridge = AppMetricaServiceLocator.reporterBridge;
 
       expect(bridge, isA<PigeonReporterBridge>());
     });
 
     test('returns same instance on multiple calls', () {
-      final bridge1 = AppMetricaServiceLocator.reporterBridge;
-      final bridge2 = AppMetricaServiceLocator.reporterBridge;
+      final ReporterPlatformBridge bridge1 = AppMetricaServiceLocator.reporterBridge;
+      final ReporterPlatformBridge bridge2 = AppMetricaServiceLocator.reporterBridge;
 
       expect(identical(bridge1, bridge2), true);
     });
@@ -42,7 +42,7 @@ void main() {
 
   group('AppMetricaServiceLocator.overridePlatformBridge', () {
     test('overrides platform bridge', () {
-      final mockBridge = MockPlatformBridge();
+      final MockPlatformBridge mockBridge = MockPlatformBridge();
 
       AppMetricaServiceLocator.overridePlatformBridge(mockBridge);
 
@@ -53,8 +53,8 @@ void main() {
     });
 
     test('can override multiple times', () {
-      final mockBridge1 = MockPlatformBridge();
-      final mockBridge2 = MockPlatformBridge();
+      final MockPlatformBridge mockBridge1 = MockPlatformBridge();
+      final MockPlatformBridge mockBridge2 = MockPlatformBridge();
 
       AppMetricaServiceLocator.overridePlatformBridge(mockBridge1);
       expect(
@@ -72,7 +72,7 @@ void main() {
 
   group('AppMetricaServiceLocator.overrideReporterBridge', () {
     test('overrides reporter bridge', () {
-      final mockBridge = MockReporterPlatformBridge();
+      final MockReporterPlatformBridge mockBridge = MockReporterPlatformBridge();
 
       AppMetricaServiceLocator.overrideReporterBridge(mockBridge);
 
@@ -83,8 +83,8 @@ void main() {
     });
 
     test('can override multiple times', () {
-      final mockBridge1 = MockReporterPlatformBridge();
-      final mockBridge2 = MockReporterPlatformBridge();
+      final MockReporterPlatformBridge mockBridge1 = MockReporterPlatformBridge();
+      final MockReporterPlatformBridge mockBridge2 = MockReporterPlatformBridge();
 
       AppMetricaServiceLocator.overrideReporterBridge(mockBridge1);
       expect(
@@ -102,7 +102,7 @@ void main() {
 
   group('AppMetricaServiceLocator.reset', () {
     test('resets platform bridge to default', () {
-      final mockBridge = MockPlatformBridge();
+      final MockPlatformBridge mockBridge = MockPlatformBridge();
       AppMetricaServiceLocator.overridePlatformBridge(mockBridge);
 
       AppMetricaServiceLocator.reset();
@@ -118,7 +118,7 @@ void main() {
     });
 
     test('resets reporter bridge to default', () {
-      final mockBridge = MockReporterPlatformBridge();
+      final MockReporterPlatformBridge mockBridge = MockReporterPlatformBridge();
       AppMetricaServiceLocator.overrideReporterBridge(mockBridge);
 
       AppMetricaServiceLocator.reset();
@@ -134,8 +134,8 @@ void main() {
     });
 
     test('resets both bridges at once', () {
-      final mockPlatformBridge = MockPlatformBridge();
-      final mockReporterBridge = MockReporterPlatformBridge();
+      final MockPlatformBridge mockPlatformBridge = MockPlatformBridge();
+      final MockReporterPlatformBridge mockReporterBridge = MockReporterPlatformBridge();
 
       AppMetricaServiceLocator.overridePlatformBridge(mockPlatformBridge);
       AppMetricaServiceLocator.overrideReporterBridge(mockReporterBridge);
@@ -167,10 +167,10 @@ void main() {
   group('Isolation between bridges', () {
     test('overriding platform bridge does not affect reporter bridge', () {
       // Get default reporter bridge first
-      final defaultReporterBridge = AppMetricaServiceLocator.reporterBridge;
+      final ReporterPlatformBridge defaultReporterBridge = AppMetricaServiceLocator.reporterBridge;
 
       // Override platform bridge
-      final mockPlatformBridge = MockPlatformBridge();
+      final MockPlatformBridge mockPlatformBridge = MockPlatformBridge();
       AppMetricaServiceLocator.overridePlatformBridge(mockPlatformBridge);
 
       // Reporter bridge should still be the same
@@ -185,10 +185,10 @@ void main() {
 
     test('overriding reporter bridge does not affect platform bridge', () {
       // Get default platform bridge first
-      final defaultPlatformBridge = AppMetricaServiceLocator.platformBridge;
+      final PlatformBridge defaultPlatformBridge = AppMetricaServiceLocator.platformBridge;
 
       // Override reporter bridge
-      final mockReporterBridge = MockReporterPlatformBridge();
+      final MockReporterPlatformBridge mockReporterBridge = MockReporterPlatformBridge();
       AppMetricaServiceLocator.overrideReporterBridge(mockReporterBridge);
 
       // Platform bridge should still be the same

@@ -1,5 +1,6 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appmetrica_plugin/src/internal/service_locator.dart';
+import 'package:appmetrica_plugin/src/models/profile.dart';
 import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,9 +18,9 @@ void main() {
     AppMetricaServiceLocator.overridePlatformBridge(mockPlatformBridge);
 
     // Default stubs for common methods
-    when(mockPlatformBridge.activate(any)).thenAnswer((_) => Future.value());
+    when(mockPlatformBridge.activate(any)).thenAnswer((Invocation _) => Future<void>.value());
     when(mockPlatformBridge.handlePluginInitFinished())
-        .thenAnswer((_) => Future.value());
+        .thenAnswer((Invocation _) => Future<void>.value());
   });
 
   tearDown(() {
@@ -29,7 +30,7 @@ void main() {
   group('AppMetrica.activate', () {
     test('calls platform bridge with converted config', () async {
       // Disable auto-tracking to avoid calling real Pigeon methods
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         sessionsAutoTrackingEnabled: false,
         appOpenTrackingEnabled: false,
@@ -38,14 +39,14 @@ void main() {
 
       await AppMetrica.activate(config);
 
-      final captured =
+      final AppMetricaConfigPigeon captured =
           verify(mockPlatformBridge.activate(captureAny)).captured.single
               as AppMetricaConfigPigeon;
       expect(captured.apiKey, 'test-api-key');
     });
 
     test('passes all config parameters to platform bridge', () async {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         appVersion: '1.0.0',
         crashReporting: true,
@@ -63,7 +64,7 @@ void main() {
 
       await AppMetrica.activate(config);
 
-      final captured =
+      final AppMetricaConfigPigeon captured =
           verify(mockPlatformBridge.activate(captureAny)).captured.single
               as AppMetricaConfigPigeon;
       expect(captured.apiKey, 'test-api-key');
@@ -82,9 +83,9 @@ void main() {
   group('AppMetrica.activateReporter', () {
     test('calls platform bridge with converted reporter config', () async {
       when(mockPlatformBridge.activateReporter(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      const config = AppMetricaReporterConfig(
+      const AppMetricaReporterConfig config = AppMetricaReporterConfig(
         'reporter-api-key',
         dataSendingEnabled: true,
         sessionTimeout: 20,
@@ -92,7 +93,7 @@ void main() {
 
       await AppMetrica.activateReporter(config);
 
-      final captured =
+      final ReporterConfigPigeon captured =
           verify(mockPlatformBridge.activateReporter(captureAny)).captured.single
               as ReporterConfigPigeon;
       expect(captured.apiKey, 'reporter-api-key');
@@ -104,7 +105,7 @@ void main() {
   group('AppMetrica.reportEvent', () {
     test('calls platform bridge with event name', () async {
       when(mockPlatformBridge.reportEvent(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportEvent('test_event');
 
@@ -115,7 +116,7 @@ void main() {
   group('AppMetrica.reportEventWithJson', () {
     test('calls platform bridge with event name and json', () async {
       when(mockPlatformBridge.reportEventWithJson(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportEventWithJson(
           'test_event', '{"key": "value"}');
@@ -127,7 +128,7 @@ void main() {
 
     test('handles null json', () async {
       when(mockPlatformBridge.reportEventWithJson(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportEventWithJson('test_event', null);
 
@@ -139,10 +140,10 @@ void main() {
   group('AppMetrica.reportEventWithMap', () {
     test('converts map to json and calls platform bridge', () async {
       when(mockPlatformBridge.reportEventWithJson(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportEventWithMap(
-          'test_event', {'key': 'value', 'number': 42});
+          'test_event', <String, Object>{'key': 'value', 'number': 42});
 
       verify(mockPlatformBridge.reportEventWithJson(
               'test_event', '{"key":"value","number":42}'))
@@ -151,7 +152,7 @@ void main() {
 
     test('handles null attributes', () async {
       when(mockPlatformBridge.reportEventWithJson(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportEventWithMap('test_event', null);
 
@@ -163,9 +164,9 @@ void main() {
   group('AppMetrica.reportError', () {
     test('calls platform bridge with error description', () async {
       when(mockPlatformBridge.reportError(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final error = AppMetricaErrorDescription(
+      final AppMetricaErrorDescription error = AppMetricaErrorDescription(
         StackTrace.current,
         message: 'Test error',
         type: 'TestException',
@@ -174,7 +175,7 @@ void main() {
       await AppMetrica.reportError(
           message: 'Error occurred', errorDescription: error);
 
-      final captured =
+      final List<dynamic> captured =
           verify(mockPlatformBridge.reportError(captureAny, captureAny))
               .captured;
       expect(captured[0], isA<ErrorDetailsPigeon>());
@@ -183,14 +184,14 @@ void main() {
 
     test('adds current stack trace when error description is null', () async {
       when(mockPlatformBridge.reportError(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportError(message: 'Error occurred');
 
-      final captured =
+      final List<dynamic> captured =
           verify(mockPlatformBridge.reportError(captureAny, captureAny))
               .captured;
-      final errorDetails = captured[0] as ErrorDetailsPigeon;
+      final ErrorDetailsPigeon errorDetails = captured[0] as ErrorDetailsPigeon;
       expect(errorDetails.backtrace, isNotEmpty);
     });
   });
@@ -198,7 +199,7 @@ void main() {
   group('AppMetrica.reportErrorWithGroup', () {
     test('calls platform bridge with group id', () async {
       when(mockPlatformBridge.reportErrorWithGroup(any, any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportErrorWithGroup('error_group',
           message: 'Grouped error');
@@ -212,9 +213,9 @@ void main() {
   group('AppMetrica.reportRevenue', () {
     test('calls platform bridge with converted revenue', () async {
       when(mockPlatformBridge.reportRevenue(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final revenue = AppMetricaRevenue(
+      final AppMetricaRevenue revenue = AppMetricaRevenue(
         Decimal.parse('9.99'),
         'USD',
         productId: 'product_123',
@@ -223,7 +224,7 @@ void main() {
 
       await AppMetrica.reportRevenue(revenue);
 
-      final captured =
+      final RevenuePigeon captured =
           verify(mockPlatformBridge.reportRevenue(captureAny)).captured.single
               as RevenuePigeon;
       expect(captured.price, '9.99');
@@ -236,9 +237,9 @@ void main() {
   group('AppMetrica.reportAdRevenue', () {
     test('calls platform bridge with converted ad revenue', () async {
       when(mockPlatformBridge.reportAdRevenue(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final adRevenue = AppMetricaAdRevenue(
+      final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
         adRevenue: Decimal.parse('0.05'),
         currency: 'USD',
         adType: AppMetricaAdType.banner,
@@ -247,7 +248,7 @@ void main() {
 
       await AppMetrica.reportAdRevenue(adRevenue);
 
-      final captured =
+      final AdRevenuePigeon captured =
           verify(mockPlatformBridge.reportAdRevenue(captureAny)).captured.single
               as AdRevenuePigeon;
       expect(captured.adRevenue, '0.05');
@@ -260,17 +261,17 @@ void main() {
   group('AppMetrica.reportECommerce', () {
     test('calls platform bridge with ecommerce event', () async {
       when(mockPlatformBridge.reportECommerce(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      const screen = AppMetricaECommerceScreen(
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(
         name: 'ProductScreen',
         searchQuery: 'shoes',
       );
-      final event = AppMetricaECommerce.showScreenEvent(screen);
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.showScreenEvent(screen);
 
       await AppMetrica.reportECommerce(event);
 
-      final captured =
+      final ECommerceEventPigeon captured =
           verify(mockPlatformBridge.reportECommerce(captureAny)).captured.single
               as ECommerceEventPigeon;
       expect(captured.eventType, 'show_screen_event');
@@ -280,16 +281,16 @@ void main() {
   group('AppMetrica.reportUserProfile', () {
     test('calls platform bridge with user profile', () async {
       when(mockPlatformBridge.reportUserProfile(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final profile = AppMetricaUserProfile([
+      final AppMetricaUserProfile profile = AppMetricaUserProfile(<UserProfileAttribute>[
         AppMetricaNameAttribute.withValue('John Doe'),
         AppMetricaGenderAttribute.withValue(AppMetricaGender.male),
       ]);
 
       await AppMetrica.reportUserProfile(profile);
 
-      final captured =
+      final UserProfilePigeon captured =
           verify(mockPlatformBridge.reportUserProfile(captureAny))
               .captured
               .single as UserProfilePigeon;
@@ -300,9 +301,9 @@ void main() {
   group('AppMetrica.reportUnhandledException', () {
     test('calls platform bridge with error details', () async {
       when(mockPlatformBridge.reportUnhandledException(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final error = AppMetricaErrorDescription(
+      final AppMetricaErrorDescription error = AppMetricaErrorDescription(
         StackTrace.current,
         message: 'Unhandled exception',
         type: 'Exception',
@@ -317,7 +318,7 @@ void main() {
   group('AppMetrica.reportAppOpen', () {
     test('calls platform bridge with deeplink', () async {
       when(mockPlatformBridge.reportAppOpen(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportAppOpen('myapp://path/to/content');
 
@@ -329,7 +330,7 @@ void main() {
   group('AppMetrica.reportReferralUrl', () {
     test('calls platform bridge with referral url', () async {
       when(mockPlatformBridge.reportReferralUrl(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.reportReferralUrl('https://example.com/referral');
 
@@ -341,19 +342,19 @@ void main() {
   group('AppMetrica.requestDeferredDeeplink', () {
     test('returns deeplink on success', () async {
       when(mockPlatformBridge.requestDeferredDeeplink()).thenAnswer(
-        (_) => Future.value(AppMetricaDeferredDeeplinkPigeon(
+        (Invocation _) => Future<AppMetricaDeferredDeeplinkPigeon>.value(AppMetricaDeferredDeeplinkPigeon(
           deeplink: 'myapp://deeplink',
         )),
       );
 
-      final result = await AppMetrica.requestDeferredDeeplink();
+      final String result = await AppMetrica.requestDeferredDeeplink();
 
       expect(result, 'myapp://deeplink');
     });
 
     test('throws exception on error', () async {
       when(mockPlatformBridge.requestDeferredDeeplink()).thenAnswer(
-        (_) => Future.value(AppMetricaDeferredDeeplinkPigeon(
+        (Invocation _) => Future<AppMetricaDeferredDeeplinkPigeon>.value(AppMetricaDeferredDeeplinkPigeon(
           error: AppMetricaDeferredDeeplinkErrorPigeon(
             reason: AppMetricaDeferredDeeplinkReasonPigeon.NOT_A_FIRST_LAUNCH,
             errorDescription: 'Not first launch',
@@ -370,7 +371,7 @@ void main() {
 
     test('throws exception when deeplink is null', () async {
       when(mockPlatformBridge.requestDeferredDeeplink()).thenAnswer(
-        (_) => Future.value(AppMetricaDeferredDeeplinkPigeon()),
+        (Invocation _) => Future<AppMetricaDeferredDeeplinkPigeon>.value(AppMetricaDeferredDeeplinkPigeon()),
       );
 
       expect(
@@ -383,19 +384,19 @@ void main() {
   group('AppMetrica.requestDeferredDeeplinkParameters', () {
     test('returns parameters on success', () async {
       when(mockPlatformBridge.requestDeferredDeeplinkParameters()).thenAnswer(
-        (_) => Future.value(AppMetricaDeferredDeeplinkParametersPigeon(
-          parameters: {'key': 'value', 'foo': 'bar'},
+        (Invocation _) => Future<AppMetricaDeferredDeeplinkParametersPigeon>.value(AppMetricaDeferredDeeplinkParametersPigeon(
+          parameters: <String, String>{'key': 'value', 'foo': 'bar'},
         )),
       );
 
-      final result = await AppMetrica.requestDeferredDeeplinkParameters();
+      final Map<String, String> result = await AppMetrica.requestDeferredDeeplinkParameters();
 
-      expect(result, {'key': 'value', 'foo': 'bar'});
+      expect(result, <String, String>{'key': 'value', 'foo': 'bar'});
     });
 
     test('throws exception on error', () async {
       when(mockPlatformBridge.requestDeferredDeeplinkParameters()).thenAnswer(
-        (_) => Future.value(AppMetricaDeferredDeeplinkParametersPigeon(
+        (Invocation _) => Future<AppMetricaDeferredDeeplinkParametersPigeon>.value(AppMetricaDeferredDeeplinkParametersPigeon(
           error: AppMetricaDeferredDeeplinkErrorPigeon(
             reason: AppMetricaDeferredDeeplinkReasonPigeon.NO_REFERRER,
             errorDescription: 'No referrer',
@@ -414,7 +415,7 @@ void main() {
   group('AppMetrica.requestStartupParams', () {
     test('returns converted startup params', () async {
       when(mockPlatformBridge.requestStartupParams(any)).thenAnswer(
-        (_) => Future.value(StartupParamsPigeon(
+        (Invocation _) => Future<StartupParamsPigeon>.value(StartupParamsPigeon(
           result: StartupParamsResultPigeon(
             deviceId: 'device123',
             uuid: 'uuid456',
@@ -422,7 +423,7 @@ void main() {
         )),
       );
 
-      final result = await AppMetrica.requestStartupParams(null);
+      final AppMetricaStartupParams result = await AppMetrica.requestStartupParams(null);
 
       expect(result.result?.deviceId, 'device123');
       expect(result.result?.uuid, 'uuid456');
@@ -432,13 +433,13 @@ void main() {
   group('AppMetrica.setLocation', () {
     test('calls platform bridge with location', () async {
       when(mockPlatformBridge.setLocation(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      const location = AppMetricaLocation(55.751244, 37.618423);
+      const AppMetricaLocation location = AppMetricaLocation(55.751244, 37.618423);
 
       await AppMetrica.setLocation(location);
 
-      final captured =
+      final LocationPigeon captured =
           verify(mockPlatformBridge.setLocation(captureAny)).captured.single
               as LocationPigeon;
       expect(captured.latitude, 55.751244);
@@ -447,7 +448,7 @@ void main() {
 
     test('calls platform bridge with null location', () async {
       when(mockPlatformBridge.setLocation(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setLocation(null);
 
@@ -458,7 +459,7 @@ void main() {
   group('AppMetrica.setLocationTracking', () {
     test('calls platform bridge with true', () async {
       when(mockPlatformBridge.setLocationTracking(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setLocationTracking(true);
 
@@ -467,7 +468,7 @@ void main() {
 
     test('calls platform bridge with false', () async {
       when(mockPlatformBridge.setLocationTracking(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setLocationTracking(false);
 
@@ -478,7 +479,7 @@ void main() {
   group('AppMetrica.setDataSendingEnabled', () {
     test('calls platform bridge with true', () async {
       when(mockPlatformBridge.setDataSendingEnabled(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setDataSendingEnabled(true);
 
@@ -487,7 +488,7 @@ void main() {
 
     test('calls platform bridge with false', () async {
       when(mockPlatformBridge.setDataSendingEnabled(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setDataSendingEnabled(false);
 
@@ -498,7 +499,7 @@ void main() {
   group('AppMetrica.setUserProfileID', () {
     test('calls platform bridge with profile id', () async {
       when(mockPlatformBridge.setUserProfileID(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setUserProfileID('user123');
 
@@ -507,7 +508,7 @@ void main() {
 
     test('calls platform bridge with null', () async {
       when(mockPlatformBridge.setUserProfileID(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setUserProfileID(null);
 
@@ -518,7 +519,7 @@ void main() {
   group('AppMetrica.setAdvIdentifiersTracking', () {
     test('calls platform bridge', () async {
       when(mockPlatformBridge.setAdvIdentifiersTracking(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.setAdvIdentifiersTracking(true);
 
@@ -529,7 +530,7 @@ void main() {
   group('AppMetrica.pauseSession', () {
     test('calls platform bridge', () async {
       when(mockPlatformBridge.pauseSession())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.pauseSession();
 
@@ -540,7 +541,7 @@ void main() {
   group('AppMetrica.resumeSession', () {
     test('calls platform bridge', () async {
       when(mockPlatformBridge.resumeSession())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.resumeSession();
 
@@ -551,7 +552,7 @@ void main() {
   group('AppMetrica.sendEventsBuffer', () {
     test('calls platform bridge', () async {
       when(mockPlatformBridge.sendEventsBuffer())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.sendEventsBuffer();
 
@@ -562,7 +563,7 @@ void main() {
   group('AppMetrica.clearAppEnvironment', () {
     test('calls platform bridge', () async {
       when(mockPlatformBridge.clearAppEnvironment())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.clearAppEnvironment();
 
@@ -573,7 +574,7 @@ void main() {
   group('AppMetrica.putAppEnvironmentValue', () {
     test('calls platform bridge with key and value', () async {
       when(mockPlatformBridge.putAppEnvironmentValue(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.putAppEnvironmentValue('env_key', 'env_value');
 
@@ -583,7 +584,7 @@ void main() {
 
     test('calls platform bridge with null value', () async {
       when(mockPlatformBridge.putAppEnvironmentValue(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.putAppEnvironmentValue('env_key', null);
 
@@ -595,7 +596,7 @@ void main() {
   group('AppMetrica.putErrorEnvironmentValue', () {
     test('calls platform bridge with key and value', () async {
       when(mockPlatformBridge.putErrorEnvironmentValue(any, any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.putErrorEnvironmentValue('error_key', 'error_value');
 
@@ -608,16 +609,16 @@ void main() {
   group('AppMetrica.reportExternalAttribution', () {
     test('calls platform bridge with adjust attribution', () async {
       when(mockPlatformBridge.reportExternalAttribution(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final attribution = AppMetricaExternalAttribution.adjust(
+      final AppMetricaExternalAttribution attribution = AppMetricaExternalAttribution.adjust(
         trackerToken: 'token123',
         network: 'facebook',
       );
 
       await AppMetrica.reportExternalAttribution(attribution);
 
-      final captured = verify(
+      final ExternalAttributionPigeon captured = verify(
               mockPlatformBridge.reportExternalAttribution(captureAny))
           .captured
           .single as ExternalAttributionPigeon;
@@ -628,18 +629,18 @@ void main() {
   group('AppMetrica.deviceId', () {
     test('returns device id from platform bridge', () async {
       when(mockPlatformBridge.getDeviceId())
-          .thenAnswer((_) => Future.value('device123'));
+          .thenAnswer((Invocation _) => Future<String?>.value('device123'));
 
-      final result = await AppMetrica.deviceId;
+      final String? result = await AppMetrica.deviceId;
 
       expect(result, 'device123');
     });
 
     test('returns null when device id is not available', () async {
       when(mockPlatformBridge.getDeviceId())
-          .thenAnswer((_) => Future.value(null));
+          .thenAnswer((Invocation _) => Future<String?>.value(null));
 
-      final result = await AppMetrica.deviceId;
+      final String? result = await AppMetrica.deviceId;
 
       expect(result, null);
     });
@@ -648,9 +649,9 @@ void main() {
   group('AppMetrica.uuid', () {
     test('returns uuid from platform bridge', () async {
       when(mockPlatformBridge.getUuid())
-          .thenAnswer((_) => Future.value('uuid123'));
+          .thenAnswer((Invocation _) => Future<String?>.value('uuid123'));
 
-      final result = await AppMetrica.uuid;
+      final String? result = await AppMetrica.uuid;
 
       expect(result, 'uuid123');
     });
@@ -659,9 +660,9 @@ void main() {
   group('AppMetrica.libraryVersion', () {
     test('returns library version from platform bridge', () async {
       when(mockPlatformBridge.getLibraryVersion())
-          .thenAnswer((_) => Future.value('5.0.0'));
+          .thenAnswer((Invocation _) => Future<String>.value('5.0.0'));
 
-      final result = await AppMetrica.libraryVersion;
+      final String result = await AppMetrica.libraryVersion;
 
       expect(result, '5.0.0');
     });
@@ -670,9 +671,9 @@ void main() {
   group('AppMetrica.libraryApiLevel', () {
     test('returns api level from platform bridge', () async {
       when(mockPlatformBridge.getLibraryApiLevel())
-          .thenAnswer((_) => Future.value(100));
+          .thenAnswer((Invocation _) => Future<int>.value(100));
 
-      final result = await AppMetrica.libraryApiLevel;
+      final int result = await AppMetrica.libraryApiLevel;
 
       expect(result, 100);
     });
@@ -681,7 +682,7 @@ void main() {
   group('AppMetrica.enableActivityAutoTracking', () {
     test('calls platform bridge', () async {
       when(mockPlatformBridge.enableActivityAutoTracking())
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
       await AppMetrica.enableActivityAutoTracking();
 
@@ -692,9 +693,9 @@ void main() {
   group('AppMetrica.getReporter', () {
     test('returns reporter and touches it on platform bridge', () async {
       when(mockPlatformBridge.touchReporter(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final reporter = AppMetrica.getReporter('reporter-key');
+      final AppMetricaReporter reporter = AppMetrica.getReporter('reporter-key');
 
       expect(reporter, isNotNull);
       verify(mockPlatformBridge.touchReporter('reporter-key')).called(1);
@@ -702,20 +703,20 @@ void main() {
 
     test('returns same reporter for same api key', () async {
       when(mockPlatformBridge.touchReporter(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final reporter1 = AppMetrica.getReporter('reporter-key');
-      final reporter2 = AppMetrica.getReporter('reporter-key');
+      final AppMetricaReporter reporter1 = AppMetrica.getReporter('reporter-key');
+      final AppMetricaReporter reporter2 = AppMetrica.getReporter('reporter-key');
 
       expect(identical(reporter1, reporter2), true);
     });
 
     test('returns different reporters for different api keys', () async {
       when(mockPlatformBridge.touchReporter(any))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((Invocation _) => Future<void>.value());
 
-      final reporter1 = AppMetrica.getReporter('reporter-key-1');
-      final reporter2 = AppMetrica.getReporter('reporter-key-2');
+      final AppMetricaReporter reporter1 = AppMetrica.getReporter('reporter-key-1');
+      final AppMetricaReporter reporter2 = AppMetrica.getReporter('reporter-key-2');
 
       expect(identical(reporter1, reporter2), false);
     });

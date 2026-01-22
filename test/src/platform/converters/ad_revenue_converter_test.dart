@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('AdRevenueConverter', () {
     test('converts all fields correctly', () {
-      final adRevenue = AppMetricaAdRevenue(
+      final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
         adRevenue: Decimal.parse('0.05'),
         currency: 'USD',
         adType: AppMetricaAdType.banner,
@@ -17,10 +17,10 @@ void main() {
         adPlacementId: 'placement_456',
         adPlacementName: 'Home Screen',
         precision: 'publisher_defined',
-        payload: {'key1': 'value1', 'key2': 'value2'},
+        payload: <String, String>{'key1': 'value1', 'key2': 'value2'},
       );
 
-      final pigeon = adRevenue.toPigeon();
+      final AdRevenuePigeon pigeon = adRevenue.toPigeon();
 
       expect(pigeon.adRevenue, '0.05');
       expect(pigeon.currency, 'USD');
@@ -31,16 +31,16 @@ void main() {
       expect(pigeon.adPlacementId, 'placement_456');
       expect(pigeon.adPlacementName, 'Home Screen');
       expect(pigeon.precision, 'publisher_defined');
-      expect(pigeon.payload, {'key1': 'value1', 'key2': 'value2'});
+      expect(pigeon.payload, <String, String>{'key1': 'value1', 'key2': 'value2'});
     });
 
     test('converts only required fields', () {
-      final adRevenue = AppMetricaAdRevenue(
+      final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
         adRevenue: Decimal.parse('1.23'),
         currency: 'EUR',
       );
 
-      final pigeon = adRevenue.toPigeon();
+      final AdRevenuePigeon pigeon = adRevenue.toPigeon();
 
       expect(pigeon.adRevenue, '1.23');
       expect(pigeon.currency, 'EUR');
@@ -55,30 +55,30 @@ void main() {
     });
 
     test('converts Decimal with many decimal places', () {
-      final adRevenue = AppMetricaAdRevenue(
+      final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
         adRevenue: Decimal.parse('0.00123456789'),
         currency: 'USD',
       );
 
-      final pigeon = adRevenue.toPigeon();
+      final AdRevenuePigeon pigeon = adRevenue.toPigeon();
 
       expect(pigeon.adRevenue, '0.00123456789');
     });
 
     test('converts large Decimal values', () {
-      final adRevenue = AppMetricaAdRevenue(
+      final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
         adRevenue: Decimal.parse('999999999.99'),
         currency: 'USD',
       );
 
-      final pigeon = adRevenue.toPigeon();
+      final AdRevenuePigeon pigeon = adRevenue.toPigeon();
 
       expect(pigeon.adRevenue, '999999999.99');
     });
 
     group('adType conversion', () {
       test('converts unknown', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.unknown,
@@ -88,7 +88,7 @@ void main() {
       });
 
       test('converts native', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.native,
@@ -98,7 +98,7 @@ void main() {
       });
 
       test('converts banner', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.banner,
@@ -108,7 +108,7 @@ void main() {
       });
 
       test('converts rewarded', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.rewarded,
@@ -118,7 +118,7 @@ void main() {
       });
 
       test('converts interstitial', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.interstitial,
@@ -128,7 +128,7 @@ void main() {
       });
 
       test('converts mrec', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.mrec,
@@ -138,7 +138,7 @@ void main() {
       });
 
       test('converts appOpen', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.appOpen,
@@ -148,7 +148,7 @@ void main() {
       });
 
       test('converts other', () {
-        final adRevenue = AppMetricaAdRevenue(
+        final AppMetricaAdRevenue adRevenue = AppMetricaAdRevenue(
           adRevenue: Decimal.one,
           currency: 'USD',
           adType: AppMetricaAdType.other,

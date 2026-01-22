@@ -5,3 +5,9 @@ analyzer:
     - "lib/**/*pigeon.dart"
     - "pigeons/*.dart"
     - "test/*.mocks.dart"
+
+linter:
+  rules:
+    always_specify_types: true
+    avoid_types_on_closure_parameters: false
+    type_annotate_public_apis: true

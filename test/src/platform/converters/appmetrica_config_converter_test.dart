@@ -1,13 +1,14 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appmetrica_plugin/src/platform/converters/appmetrica_config_converter.dart';
+import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppMetricaConfigConverter', () {
     test('converts only api key', () {
-      const config = AppMetricaConfig('test-api-key');
+      const AppMetricaConfig config = AppMetricaConfig('test-api-key');
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.apiKey, 'test-api-key');
       expect(pigeon.advIdentifiersTracking, null);
@@ -24,21 +25,21 @@ void main() {
     });
 
     test('converts all fields', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'full-api-key',
         advIdentifiersTracking: true,
         anrMonitoring: true,
         anrMonitoringTimeout: 5,
         appBuildNumber: 123,
-        appEnvironment: {'env_key': 'env_value'},
+        appEnvironment: <String, String>{'env_key': 'env_value'},
         appOpenTrackingEnabled: true,
         appVersion: '2.0.0',
         crashReporting: true,
-        customHosts: ['host1.example.com', 'host2.example.com'],
+        customHosts: <String>['host1.example.com', 'host2.example.com'],
         dataSendingEnabled: true,
         deviceType: 'phone',
         dispatchPeriodSeconds: 60,
-        errorEnvironment: {'error_key': 'error_value'},
+        errorEnvironment: <String, String>{'error_key': 'error_value'},
         firstActivationAsUpdate: true,
         location: AppMetricaLocation(55.751244, 37.618423),
         locationTracking: true,
@@ -53,22 +54,22 @@ void main() {
         userProfileID: 'user_123',
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.apiKey, 'full-api-key');
       expect(pigeon.advIdentifiersTracking, true);
       expect(pigeon.anrMonitoring, true);
       expect(pigeon.anrMonitoringTimeout, 5);
       expect(pigeon.appBuildNumber, 123);
-      expect(pigeon.appEnvironment, {'env_key': 'env_value'});
+      expect(pigeon.appEnvironment, <String, String>{'env_key': 'env_value'});
       expect(pigeon.appOpenTrackingEnabled, true);
       expect(pigeon.appVersion, '2.0.0');
       expect(pigeon.crashReporting, true);
-      expect(pigeon.customHosts, ['host1.example.com', 'host2.example.com']);
+      expect(pigeon.customHosts, <String>['host1.example.com', 'host2.example.com']);
       expect(pigeon.dataSendingEnabled, true);
       expect(pigeon.deviceType, 'phone');
       expect(pigeon.dispatchPeriodSeconds, 60);
-      expect(pigeon.errorEnvironment, {'error_key': 'error_value'});
+      expect(pigeon.errorEnvironment, <String, String>{'error_key': 'error_value'});
       expect(pigeon.firstActivationAsUpdate, true);
       expect(pigeon.location?.latitude, 55.751244);
       expect(pigeon.location?.longitude, 37.618423);
@@ -85,7 +86,7 @@ void main() {
     });
 
     test('converts false boolean values', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         advIdentifiersTracking: false,
         anrMonitoring: false,
@@ -100,7 +101,7 @@ void main() {
         sessionsAutoTrackingEnabled: false,
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.advIdentifiersTracking, false);
       expect(pigeon.anrMonitoring, false);
@@ -116,7 +117,7 @@ void main() {
     });
 
     test('converts location with all fields', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         location: AppMetricaLocation(
           55.751244,
@@ -130,7 +131,7 @@ void main() {
         ),
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.location?.latitude, 55.751244);
       expect(pigeon.location?.longitude, 37.618423);
@@ -143,60 +144,60 @@ void main() {
     });
 
     test('converts preload info with additional info', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         preloadInfo: AppMetricaPreloadInfo(
           'tracking_id',
-          additionalInfo: {'source': 'partner', 'campaign': 'promo'},
+          additionalInfo: <String, String>{'source': 'partner', 'campaign': 'promo'},
         ),
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.preloadInfo?.trackingId, 'tracking_id');
-      expect(pigeon.preloadInfo?.additionalInfo, {
+      expect(pigeon.preloadInfo?.additionalInfo, <String, String>{
         'source': 'partner',
         'campaign': 'promo',
       });
     });
 
     test('converts empty environments', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
-        appEnvironment: {},
-        errorEnvironment: {},
+        appEnvironment: <String, String>{},
+        errorEnvironment: <String, String>{},
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
-      expect(pigeon.appEnvironment, {});
-      expect(pigeon.errorEnvironment, {});
+      expect(pigeon.appEnvironment, <String, String>{});
+      expect(pigeon.errorEnvironment, <String, String>{});
     });
 
     test('converts empty custom hosts', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
-        customHosts: [],
+        customHosts: <String>[],
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
-      expect(pigeon.customHosts, []);
+      expect(pigeon.customHosts, <String>[]);
     });
 
     test('converts minimum session timeout', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         sessionTimeout: 10,
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.sessionTimeout, 10);
     });
 
     test('converts zero values', () {
-      const config = AppMetricaConfig(
+      const AppMetricaConfig config = AppMetricaConfig(
         'test-api-key',
         anrMonitoringTimeout: 0,
         appBuildNumber: 0,
@@ -206,7 +207,7 @@ void main() {
         sessionTimeout: 0,
       );
 
-      final pigeon = config.toPigeon();
+      final AppMetricaConfigPigeon pigeon = config.toPigeon();
 
       expect(pigeon.anrMonitoringTimeout, 0);
       expect(pigeon.appBuildNumber, 0);

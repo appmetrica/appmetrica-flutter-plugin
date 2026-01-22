@@ -1,63 +1,64 @@
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appmetrica_plugin/src/platform/converters/ecommerce_converter.dart';
+import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ECommerceAmountConverter', () {
     test('converts amount with integer value', () {
-      final amount = AppMetricaECommerceAmount(
+      final AppMetricaECommerceAmount amount = AppMetricaECommerceAmount(
         amount: Decimal.parse('100'),
         currency: 'USD',
       );
 
-      final pigeon = amount.toPigeon();
+      final ECommerceAmountPigeon pigeon = amount.toPigeon();
 
       expect(pigeon.amount, '100');
       expect(pigeon.currency, 'USD');
     });
 
     test('converts amount with decimal value', () {
-      final amount = AppMetricaECommerceAmount(
+      final AppMetricaECommerceAmount amount = AppMetricaECommerceAmount(
         amount: Decimal.parse('99.99'),
         currency: 'EUR',
       );
 
-      final pigeon = amount.toPigeon();
+      final ECommerceAmountPigeon pigeon = amount.toPigeon();
 
       expect(pigeon.amount, '99.99');
       expect(pigeon.currency, 'EUR');
     });
 
     test('converts amount with many decimal places', () {
-      final amount = AppMetricaECommerceAmount(
+      final AppMetricaECommerceAmount amount = AppMetricaECommerceAmount(
         amount: Decimal.parse('0.00000001'),
         currency: 'BTC',
       );
 
-      final pigeon = amount.toPigeon();
+      final ECommerceAmountPigeon pigeon = amount.toPigeon();
 
       expect(pigeon.amount, '0.00000001');
     });
 
     test('converts zero amount', () {
-      final amount = AppMetricaECommerceAmount(
+      final AppMetricaECommerceAmount amount = AppMetricaECommerceAmount(
         amount: Decimal.zero,
         currency: 'USD',
       );
 
-      final pigeon = amount.toPigeon();
+      final ECommerceAmountPigeon pigeon = amount.toPigeon();
 
       expect(pigeon.amount, '0');
     });
 
     test('converts negative amount', () {
-      final amount = AppMetricaECommerceAmount(
+      final AppMetricaECommerceAmount amount = AppMetricaECommerceAmount(
         amount: Decimal.parse('-50.00'),
         currency: 'USD',
       );
 
-      final pigeon = amount.toPigeon();
+      final ECommerceAmountPigeon pigeon = amount.toPigeon();
 
       expect(pigeon.amount, '-50');
     });
@@ -65,14 +66,14 @@ void main() {
 
   group('ECommercePriceConverter', () {
     test('converts price with fiat only', () {
-      final price = AppMetricaECommercePrice(
+      final AppMetricaECommercePrice price = AppMetricaECommercePrice(
         fiat: AppMetricaECommerceAmount(
           amount: Decimal.parse('29.99'),
           currency: 'USD',
         ),
       );
 
-      final pigeon = price.toPigeon();
+      final ECommercePricePigeon pigeon = price.toPigeon();
 
       expect(pigeon.fiat.amount, '29.99');
       expect(pigeon.fiat.currency, 'USD');
@@ -80,12 +81,12 @@ void main() {
     });
 
     test('converts price with internal components', () {
-      final price = AppMetricaECommercePrice(
+      final AppMetricaECommercePrice price = AppMetricaECommercePrice(
         fiat: AppMetricaECommerceAmount(
           amount: Decimal.parse('100'),
           currency: 'USD',
         ),
-        internalComponents: [
+        internalComponents: <AppMetricaECommerceAmount>[
           AppMetricaECommerceAmount(
             amount: Decimal.parse('500'),
             currency: 'COINS',
@@ -97,7 +98,7 @@ void main() {
         ],
       );
 
-      final pigeon = price.toPigeon();
+      final ECommercePricePigeon pigeon = price.toPigeon();
 
       expect(pigeon.fiat.amount, '100');
       expect(pigeon.internalComponents?.length, 2);
@@ -108,15 +109,15 @@ void main() {
     });
 
     test('converts price with empty internal components', () {
-      final price = AppMetricaECommercePrice(
+      final AppMetricaECommercePrice price = AppMetricaECommercePrice(
         fiat: AppMetricaECommerceAmount(
           amount: Decimal.one,
           currency: 'USD',
         ),
-        internalComponents: [],
+        internalComponents: <AppMetricaECommerceAmount>[],
       );
 
-      final pigeon = price.toPigeon();
+      final ECommercePricePigeon pigeon = price.toPigeon();
 
       expect(pigeon.internalComponents, isEmpty);
     });
@@ -124,25 +125,25 @@ void main() {
 
   group('ECommerceScreenConverter', () {
     test('converts screen with all fields', () {
-      const screen = AppMetricaECommerceScreen(
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(
         name: 'ProductList',
-        categoriesPath: ['Electronics', 'Phones', 'Smartphones'],
+        categoriesPath: <String>['Electronics', 'Phones', 'Smartphones'],
         searchQuery: 'iphone 15',
-        payload: {'source': 'search', 'filter': 'price_asc'},
+        payload: <String, String>{'source': 'search', 'filter': 'price_asc'},
       );
 
-      final pigeon = screen.toPigeon();
+      final ECommerceScreenPigeon pigeon = screen.toPigeon();
 
       expect(pigeon.name, 'ProductList');
-      expect(pigeon.categoriesPath, ['Electronics', 'Phones', 'Smartphones']);
+      expect(pigeon.categoriesPath, <String>['Electronics', 'Phones', 'Smartphones']);
       expect(pigeon.searchQuery, 'iphone 15');
-      expect(pigeon.payload, {'source': 'search', 'filter': 'price_asc'});
+      expect(pigeon.payload, <String, String>{'source': 'search', 'filter': 'price_asc'});
     });
 
     test('converts screen with only name', () {
-      const screen = AppMetricaECommerceScreen(name: 'HomePage');
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(name: 'HomePage');
 
-      final pigeon = screen.toPigeon();
+      final ECommerceScreenPigeon pigeon = screen.toPigeon();
 
       expect(pigeon.name, 'HomePage');
       expect(pigeon.categoriesPath, null);
@@ -151,14 +152,14 @@ void main() {
     });
 
     test('converts screen with empty fields', () {
-      const screen = AppMetricaECommerceScreen(
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(
         name: '',
-        categoriesPath: [],
+        categoriesPath: <String>[],
         searchQuery: '',
-        payload: {},
+        payload: <String, String>{},
       );
 
-      final pigeon = screen.toPigeon();
+      final ECommerceScreenPigeon pigeon = screen.toPigeon();
 
       expect(pigeon.name, '');
       expect(pigeon.categoriesPath, isEmpty);
@@ -167,13 +168,13 @@ void main() {
     });
 
     test('converts screen with unicode characters', () {
-      const screen = AppMetricaECommerceScreen(
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(
         name: 'Категория товаров',
         searchQuery: '手机',
-        payload: {'emoji': '🛒'},
+        payload: <String, String>{'emoji': '🛒'},
       );
 
-      final pigeon = screen.toPigeon();
+      final ECommerceScreenPigeon pigeon = screen.toPigeon();
 
       expect(pigeon.name, 'Категория товаров');
       expect(pigeon.searchQuery, '手机');
@@ -183,11 +184,11 @@ void main() {
 
   group('ECommerceProductConverter', () {
     test('converts product with all fields', () {
-      final product = AppMetricaECommerceProduct(
+      final AppMetricaECommerceProduct product = AppMetricaECommerceProduct(
         sku: 'SKU-12345',
         name: 'iPhone 15 Pro',
-        categoriesPath: ['Electronics', 'Phones'],
-        payload: {'brand': 'Apple', 'color': 'Black'},
+        categoriesPath: <String>['Electronics', 'Phones'],
+        payload: <String, String>{'brand': 'Apple', 'color': 'Black'},
         actualPrice: AppMetricaECommercePrice(
           fiat: AppMetricaECommerceAmount(
             amount: Decimal.parse('999.00'),
@@ -200,24 +201,24 @@ void main() {
             currency: 'USD',
           ),
         ),
-        promocodes: ['SALE10', 'NEWYEAR'],
+        promocodes: <String>['SALE10', 'NEWYEAR'],
       );
 
-      final pigeon = product.toPigeon();
+      final ECommerceProductPigeon pigeon = product.toPigeon();
 
       expect(pigeon.sku, 'SKU-12345');
       expect(pigeon.name, 'iPhone 15 Pro');
-      expect(pigeon.categoriesPath, ['Electronics', 'Phones']);
-      expect(pigeon.payload, {'brand': 'Apple', 'color': 'Black'});
+      expect(pigeon.categoriesPath, <String>['Electronics', 'Phones']);
+      expect(pigeon.payload, <String, String>{'brand': 'Apple', 'color': 'Black'});
       expect(pigeon.actualPrice?.fiat.amount, '999');
       expect(pigeon.originalPrice?.fiat.amount, '1099');
-      expect(pigeon.promocodes, ['SALE10', 'NEWYEAR']);
+      expect(pigeon.promocodes, <String>['SALE10', 'NEWYEAR']);
     });
 
     test('converts product with only sku', () {
-      const product = AppMetricaECommerceProduct(sku: 'MINIMAL-SKU');
+      const AppMetricaECommerceProduct product = AppMetricaECommerceProduct(sku: 'MINIMAL-SKU');
 
-      final pigeon = product.toPigeon();
+      final ECommerceProductPigeon pigeon = product.toPigeon();
 
       expect(pigeon.sku, 'MINIMAL-SKU');
       expect(pigeon.name, null);
@@ -229,12 +230,12 @@ void main() {
     });
 
     test('converts product with empty promocodes', () {
-      const product = AppMetricaECommerceProduct(
+      const AppMetricaECommerceProduct product = AppMetricaECommerceProduct(
         sku: 'SKU-001',
-        promocodes: [],
+        promocodes: <String>[],
       );
 
-      final pigeon = product.toPigeon();
+      final ECommerceProductPigeon pigeon = product.toPigeon();
 
       expect(pigeon.promocodes, isEmpty);
     });
@@ -242,13 +243,13 @@ void main() {
 
   group('ECommerceReferrerConverter', () {
     test('converts referrer with all fields', () {
-      const referrer = AppMetricaECommerceReferrer(
+      const AppMetricaECommerceReferrer referrer = AppMetricaECommerceReferrer(
         type: 'button',
         identifier: 'add_to_cart_button',
         screen: AppMetricaECommerceScreen(name: 'ProductPage'),
       );
 
-      final pigeon = referrer.toPigeon();
+      final ECommerceReferrerPigeon pigeon = referrer.toPigeon();
 
       expect(pigeon.type, 'button');
       expect(pigeon.identifier, 'add_to_cart_button');
@@ -256,9 +257,9 @@ void main() {
     });
 
     test('converts referrer with no fields', () {
-      const referrer = AppMetricaECommerceReferrer();
+      const AppMetricaECommerceReferrer referrer = AppMetricaECommerceReferrer();
 
-      final pigeon = referrer.toPigeon();
+      final ECommerceReferrerPigeon pigeon = referrer.toPigeon();
 
       expect(pigeon.type, null);
       expect(pigeon.identifier, null);
@@ -266,9 +267,9 @@ void main() {
     });
 
     test('converts referrer with only type', () {
-      const referrer = AppMetricaECommerceReferrer(type: 'deeplink');
+      const AppMetricaECommerceReferrer referrer = AppMetricaECommerceReferrer(type: 'deeplink');
 
-      final pigeon = referrer.toPigeon();
+      final ECommerceReferrerPigeon pigeon = referrer.toPigeon();
 
       expect(pigeon.type, 'deeplink');
       expect(pigeon.identifier, null);
@@ -277,7 +278,7 @@ void main() {
 
   group('ECommerceCartItemConverter', () {
     test('converts cart item with all fields', () {
-      final cartItem = AppMetricaECommerceCartItem(
+      final AppMetricaECommerceCartItem cartItem = AppMetricaECommerceCartItem(
         product: const AppMetricaECommerceProduct(sku: 'PROD-001', name: 'Test Product'),
         quantity: Decimal.parse('2'),
         revenue: AppMetricaECommercePrice(
@@ -289,7 +290,7 @@ void main() {
         referrer: const AppMetricaECommerceReferrer(type: 'recommendation'),
       );
 
-      final pigeon = cartItem.toPigeon();
+      final ECommerceCartItemPigeon pigeon = cartItem.toPigeon();
 
       expect(pigeon.product.sku, 'PROD-001');
       expect(pigeon.quantity, '2');
@@ -298,7 +299,7 @@ void main() {
     });
 
     test('converts cart item without referrer', () {
-      final cartItem = AppMetricaECommerceCartItem(
+      final AppMetricaECommerceCartItem cartItem = AppMetricaECommerceCartItem(
         product: const AppMetricaECommerceProduct(sku: 'PROD-002'),
         quantity: Decimal.parse('1.5'),
         revenue: AppMetricaECommercePrice(
@@ -309,7 +310,7 @@ void main() {
         ),
       );
 
-      final pigeon = cartItem.toPigeon();
+      final ECommerceCartItemPigeon pigeon = cartItem.toPigeon();
 
       expect(pigeon.product.sku, 'PROD-002');
       expect(pigeon.quantity, '1.5');
@@ -317,7 +318,7 @@ void main() {
     });
 
     test('converts cart item with fractional quantity', () {
-      final cartItem = AppMetricaECommerceCartItem(
+      final AppMetricaECommerceCartItem cartItem = AppMetricaECommerceCartItem(
         product: const AppMetricaECommerceProduct(sku: 'WEIGHT-001'),
         quantity: Decimal.parse('0.750'),
         revenue: AppMetricaECommercePrice(
@@ -328,7 +329,7 @@ void main() {
         ),
       );
 
-      final pigeon = cartItem.toPigeon();
+      final ECommerceCartItemPigeon pigeon = cartItem.toPigeon();
 
       expect(pigeon.quantity, '0.75');
     });
@@ -336,9 +337,9 @@ void main() {
 
   group('ECommerceOrderConverter', () {
     test('converts order with all fields', () {
-      final order = AppMetricaECommerceOrder(
+      final AppMetricaECommerceOrder order = AppMetricaECommerceOrder(
         identifier: 'ORDER-2024-001',
-        items: [
+        items: <AppMetricaECommerceCartItem>[
           AppMetricaECommerceCartItem(
             product: const AppMetricaECommerceProduct(sku: 'SKU-1'),
             quantity: Decimal.one,
@@ -360,22 +361,22 @@ void main() {
             ),
           ),
         ],
-        payload: {'coupon': 'DISCOUNT20', 'shipping': 'express'},
+        payload: <String, String>{'coupon': 'DISCOUNT20', 'shipping': 'express'},
       );
 
-      final pigeon = order.toPigeon();
+      final ECommerceOrderPigeon pigeon = order.toPigeon();
 
       expect(pigeon.identifier, 'ORDER-2024-001');
       expect(pigeon.items.length, 2);
       expect(pigeon.items[0]?.product.sku, 'SKU-1');
       expect(pigeon.items[1]?.product.sku, 'SKU-2');
-      expect(pigeon.payload, {'coupon': 'DISCOUNT20', 'shipping': 'express'});
+      expect(pigeon.payload, <String, String>{'coupon': 'DISCOUNT20', 'shipping': 'express'});
     });
 
     test('converts order without payload', () {
-      final order = AppMetricaECommerceOrder(
+      final AppMetricaECommerceOrder order = AppMetricaECommerceOrder(
         identifier: 'ORDER-002',
-        items: [
+        items: <AppMetricaECommerceCartItem>[
           AppMetricaECommerceCartItem(
             product: const AppMetricaECommerceProduct(sku: 'ITEM-1'),
             quantity: Decimal.one,
@@ -389,7 +390,7 @@ void main() {
         ],
       );
 
-      final pigeon = order.toPigeon();
+      final ECommerceOrderPigeon pigeon = order.toPigeon();
 
       expect(pigeon.identifier, 'ORDER-002');
       expect(pigeon.items.length, 1);
@@ -399,10 +400,10 @@ void main() {
 
   group('ECommerceEventConverter', () {
     test('converts showScreenEvent', () {
-      const screen = AppMetricaECommerceScreen(name: 'MainScreen');
-      final event = AppMetricaECommerce.showScreenEvent(screen);
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(name: 'MainScreen');
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.showScreenEvent(screen);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'show_screen_event');
       expect(pigeon.screen?.name, 'MainScreen');
@@ -412,11 +413,11 @@ void main() {
     });
 
     test('converts showProductCardEvent', () {
-      const product = AppMetricaECommerceProduct(sku: 'SKU-CARD');
-      const screen = AppMetricaECommerceScreen(name: 'SearchResults');
-      final event = AppMetricaECommerce.showProductCardEvent(product, screen);
+      const AppMetricaECommerceProduct product = AppMetricaECommerceProduct(sku: 'SKU-CARD');
+      const AppMetricaECommerceScreen screen = AppMetricaECommerceScreen(name: 'SearchResults');
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.showProductCardEvent(product, screen);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'show_product_card_event');
       expect(pigeon.product?.sku, 'SKU-CARD');
@@ -424,12 +425,12 @@ void main() {
     });
 
     test('converts showProductDetailsEvent with referrer', () {
-      const product = AppMetricaECommerceProduct(sku: 'SKU-DETAILS');
-      const referrer = AppMetricaECommerceReferrer(type: 'push');
-      final event =
+      const AppMetricaECommerceProduct product = AppMetricaECommerceProduct(sku: 'SKU-DETAILS');
+      const AppMetricaECommerceReferrer referrer = AppMetricaECommerceReferrer(type: 'push');
+      final AppMetricaECommerceEvent event =
           AppMetricaECommerce.showProductDetailsEvent(product, referrer);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'show_product_details_event');
       expect(pigeon.product?.sku, 'SKU-DETAILS');
@@ -437,10 +438,10 @@ void main() {
     });
 
     test('converts showProductDetailsEvent without referrer', () {
-      const product = AppMetricaECommerceProduct(sku: 'SKU-NO-REF');
-      final event = AppMetricaECommerce.showProductDetailsEvent(product, null);
+      const AppMetricaECommerceProduct product = AppMetricaECommerceProduct(sku: 'SKU-NO-REF');
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.showProductDetailsEvent(product, null);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'show_product_details_event');
       expect(pigeon.product?.sku, 'SKU-NO-REF');
@@ -448,7 +449,7 @@ void main() {
     });
 
     test('converts addCartItemEvent', () {
-      final cartItem = AppMetricaECommerceCartItem(
+      final AppMetricaECommerceCartItem cartItem = AppMetricaECommerceCartItem(
         product: const AppMetricaECommerceProduct(sku: 'ADD-SKU'),
         quantity: Decimal.one,
         revenue: AppMetricaECommercePrice(
@@ -458,16 +459,16 @@ void main() {
           ),
         ),
       );
-      final event = AppMetricaECommerce.addCartItemEvent(cartItem);
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.addCartItemEvent(cartItem);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'add_cart_item_event');
       expect(pigeon.cartItem?.product.sku, 'ADD-SKU');
     });
 
     test('converts removeCartItemEvent', () {
-      final cartItem = AppMetricaECommerceCartItem(
+      final AppMetricaECommerceCartItem cartItem = AppMetricaECommerceCartItem(
         product: const AppMetricaECommerceProduct(sku: 'REMOVE-SKU'),
         quantity: Decimal.one,
         revenue: AppMetricaECommercePrice(
@@ -477,18 +478,18 @@ void main() {
           ),
         ),
       );
-      final event = AppMetricaECommerce.removeCartItemEvent(cartItem);
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.removeCartItemEvent(cartItem);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'remove_cart_item_event');
       expect(pigeon.cartItem?.product.sku, 'REMOVE-SKU');
     });
 
     test('converts beginCheckoutEvent', () {
-      final order = AppMetricaECommerceOrder(
+      final AppMetricaECommerceOrder order = AppMetricaECommerceOrder(
         identifier: 'CHECKOUT-001',
-        items: [
+        items: <AppMetricaECommerceCartItem>[
           AppMetricaECommerceCartItem(
             product: const AppMetricaECommerceProduct(sku: 'CHECKOUT-ITEM'),
             quantity: Decimal.one,
@@ -501,18 +502,18 @@ void main() {
           ),
         ],
       );
-      final event = AppMetricaECommerce.beginCheckoutEvent(order);
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.beginCheckoutEvent(order);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'begin_checkout_event');
       expect(pigeon.order?.identifier, 'CHECKOUT-001');
     });
 
     test('converts purchaseEvent', () {
-      final order = AppMetricaECommerceOrder(
+      final AppMetricaECommerceOrder order = AppMetricaECommerceOrder(
         identifier: 'PURCHASE-001',
-        items: [
+        items: <AppMetricaECommerceCartItem>[
           AppMetricaECommerceCartItem(
             product: const AppMetricaECommerceProduct(sku: 'PURCHASE-ITEM'),
             quantity: Decimal.parse('3'),
@@ -524,15 +525,15 @@ void main() {
             ),
           ),
         ],
-        payload: {'payment_method': 'card'},
+        payload: <String, String>{'payment_method': 'card'},
       );
-      final event = AppMetricaECommerce.purchaseEvent(order);
+      final AppMetricaECommerceEvent event = AppMetricaECommerce.purchaseEvent(order);
 
-      final pigeon = event.toPigeon();
+      final ECommerceEventPigeon pigeon = event.toPigeon();
 
       expect(pigeon.eventType, 'purchase_event');
       expect(pigeon.order?.identifier, 'PURCHASE-001');
-      expect(pigeon.order?.payload, {'payment_method': 'card'});
+      expect(pigeon.order?.payload, <String, String>{'payment_method': 'card'});
     });
   });
 }

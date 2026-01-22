@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('AppMetricaDeferredDeeplinkReasonConverter', () {
     test('converts NOT_A_FIRST_LAUNCH', () {
-      const reason = AppMetricaDeferredDeeplinkReasonPigeon.NOT_A_FIRST_LAUNCH;
+      const AppMetricaDeferredDeeplinkReasonPigeon reason = AppMetricaDeferredDeeplinkReasonPigeon.NOT_A_FIRST_LAUNCH;
 
       expect(
         reason.toDart(),
@@ -15,7 +15,7 @@ void main() {
     });
 
     test('converts PARSE_ERROR', () {
-      const reason = AppMetricaDeferredDeeplinkReasonPigeon.PARSE_ERROR;
+      const AppMetricaDeferredDeeplinkReasonPigeon reason = AppMetricaDeferredDeeplinkReasonPigeon.PARSE_ERROR;
 
       expect(
         reason.toDart(),
@@ -24,7 +24,7 @@ void main() {
     });
 
     test('converts UNKNOWN', () {
-      const reason = AppMetricaDeferredDeeplinkReasonPigeon.UNKNOWN;
+      const AppMetricaDeferredDeeplinkReasonPigeon reason = AppMetricaDeferredDeeplinkReasonPigeon.UNKNOWN;
 
       expect(
         reason.toDart(),
@@ -33,7 +33,7 @@ void main() {
     });
 
     test('converts NO_REFERRER', () {
-      const reason = AppMetricaDeferredDeeplinkReasonPigeon.NO_REFERRER;
+      const AppMetricaDeferredDeeplinkReasonPigeon reason = AppMetricaDeferredDeeplinkReasonPigeon.NO_REFERRER;
 
       expect(
         reason.toDart(),
@@ -42,7 +42,7 @@ void main() {
     });
 
     test('converts NO_ERROR to unknown (fallback)', () {
-      const reason = AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR;
+      const AppMetricaDeferredDeeplinkReasonPigeon reason = AppMetricaDeferredDeeplinkReasonPigeon.NO_ERROR;
 
       expect(
         reason.toDart(),
@@ -53,7 +53,7 @@ void main() {
 
   group('AppMetricaDeferredDeeplinkRequestException', () {
     test('creates exception with all fields', () {
-      final exception = AppMetricaDeferredDeeplinkRequestException(
+      final AppMetricaDeferredDeeplinkRequestException exception = AppMetricaDeferredDeeplinkRequestException(
         AppMetricaDeferredDeeplinkErrorReason.notAFirstLaunch,
         'Not the first app launch',
         'Deferred deeplink is only available on first launch',
@@ -67,7 +67,7 @@ void main() {
     });
 
     test('creates exception with null message', () {
-      final exception = AppMetricaDeferredDeeplinkRequestException(
+      final AppMetricaDeferredDeeplinkRequestException exception = AppMetricaDeferredDeeplinkRequestException(
         AppMetricaDeferredDeeplinkErrorReason.noReferrer,
         'No referrer found',
         null,
@@ -79,7 +79,7 @@ void main() {
     });
 
     test('is an Exception', () {
-      final exception = AppMetricaDeferredDeeplinkRequestException(
+      final AppMetricaDeferredDeeplinkRequestException exception = AppMetricaDeferredDeeplinkRequestException(
         AppMetricaDeferredDeeplinkErrorReason.parseError,
         'Parse error',
         null,
