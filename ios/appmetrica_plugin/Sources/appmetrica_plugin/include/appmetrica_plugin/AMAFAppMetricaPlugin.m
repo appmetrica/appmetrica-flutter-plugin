@@ -28,6 +28,7 @@
     AMAFAppMetricaPlugin *instance = [AMAFAppMetricaPlugin sharedInstance];
     instance.deeplinkHolder = [[AMAFInitialDeepLinkHolderImplementation alloc] init];
     [registrar addApplicationDelegate:instance];
+    [registrar addSceneDelegate:instance];
 
     AMAFAppMetricaPigeonSetup(registrar.messenger, [[AMAFAppMetricaImplementation alloc] init]);
     AMAFAppMetricaLibraryAdapterPigeonSetup(registrar.messenger, [[AMAFAppMetricaLibraryAdapterImplementation alloc] init]);
@@ -62,6 +63,31 @@
         }
     }
     return openUrl;
+}
+
+- (NSURL *)extractDeeplinkFromConnectionOptions:(UISceneConnectionOptions *)options
+{
+    UIOpenURLContext *urlContext = options.URLContexts.anyObject;
+    if (urlContext.URL.absoluteString.length > 0) {
+        return urlContext.URL;
+    }
+    for (NSUserActivity *activity in options.userActivities) {
+        if (activity.webpageURL != nil) {
+            return activity.webpageURL;
+        }
+    }
+    return nil;
+}
+
+- (BOOL)scene:(UIScene *)scene
+    willConnectToSession:(UISceneSession *)session
+                 options:(UISceneConnectionOptions *)connectionOptions
+{
+    NSURL *url = [self extractDeeplinkFromConnectionOptions:connectionOptions];
+    if (url != nil) {
+        [self.deeplinkHolder setInitialDeeplink:[url absoluteString]];
+    }
+    return YES;
 }
 
 @end

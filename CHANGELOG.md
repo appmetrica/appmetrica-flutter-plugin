@@ -1,5 +1,6 @@
 ## 3.5.0
 
+- Add UIScene lifecycle support for iOS. Initial deeplink detection now works correctly in apps using UIScene.
 - Update minimum Flutter version to 3.38.0 (Dart SDK 3.10.0).
 - Fix crash on call `requestDeferredDeeplink`.
 

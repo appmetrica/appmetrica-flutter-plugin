@@ -1,7 +1,7 @@
 
 #import <Flutter/Flutter.h>
 
-@interface AMAFAppMetricaPlugin : NSObject<FlutterPlugin>
+@interface AMAFAppMetricaPlugin : NSObject<FlutterPlugin, FlutterSceneLifeCycleDelegate>
 
 + (instancetype)sharedInstance;
 
