@@ -16,8 +16,6 @@ extension StartupParamsItemStatusConverter on StartupParamsItemStatusPigeon {
         return AppMetricaStartupParamsItemStatus.providerUnavailable;
       case StartupParamsItemStatusPigeon.UNKNOWN_ERROR:
         return AppMetricaStartupParamsItemStatus.unknownError;
-      default:
-        return AppMetricaStartupParamsItemStatus.unknownError;
     }
   }
 }

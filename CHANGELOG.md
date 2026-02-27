@@ -1,5 +1,6 @@
 ## 3.5.0
 
+- Update minimum Flutter version to 3.38.0 (Dart SDK 3.10.0).
 - Fix crash on call `requestDeferredDeeplink`.
 
 ## 3.4.0

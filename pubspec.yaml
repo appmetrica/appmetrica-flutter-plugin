@@ -5,8 +5,8 @@ homepage: https://appmetrica.io/about
 repository: https://github.com/appmetrica/appmetrica-flutter-plugin
 
 environment:
-  sdk: ">=2.14.0 <4.0.0"
-  flutter: ">=2.0.0"
+  sdk: ">=3.10.0 <4.0.0"
+  flutter: ">=3.38.0"
 
 dependencies:
   flutter:
