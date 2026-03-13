@@ -80,12 +80,6 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    AppMetrica.reportReferralUrl("https://github.com/appmetrica");
-                  },
-                  child: const Text('Report Referral Url'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
                     AppMetrica.setLocationTracking(true);
                   },
                   child: const Text('Set Location Tracking'),

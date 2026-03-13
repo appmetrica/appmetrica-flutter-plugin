@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/appmetrica/appmetrica-sdk-ios",
-            from: "5.16.0"
+            .upToNextMajor(from: "6.1.0")
         ),
     ],
     targets: [

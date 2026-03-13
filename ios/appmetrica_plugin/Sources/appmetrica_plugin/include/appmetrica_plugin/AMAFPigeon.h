@@ -517,7 +517,6 @@ NSObject<FlutterMessageCodec> *AMAFAppMetricaPigeonGetCodec(void);
 - (void)reportEventEventName:(NSString *)eventName error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)reportEventWithJsonEventName:(NSString *)eventName attributesJson:(nullable NSString *)attributesJson error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)reportExternalAttributionExternalAttributionPigeon:(AMAFExternalAttributionPigeon *)externalAttributionPigeon error:(FlutterError *_Nullable *_Nonnull)error;
-- (void)reportReferralUrlReferralUrl:(NSString *)referralUrl error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)reportRevenueRevenue:(AMAFRevenuePigeon *)revenue error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)reportUnhandledExceptionError:(AMAFErrorDetailsPigeon *)error error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)reportUserProfileUserProfile:(AMAFUserProfilePigeon *)userProfile error:(FlutterError *_Nullable *_Nonnull)error;

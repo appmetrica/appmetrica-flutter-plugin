@@ -146,12 +146,6 @@ public class AppMetricaImpl implements Pigeon.AppMetricaPigeon {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public void reportReferralUrl(@NonNull String referralUrl) {
-        AppMetrica.reportReferralUrl(referralUrl);
-    }
-
-    @Override
     public void requestDeferredDeeplink(@NonNull Pigeon.Result<Pigeon.AppMetricaDeferredDeeplinkPigeon> result) {
         AppMetrica.requestDeferredDeeplink(new DeferredDeeplinkListener() {
             @Override

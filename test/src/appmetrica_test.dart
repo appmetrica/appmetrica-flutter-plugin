@@ -327,18 +327,6 @@ void main() {
     });
   });
 
-  group('AppMetrica.reportReferralUrl', () {
-    test('calls platform bridge with referral url', () async {
-      when(mockPlatformBridge.reportReferralUrl(any))
-          .thenAnswer((Invocation _) => Future<void>.value());
-
-      await AppMetrica.reportReferralUrl('https://example.com/referral');
-
-      verify(mockPlatformBridge.reportReferralUrl('https://example.com/referral'))
-          .called(1);
-    });
-  });
-
   group('AppMetrica.requestDeferredDeeplink', () {
     test('returns deeplink on success', () async {
       when(mockPlatformBridge.requestDeferredDeeplink()).thenAnswer(

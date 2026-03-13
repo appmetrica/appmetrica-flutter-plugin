@@ -1858,25 +1858,6 @@ void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObj
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
-        initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.reportReferralUrl"
-        binaryMessenger:binaryMessenger
-        codec:AMAFAppMetricaPigeonGetCodec()];
-    if (api) {
-      NSCAssert([api respondsToSelector:@selector(reportReferralUrlReferralUrl:error:)], @"AMAFAppMetricaPigeon api (%@) doesn't respond to @selector(reportReferralUrlReferralUrl:error:)", api);
-      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        NSArray *args = message;
-        NSString *arg_referralUrl = GetNullableObjectAtIndex(args, 0);
-        FlutterError *error;
-        [api reportReferralUrlReferralUrl:arg_referralUrl error:&error];
-        callback(wrapResult(nil, error));
-      }];
-    } else {
-      [channel setMessageHandler:nil];
-    }
-  }
-  {
-    FlutterBasicMessageChannel *channel =
-      [[FlutterBasicMessageChannel alloc]
         initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.reportRevenue"
         binaryMessenger:binaryMessenger
         codec:AMAFAppMetricaPigeonGetCodec()];

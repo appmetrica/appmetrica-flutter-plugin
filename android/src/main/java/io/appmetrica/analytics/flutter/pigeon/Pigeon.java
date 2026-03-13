@@ -4069,8 +4069,6 @@ public class Pigeon {
 
     void reportExternalAttribution(@NonNull ExternalAttributionPigeon externalAttributionPigeon);
 
-    void reportReferralUrl(@NonNull String referralUrl);
-
     void reportRevenue(@NonNull RevenuePigeon revenue);
 
     void reportUnhandledException(@NonNull ErrorDetailsPigeon error);
@@ -4543,30 +4541,6 @@ public class Pigeon {
                 ExternalAttributionPigeon externalAttributionPigeonArg = (ExternalAttributionPigeon) args.get(0);
                 try {
                   api.reportExternalAttribution(externalAttributionPigeonArg);
-                  wrapped.add(0, null);
-                }
- catch (Throwable exception) {
-                  ArrayList<Object> wrappedError = wrapError(exception);
-                  wrapped = wrappedError;
-                }
-                reply.reply(wrapped);
-              });
-        } else {
-          channel.setMessageHandler(null);
-        }
-      }
-      {
-        BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.reportReferralUrl", getCodec());
-        if (api != null) {
-          channel.setMessageHandler(
-              (message, reply) -> {
-                ArrayList<Object> wrapped = new ArrayList<Object>();
-                ArrayList<Object> args = (ArrayList<Object>) message;
-                String referralUrlArg = (String) args.get(0);
-                try {
-                  api.reportReferralUrl(referralUrlArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

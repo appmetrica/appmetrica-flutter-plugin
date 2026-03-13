@@ -20,7 +20,6 @@ abstract class PlatformBridge {
   Future<void> reportEvent(String eventName);
   Future<void> reportEventWithJson(String eventName, String? attributesJson);
   Future<void> reportAppOpen(String deeplink);
-  Future<void> reportReferralUrl(String referralUrl);
 
   // Errors
   Future<void> reportError(ErrorDetailsPigeon error, String? message);
@@ -121,10 +120,6 @@ class PigeonPlatformBridge implements PlatformBridge {
   @override
   Future<void> reportAppOpen(String deeplink) =>
       _pigeon.reportAppOpen(deeplink);
-
-  @override
-  Future<void> reportReferralUrl(String referralUrl) =>
-      _pigeon.reportReferralUrl(referralUrl);
 
   // Errors
 

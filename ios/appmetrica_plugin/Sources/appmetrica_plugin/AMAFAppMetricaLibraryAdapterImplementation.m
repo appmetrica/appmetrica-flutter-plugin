@@ -7,7 +7,7 @@
 
 - (void)subscribeForAutoCollectedDataApiKey:(NSString *)apiKey
                                       error:(FlutterError **)error {
-    [[AMAAppMetricaLibraryAdapter sharedInstance] subscribeForAutocollectedDataForApiKey:apiKey];
+    [[AMAAnalyticsLibraryAdapter sharedInstance] subscribeForAutocollectedDataForApiKey:apiKey];
 }
 
 @end

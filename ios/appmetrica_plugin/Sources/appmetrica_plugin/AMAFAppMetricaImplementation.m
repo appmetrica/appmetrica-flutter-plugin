@@ -124,11 +124,6 @@
     }
 }
 
-- (void)reportReferralUrlReferralUrl:(NSString *)referralUrl error:(FlutterError **)flutterError
-{
-    // METRIKALIB-9368: Removed
-}
-
 - (void)reportRevenueRevenue:(AMAFRevenuePigeon *)revenue error:(FlutterError **)flutterError
 {
     [AMAAppMetrica reportRevenue:[AMAFConverter convertRevenueInfo:revenue]

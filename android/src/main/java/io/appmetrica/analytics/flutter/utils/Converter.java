@@ -613,8 +613,6 @@ public class Converter {
                 return Pigeon.StartupParamsItemStatusPigeon.PROVIDER_UNAVAILABLE;
             case INVALID_VALUE_FROM_PROVIDER:
                 return Pigeon.StartupParamsItemStatusPigeon.INVALID_VALUE_FROM_PROVIDER;
-            case NETWORK_ERROR:
-                return Pigeon.StartupParamsItemStatusPigeon.NETWORK_ERROR;
             case FEATURE_DISABLED:
                 return Pigeon.StartupParamsItemStatusPigeon.FEATURE_DISABLED;
             default:

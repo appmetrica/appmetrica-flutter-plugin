@@ -149,12 +149,6 @@ class AppMetrica {
       String eventName, Map<String, Object>? attributes) =>
       _platform.reportEventWithJson(eventName, attributes != null ? jsonEncode(attributes) : null);
 
-  /// Sets the [referralUrl] of the application installation.
-  ///
-  /// The method can be used to track some traffic sources.
-  static Future<void> reportReferralUrl(String referralUrl) =>
-      _platform.reportReferralUrl(referralUrl);
-
   /// Sends the purchase information to the AppMetrica server.
   static Future<void> reportRevenue(AppMetricaRevenue revenue) =>
       _platform.reportRevenue(revenue.toPigeon());

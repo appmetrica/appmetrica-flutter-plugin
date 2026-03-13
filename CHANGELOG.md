@@ -3,6 +3,11 @@
 - Add UIScene lifecycle support for iOS. Initial deeplink detection now works correctly in apps using UIScene.
 - Update minimum Flutter version to 3.38.0 (Dart SDK 3.10.0).
 - Fix crash on call `requestDeferredDeeplink`.
+- Remove `AppMetrica.reportReferralUrl` method.
+- The specification of the native SDK version for iOS has been improved: now it defines a range from the minimum version up to the next major version.
+- Native SDK versions:
+  - Android: 8.0.0
+  - iOS: 6.1
 
 ## 3.4.0
 

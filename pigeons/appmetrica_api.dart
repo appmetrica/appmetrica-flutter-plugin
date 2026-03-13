@@ -310,8 +310,6 @@ abstract class AppMetricaPigeon {
 
   void reportExternalAttribution(ExternalAttributionPigeon externalAttributionPigeon);
 
-  void reportReferralUrl(String referralUrl);
-
   void reportRevenue(RevenuePigeon revenue);
 
   void reportUnhandledException(ErrorDetailsPigeon error);
