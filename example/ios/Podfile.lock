@@ -1,18 +1,17 @@
 PODS:
   - appmetrica_plugin (3.5.0):
-    - AppMetricaAnalytics (~> 6.1)
+    - AppMetricaAdSupport (~> 6.1)
+    - AppMetricaCore (~> 6.1)
+    - AppMetricaCoreExtension (~> 6.1)
+    - AppMetricaCrashes (~> 6.1)
+    - AppMetricaIDSync (~> 6.1)
     - AppMetricaLibraryAdapter (~> 6.1)
+    - AppMetricaScreenshot (~> 6.1)
+    - AppMetricaWebKit (~> 6.1)
     - Flutter
   - AppMetricaAdSupport (6.1.0):
     - AppMetricaCore (= 6.1.0)
     - AppMetricaCoreExtension (= 6.1.0)
-  - AppMetricaAnalytics (6.1.0):
-    - AppMetricaAdSupport (= 6.1.0)
-    - AppMetricaCore (= 6.1.0)
-    - AppMetricaCrashes (= 6.1.0)
-    - AppMetricaIDSync (= 6.1.0)
-    - AppMetricaScreenshot (= 6.1.0)
-    - AppMetricaWebKit (= 6.1.0)
   - AppMetricaCore (6.1.0):
     - AppMetricaCoreUtils (= 6.1.0)
     - AppMetricaEncodingUtils (= 6.1.0)
@@ -111,7 +110,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppMetricaAdSupport
-    - AppMetricaAnalytics
     - AppMetricaCore
     - AppMetricaCoreExtension
     - AppMetricaCoreUtils
@@ -142,9 +140,8 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  appmetrica_plugin: 3ce1cb28d6b56151a75d68c3ff9eeeee82cb3271
+  appmetrica_plugin: 7e70b3164308d722a39870be6fcf7e19a47d6ce8
   AppMetricaAdSupport: 751575955613b23e7ce0ef0426265518d790b16e
-  AppMetricaAnalytics: c090954b0f1ec9b321dd815901dac3193a19dd21
   AppMetricaCore: 3393a79e2a8ecc6ab9771836b57756d7b23c7f32
   AppMetricaCoreExtension: eadaf054b3a0828fc18d2fa6317dd2f2c40fa14b
   AppMetricaCoreUtils: c2f90bbabca393e82296c1fb487756cbb6a67a04
