@@ -39,6 +39,10 @@ class AppMetricaConfigPigeon {
   String? userProfileID;
 }
 
+class AppMetricaLibraryAdapterConfigPigeon {
+  bool? advIdentifiersTracking;
+}
+
 class LocationPigeon {
   double latitude;
   double longitude;
@@ -348,7 +352,11 @@ abstract class AppMetricaPigeon {
 
 @HostApi()
 abstract class AppMetricaLibraryAdapterPigeon {
+  void activate(AppMetricaLibraryAdapterConfigPigeon config);
+
   void subscribeForAutoCollectedData(String apiKey);
+
+  void setAdvIdentifiersTracking(bool enabled);
 }
 
 class ReporterConfigPigeon {

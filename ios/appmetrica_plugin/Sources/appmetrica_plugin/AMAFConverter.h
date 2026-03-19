@@ -2,20 +2,23 @@
 #import "include/appmetrica_plugin/AMAFPigeon.h"
 
 @class AMAAdRevenueInfo;
+@class AMAAnalyticsLibraryAdapterConfiguration;
 @class AMAAppMetricaConfiguration;
 @class AMAAppMetricaCrashesConfiguration;
-@class AMAReporterConfiguration;
 @class AMAECommerce;
-@class CLLocation;
 @class AMAPluginErrorDetails;
+@class AMAReporterConfiguration;
+@class AMARevenueInfo;
 @class AMAStackTraceElement;
 @class AMAUserProfile;
-@class AMARevenueInfo;
+@class CLLocation;
 
 @interface AMAFConverter : NSObject
 
 // region to native
 + (AMAAdRevenueInfo *)convertAdRevenue:(AMAFAdRevenuePigeon *)pigeon;
+
++ (AMAAnalyticsLibraryAdapterConfiguration *)convertAppMetricaLibraryAdapterConfiguration:(AMAFAppMetricaLibraryAdapterConfigPigeon *)pigeon;
 
 + (AMAReporterConfiguration *)convertReporterConfiguration:(AMAFReporterConfigPigeon *)pigeon;
 

@@ -5,6 +5,8 @@
 #import <AppMetricaCrashes/AppMetricaCrashes.h>
 #import <CoreLocation/CoreLocation.h>
 
+@import AppMetricaLibraryAdapter;
+
 @implementation AMAFConverter
 
 static NSString *const kAMAFShowScreenEvent = @"show_screen_event";
@@ -76,6 +78,15 @@ static NSString *const kAMAFDeviceIdHashRealKey = @"appmetrica_device_id_hash";
     }
 }
 
++ (AMAAnalyticsLibraryAdapterConfiguration *)convertAppMetricaLibraryAdapterConfiguration:(AMAFAppMetricaLibraryAdapterConfigPigeon *)pigeon
+{
+    AMAMutableAnalyticsLibraryAdapterConfiguration *configuration = [AMAMutableAnalyticsLibraryAdapterConfiguration new];
+    if (pigeon.advIdentifiersTracking != nil) {
+        configuration.advertisingIdentifiersTrackingEnabled = pigeon.advIdentifiersTracking.boolValue;
+    }
+    return configuration;
+}
+
 + (AMAReporterConfiguration *)convertReporterConfiguration:(AMAFReporterConfigPigeon *)pigeon;
 {
     AMAMutableReporterConfiguration *configuration = [[AMAMutableReporterConfiguration alloc] initWithAPIKey:pigeon.apiKey];
@@ -100,6 +111,9 @@ static NSString *const kAMAFDeviceIdHashRealKey = @"appmetrica_device_id_hash";
 + (AMAAppMetricaConfiguration *)convertAppMetricaConfiguration:(AMAFAppMetricaConfigPigeon *)configPigeon
 {
     AMAAppMetricaConfiguration *configuration = [[AMAAppMetricaConfiguration alloc] initWithAPIKey:configPigeon.apiKey];
+    if (configPigeon.advIdentifiersTracking != nil) {
+        configuration.advertisingIdentifierTrackingEnabled = configPigeon.advIdentifiersTracking.boolValue;
+    }
     if (configPigeon.appVersion != nil) {
         configuration.appVersion = configPigeon.appVersion;
     }

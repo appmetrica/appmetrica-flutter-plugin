@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import io.appmetrica.analytics.AdRevenue;
 import io.appmetrica.analytics.AdType;
 import io.appmetrica.analytics.AppMetricaConfig;
+import io.appmetrica.analytics.AppMetricaLibraryAdapterConfig;
 import io.appmetrica.analytics.DeferredDeeplinkListener;
 import io.appmetrica.analytics.DeferredDeeplinkParametersListener;
 import io.appmetrica.analytics.ModulesFacade;
@@ -220,6 +221,20 @@ public class Converter {
         final String userProfileID = pigeon.getUserProfileID();
         if (userProfileID != null) {
             resultBuilder.withUserProfileID(userProfileID);
+        }
+
+        return resultBuilder.build();
+    }
+
+    @NonNull
+    public static AppMetricaLibraryAdapterConfig toNative(
+        @NonNull final Pigeon.AppMetricaLibraryAdapterConfigPigeon pigeon
+    ) {
+        final AppMetricaLibraryAdapterConfig.Builder resultBuilder = AppMetricaLibraryAdapterConfig.newConfigBuilder();
+
+        final Boolean advIdentifiersTracking = pigeon.getAdvIdentifiersTracking();
+        if (advIdentifiersTracking != null) {
+            resultBuilder.withAdvIdentifiersTracking(advIdentifiersTracking);
         }
 
         return resultBuilder.build();

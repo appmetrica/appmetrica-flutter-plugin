@@ -711,6 +711,49 @@ public class Pigeon {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
+  public static final class AppMetricaLibraryAdapterConfigPigeon {
+    private @Nullable Boolean advIdentifiersTracking;
+
+    public @Nullable Boolean getAdvIdentifiersTracking() {
+      return advIdentifiersTracking;
+    }
+
+    public void setAdvIdentifiersTracking(@Nullable Boolean setterArg) {
+      this.advIdentifiersTracking = setterArg;
+    }
+
+    public static final class Builder {
+
+      private @Nullable Boolean advIdentifiersTracking;
+
+      public @NonNull Builder setAdvIdentifiersTracking(@Nullable Boolean setterArg) {
+        this.advIdentifiersTracking = setterArg;
+        return this;
+      }
+
+      public @NonNull AppMetricaLibraryAdapterConfigPigeon build() {
+        AppMetricaLibraryAdapterConfigPigeon pigeonReturn = new AppMetricaLibraryAdapterConfigPigeon();
+        pigeonReturn.setAdvIdentifiersTracking(advIdentifiersTracking);
+        return pigeonReturn;
+      }
+    }
+
+    @NonNull
+    ArrayList<Object> toList() {
+      ArrayList<Object> toListResult = new ArrayList<Object>(1);
+      toListResult.add(advIdentifiersTracking);
+      return toListResult;
+    }
+
+    static @NonNull AppMetricaLibraryAdapterConfigPigeon fromList(@NonNull ArrayList<Object> list) {
+      AppMetricaLibraryAdapterConfigPigeon pigeonResult = new AppMetricaLibraryAdapterConfigPigeon();
+      Object advIdentifiersTracking = list.get(0);
+      pigeonResult.setAdvIdentifiersTracking((Boolean) advIdentifiersTracking);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
   public static final class LocationPigeon {
     private @NonNull Double latitude;
 
@@ -4920,17 +4963,72 @@ public class Pigeon {
       }
     }
   }
+
+  private static class AppMetricaLibraryAdapterPigeonCodec extends StandardMessageCodec {
+    public static final AppMetricaLibraryAdapterPigeonCodec INSTANCE = new AppMetricaLibraryAdapterPigeonCodec();
+
+    private AppMetricaLibraryAdapterPigeonCodec() {}
+
+    @Override
+    protected Object readValueOfType(byte type, @NonNull ByteBuffer buffer) {
+      switch (type) {
+        case (byte) 128:
+          return AppMetricaLibraryAdapterConfigPigeon.fromList((ArrayList<Object>) readValue(buffer));
+        default:
+          return super.readValueOfType(type, buffer);
+      }
+    }
+
+    @Override
+    protected void writeValue(@NonNull ByteArrayOutputStream stream, Object value) {
+      if (value instanceof AppMetricaLibraryAdapterConfigPigeon) {
+        stream.write(128);
+        writeValue(stream, ((AppMetricaLibraryAdapterConfigPigeon) value).toList());
+      } else {
+        super.writeValue(stream, value);
+      }
+    }
+  }
+
   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
   public interface AppMetricaLibraryAdapterPigeon {
 
+    void activate(@NonNull AppMetricaLibraryAdapterConfigPigeon config);
+
     void subscribeForAutoCollectedData(@NonNull String apiKey);
+
+    void setAdvIdentifiersTracking(@NonNull Boolean enabled);
 
     /** The codec used by AppMetricaLibraryAdapterPigeon. */
     static @NonNull MessageCodec<Object> getCodec() {
-      return new StandardMessageCodec();
+      return AppMetricaLibraryAdapterPigeonCodec.INSTANCE;
     }
     /**Sets up an instance of `AppMetricaLibraryAdapterPigeon` to handle messages through the `binaryMessenger`. */
     static void setup(@NonNull BinaryMessenger binaryMessenger, @Nullable AppMetricaLibraryAdapterPigeon api) {
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.activate", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                AppMetricaLibraryAdapterConfigPigeon configArg = (AppMetricaLibraryAdapterConfigPigeon) args.get(0);
+                try {
+                  api.activate(configArg);
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
@@ -4943,6 +5041,30 @@ public class Pigeon {
                 String apiKeyArg = (String) args.get(0);
                 try {
                   api.subscribeForAutoCollectedData(apiKeyArg);
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.setAdvIdentifiersTracking", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                ArrayList<Object> args = (ArrayList<Object>) message;
+                Boolean enabledArg = (Boolean) args.get(0);
+                try {
+                  api.setAdvIdentifiersTracking(enabledArg);
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

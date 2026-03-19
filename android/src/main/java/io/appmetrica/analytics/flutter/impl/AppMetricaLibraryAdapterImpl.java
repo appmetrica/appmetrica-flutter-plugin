@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import io.appmetrica.analytics.AppMetricaLibraryAdapter;
 import io.appmetrica.analytics.flutter.pigeon.Pigeon;
+import io.appmetrica.analytics.flutter.utils.Converter;
 
 public class AppMetricaLibraryAdapterImpl implements Pigeon.AppMetricaLibraryAdapterPigeon {
 
@@ -14,6 +15,16 @@ public class AppMetricaLibraryAdapterImpl implements Pigeon.AppMetricaLibraryAda
         @NonNull final Context context
     ) {
         this.context = context;
+    }
+
+    @Override
+    public void activate(@NonNull Pigeon.AppMetricaLibraryAdapterConfigPigeon config) {
+        AppMetricaLibraryAdapter.activate(context, Converter.toNative(config));
+    }
+
+    @Override
+    public void setAdvIdentifiersTracking(@NonNull Boolean enabled) {
+        AppMetricaLibraryAdapter.setAdvIdentifiersTracking(enabled);
     }
 
     @Override

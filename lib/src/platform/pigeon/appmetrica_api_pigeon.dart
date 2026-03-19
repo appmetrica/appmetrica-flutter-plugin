@@ -207,6 +207,27 @@ class AppMetricaConfigPigeon {
   }
 }
 
+class AppMetricaLibraryAdapterConfigPigeon {
+  AppMetricaLibraryAdapterConfigPigeon({
+    this.advIdentifiersTracking,
+  });
+
+  bool? advIdentifiersTracking;
+
+  Object encode() {
+    return <Object?>[
+      advIdentifiersTracking,
+    ];
+  }
+
+  static AppMetricaLibraryAdapterConfigPigeon decode(Object result) {
+    result as List<Object?>;
+    return AppMetricaLibraryAdapterConfigPigeon(
+      advIdentifiersTracking: result[0] as bool?,
+    );
+  }
+}
+
 class LocationPigeon {
   LocationPigeon({
     required this.latitude,
@@ -2240,6 +2261,29 @@ class AppMetricaPigeon {
   }
 }
 
+class _AppMetricaLibraryAdapterPigeonCodec extends StandardMessageCodec {
+  const _AppMetricaLibraryAdapterPigeonCodec();
+  @override
+  void writeValue(WriteBuffer buffer, Object? value) {
+    if (value is AppMetricaLibraryAdapterConfigPigeon) {
+      buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else {
+      super.writeValue(buffer, value);
+    }
+  }
+
+  @override
+  Object? readValueOfType(int type, ReadBuffer buffer) {
+    switch (type) {
+      case 128: 
+        return AppMetricaLibraryAdapterConfigPigeon.decode(readValue(buffer)!);
+      default:
+        return super.readValueOfType(type, buffer);
+    }
+  }
+}
+
 class AppMetricaLibraryAdapterPigeon {
   /// Constructor for [AppMetricaLibraryAdapterPigeon].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -2248,7 +2292,29 @@ class AppMetricaLibraryAdapterPigeon {
       : _binaryMessenger = binaryMessenger;
   final BinaryMessenger? _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = StandardMessageCodec();
+  static const MessageCodec<Object?> codec = _AppMetricaLibraryAdapterPigeonCodec();
+
+  Future<void> activate(AppMetricaLibraryAdapterConfigPigeon arg_config) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.activate', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(<Object?>[arg_config]) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
 
   Future<void> subscribeForAutoCollectedData(String arg_apiKey) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
@@ -2256,6 +2322,28 @@ class AppMetricaLibraryAdapterPigeon {
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_apiKey]) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> setAdvIdentifiersTracking(bool arg_enabled) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.setAdvIdentifiersTracking', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(<Object?>[arg_enabled]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

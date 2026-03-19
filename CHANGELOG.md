@@ -5,6 +5,7 @@
 - Fix crash on call `requestDeferredDeeplink`.
 - Remove `AppMetrica.reportReferralUrl` method.
 - The specification of the native SDK version for iOS has been improved: now it defines a range from the minimum version up to the next major version.
+- Add `AppMetricaConfig.advIdentifiersTracking` support for iOS.
 - Native SDK versions:
   - Android: 8.0.0
   - iOS: 6.1

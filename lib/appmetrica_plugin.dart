@@ -7,6 +7,9 @@ export 'src/internal/activation_config_holder.dart' // internal API
 export 'src/internal/appmetrica_library_adapter.dart' // internal API
     show
         AppMetricaLibraryAdapter;
+export 'src/models/appmetrica_library_adapter_config.dart' // internal API
+    show
+        AppMetricaLibraryAdapterConfig;
 export 'src/models/ad_revenue.dart'
     show
         AppMetricaAdRevenue,

@@ -32,6 +32,12 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 - (NSArray *)toList;
 @end
 
+@interface AMAFAppMetricaLibraryAdapterConfigPigeon ()
++ (AMAFAppMetricaLibraryAdapterConfigPigeon *)fromList:(NSArray *)list;
++ (nullable AMAFAppMetricaLibraryAdapterConfigPigeon *)nullableFromList:(NSArray *)list;
+- (NSArray *)toList;
+@end
+
 @interface AMAFLocationPigeon ()
 + (AMAFLocationPigeon *)fromList:(NSArray *)list;
 + (nullable AMAFLocationPigeon *)nullableFromList:(NSArray *)list;
@@ -306,6 +312,27 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     (self.sessionTimeout ?: [NSNull null]),
     (self.sessionsAutoTrackingEnabled ?: [NSNull null]),
     (self.userProfileID ?: [NSNull null]),
+  ];
+}
+@end
+
+@implementation AMAFAppMetricaLibraryAdapterConfigPigeon
++ (instancetype)makeWithAdvIdentifiersTracking:(nullable NSNumber *)advIdentifiersTracking {
+  AMAFAppMetricaLibraryAdapterConfigPigeon* pigeonResult = [[AMAFAppMetricaLibraryAdapterConfigPigeon alloc] init];
+  pigeonResult.advIdentifiersTracking = advIdentifiersTracking;
+  return pigeonResult;
+}
++ (AMAFAppMetricaLibraryAdapterConfigPigeon *)fromList:(NSArray *)list {
+  AMAFAppMetricaLibraryAdapterConfigPigeon *pigeonResult = [[AMAFAppMetricaLibraryAdapterConfigPigeon alloc] init];
+  pigeonResult.advIdentifiersTracking = GetNullableObjectAtIndex(list, 0);
+  return pigeonResult;
+}
++ (nullable AMAFAppMetricaLibraryAdapterConfigPigeon *)nullableFromList:(NSArray *)list {
+  return (list) ? [AMAFAppMetricaLibraryAdapterConfigPigeon fromList:list] : nil;
+}
+- (NSArray *)toList {
+  return @[
+    (self.advIdentifiersTracking ?: [NSNull null]),
   ];
 }
 @end
@@ -2131,13 +2158,73 @@ void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObj
     }
   }
 }
+@interface AMAFAppMetricaLibraryAdapterPigeonCodecReader : FlutterStandardReader
+@end
+@implementation AMAFAppMetricaLibraryAdapterPigeonCodecReader
+- (nullable id)readValueOfType:(UInt8)type {
+  switch (type) {
+    case 128: 
+      return [AMAFAppMetricaLibraryAdapterConfigPigeon fromList:[self readValue]];
+    default:
+      return [super readValueOfType:type];
+  }
+}
+@end
+
+@interface AMAFAppMetricaLibraryAdapterPigeonCodecWriter : FlutterStandardWriter
+@end
+@implementation AMAFAppMetricaLibraryAdapterPigeonCodecWriter
+- (void)writeValue:(id)value {
+  if ([value isKindOfClass:[AMAFAppMetricaLibraryAdapterConfigPigeon class]]) {
+    [self writeByte:128];
+    [self writeValue:[value toList]];
+  } else {
+    [super writeValue:value];
+  }
+}
+@end
+
+@interface AMAFAppMetricaLibraryAdapterPigeonCodecReaderWriter : FlutterStandardReaderWriter
+@end
+@implementation AMAFAppMetricaLibraryAdapterPigeonCodecReaderWriter
+- (FlutterStandardWriter *)writerWithData:(NSMutableData *)data {
+  return [[AMAFAppMetricaLibraryAdapterPigeonCodecWriter alloc] initWithData:data];
+}
+- (FlutterStandardReader *)readerWithData:(NSData *)data {
+  return [[AMAFAppMetricaLibraryAdapterPigeonCodecReader alloc] initWithData:data];
+}
+@end
+
 NSObject<FlutterMessageCodec> *AMAFAppMetricaLibraryAdapterPigeonGetCodec(void) {
   static FlutterStandardMessageCodec *sSharedObject = nil;
-  sSharedObject = [FlutterStandardMessageCodec sharedInstance];
+  static dispatch_once_t sPred = 0;
+  dispatch_once(&sPred, ^{
+    AMAFAppMetricaLibraryAdapterPigeonCodecReaderWriter *readerWriter = [[AMAFAppMetricaLibraryAdapterPigeonCodecReaderWriter alloc] init];
+    sSharedObject = [FlutterStandardMessageCodec codecWithReaderWriter:readerWriter];
+  });
   return sSharedObject;
 }
 
 void AMAFAppMetricaLibraryAdapterPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AMAFAppMetricaLibraryAdapterPigeon> *api) {
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.activate"
+        binaryMessenger:binaryMessenger
+        codec:AMAFAppMetricaLibraryAdapterPigeonGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(activateConfig:error:)], @"AMAFAppMetricaLibraryAdapterPigeon api (%@) doesn't respond to @selector(activateConfig:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        AMAFAppMetricaLibraryAdapterConfigPigeon *arg_config = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        [api activateConfig:arg_config error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
@@ -2151,6 +2238,25 @@ void AMAFAppMetricaLibraryAdapterPigeonSetup(id<FlutterBinaryMessenger> binaryMe
         NSString *arg_apiKey = GetNullableObjectAtIndex(args, 0);
         FlutterError *error;
         [api subscribeForAutoCollectedDataApiKey:arg_apiKey error:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaLibraryAdapterPigeon.setAdvIdentifiersTracking"
+        binaryMessenger:binaryMessenger
+        codec:AMAFAppMetricaLibraryAdapterPigeonGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(setAdvIdentifiersTrackingEnabled:error:)], @"AMAFAppMetricaLibraryAdapterPigeon api (%@) doesn't respond to @selector(setAdvIdentifiersTrackingEnabled:error:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        NSNumber *arg_enabled = GetNullableObjectAtIndex(args, 0);
+        FlutterError *error;
+        [api setAdvIdentifiersTrackingEnabled:arg_enabled error:&error];
         callback(wrapResult(nil, error));
       }];
     } else {

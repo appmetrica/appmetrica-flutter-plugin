@@ -60,6 +60,7 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
 };
 
 @class AMAFAppMetricaConfigPigeon;
+@class AMAFAppMetricaLibraryAdapterConfigPigeon;
 @class AMAFLocationPigeon;
 @class AMAFPreloadInfoPigeon;
 @class AMAFAppMetricaDeferredDeeplinkErrorPigeon;
@@ -142,6 +143,11 @@ typedef NS_ENUM(NSUInteger, AMAFStartupParamsItemStatusPigeon) {
 @property(nonatomic, strong, nullable) NSNumber * sessionTimeout;
 @property(nonatomic, strong, nullable) NSNumber * sessionsAutoTrackingEnabled;
 @property(nonatomic, copy, nullable) NSString * userProfileID;
+@end
+
+@interface AMAFAppMetricaLibraryAdapterConfigPigeon : NSObject
++ (instancetype)makeWithAdvIdentifiersTracking:(nullable NSNumber *)advIdentifiersTracking;
+@property(nonatomic, strong, nullable) NSNumber * advIdentifiersTracking;
 @end
 
 @interface AMAFLocationPigeon : NSObject
@@ -540,7 +546,9 @@ extern void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger
 NSObject<FlutterMessageCodec> *AMAFAppMetricaLibraryAdapterPigeonGetCodec(void);
 
 @protocol AMAFAppMetricaLibraryAdapterPigeon
+- (void)activateConfig:(AMAFAppMetricaLibraryAdapterConfigPigeon *)config error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)subscribeForAutoCollectedDataApiKey:(NSString *)apiKey error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)setAdvIdentifiersTrackingEnabled:(NSNumber *)enabled error:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void AMAFAppMetricaLibraryAdapterPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<AMAFAppMetricaLibraryAdapterPigeon> *_Nullable api);
