@@ -1,4 +1,3 @@
-import '../platform/pigeon/appmetrica_api_pigeon.dart';
 import '../models/appmetrica_config.dart';
 
 class AppMetricaActivationConfigHolder {
@@ -18,42 +17,4 @@ class AppMetricaActivationConfigHolder {
   }
 
   static Function(AppMetricaConfig?)? activationListener;
-}
-
-class AppMetricaActivationCompleter {
-  final AppMetricaConfig config;
-
-  AppMetricaActivationCompleter(this.config);
-
-  Future<dynamic> complete(dynamic value) {
-    _startFirstAutoTrackedSession(config.sessionsAutoTrackingEnabled);
-    _reportAutoTrackedAppOpen(config.appOpenTrackingEnabled);
-    AppMetricaActivationConfigHolder.lastActivationConfig = config;
-    return Future<dynamic>.value(value);
-  }
-
-  void onError(Object? error, StackTrace stackTrace) {
-    AppMetricaActivationConfigHolder.lastActivationConfig = null;
-    if (error != null) {
-      throw error;
-    }
-  }
-
-  Future<void> _startFirstAutoTrackedSession(bool? sessionsAutoTracking) {
-    if (AppMetricaActivationConfigHolder.activated || false == sessionsAutoTracking) {
-      return Future<void>.value();
-    } else {
-      return AppMetricaPigeon().handlePluginInitFinished();
-    }
-  }
-
-  Future<void> _reportAutoTrackedAppOpen(bool? appOpenTrackingEnabled) {
-    if (AppMetricaActivationConfigHolder.activated || false == appOpenTrackingEnabled) {
-      return Future<void>.value();
-    } else {
-      return InitialDeepLinkHolderPigeon()
-          .getInitialDeeplink()
-          .then((String? value) { if (value != null) { AppMetricaPigeon().reportAppOpen(value); } });
-    }
-  }
 }

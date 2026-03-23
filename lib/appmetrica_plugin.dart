@@ -2,8 +2,7 @@ library appmetrica;
 
 export 'src/internal/activation_config_holder.dart' // internal API
     show
-        AppMetricaActivationConfigHolder,
-        AppMetricaActivationCompleter;
+        AppMetricaActivationConfigHolder;
 export 'src/internal/appmetrica_library_adapter.dart' // internal API
     show
         AppMetricaLibraryAdapter;

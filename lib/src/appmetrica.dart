@@ -5,7 +5,10 @@ import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
+import 'internal/activation_completer.dart';
 import 'internal/activation_config_holder.dart';
+import 'internal/background_activation_completer.dart';
+import 'internal/base_activation_completer.dart';
 import 'internal/reporter_storage.dart';
 import 'internal/service_locator.dart';
 import 'internal/utils.dart';
@@ -48,15 +51,27 @@ class AppMetrica {
   static final Logger _logger = Logger("$_appMetricaRootLoggerName.MainFacade");
 
   /// Initializes the library in the application with the initial configuration [config].
-  static Future<void> activate(AppMetricaConfig config) async {
+  static Future<void> activate(AppMetricaConfig config) =>
+      _activateWithCompleter(config, AppMetricaActivationCompleter(config));
+
+  /// Initializes the library in the background with the initial configuration [config].
+  ///
+  /// Unlike [activate], this method does not start a foreground session.
+  /// Use this method when activating AppMetrica from a background task.
+  static Future<void> activateInBackground(AppMetricaConfig config) =>
+      _activateWithCompleter(config, AppMetricaBackgroundActivationCompleter(config));
+
+  static Future<void> _activateWithCompleter(
+    AppMetricaConfig config,
+    BaseActivationCompleter completer,
+  ) async {
     if (config.logs == true) {
       setUpAppMetricaLogger(Logger(_appMetricaRootLoggerName));
     }
     setUpErrorHandlingWithAppMetrica(config);
-    AppMetricaActivationCompleter activationCompleter = AppMetricaActivationCompleter(config);
     return _platform.activate(config.toPigeon()).then(
-        activationCompleter.complete,
-        onError: activationCompleter.onError
+        completer.complete,
+        onError: completer.onError
     );
   }
 

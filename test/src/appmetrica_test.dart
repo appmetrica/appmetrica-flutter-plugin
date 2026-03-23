@@ -80,6 +80,36 @@ void main() {
     });
   });
 
+  group('AppMetrica.activateInBackground', () {
+    test('calls platform bridge with converted config', () async {
+      const AppMetricaConfig config = AppMetricaConfig(
+        'bg-test-api-key',
+        sessionsAutoTrackingEnabled: false,
+        appOpenTrackingEnabled: false,
+        flutterCrashReporting: false,
+      );
+
+      await AppMetrica.activateInBackground(config);
+
+      final AppMetricaConfigPigeon captured =
+          verify(mockPlatformBridge.activate(captureAny)).captured.single
+              as AppMetricaConfigPigeon;
+      expect(captured.apiKey, 'bg-test-api-key');
+    });
+
+    test('does not call handlePluginInitFinished', () async {
+      const AppMetricaConfig config = AppMetricaConfig(
+        'bg-no-init-key',
+        appOpenTrackingEnabled: false,
+        flutterCrashReporting: false,
+      );
+
+      await AppMetrica.activateInBackground(config);
+
+      verifyNever(mockPlatformBridge.handlePluginInitFinished());
+    });
+  });
+
   group('AppMetrica.activateReporter', () {
     test('calls platform bridge with converted reporter config', () async {
       when(mockPlatformBridge.activateReporter(any))
