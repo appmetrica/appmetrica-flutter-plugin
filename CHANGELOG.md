@@ -1,3 +1,5 @@
+## 4.1.0
+
 ## 4.0.0
 
 - Add UIScene lifecycle support for iOS. Initial deeplink detection now works correctly in apps using UIScene.

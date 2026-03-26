@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'appmetrica_plugin'
-  s.version          = '4.0.0'
+  s.version          = '4.1.0'
   s.summary          = 'AppMetrica SDK for Flutter'
   s.homepage         = 'https://appmetrica.io/'
   s.license          = { :type => 'PROPRIETARY', :file => '../LICENSE' }
