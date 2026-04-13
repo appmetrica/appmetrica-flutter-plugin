@@ -1,5 +1,7 @@
 ## 4.1.0
 
+- The minimum supported iOS version has been increased to 6.2.0.
+
 ## 4.0.0
 
 - Add UIScene lifecycle support for iOS. Initial deeplink detection now works correctly in apps using UIScene.

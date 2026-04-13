@@ -14,20 +14,15 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/appmetrica/appmetrica-sdk-ios",
-            .upToNextMajor(from: "6.1.0")
+            .upToNextMajor(from: "6.2.0")
         ),
     ],
     targets: [
         .target(
             name: "appmetrica_plugin",
             dependencies: [
-                .product(name: "AppMetricaAdSupport", package: "appmetrica-sdk-ios"),
-                .product(name: "AppMetricaCore", package: "appmetrica-sdk-ios"),
-                .product(name: "AppMetricaCrashes", package: "appmetrica-sdk-ios"),
-                .product(name: "AppMetricaIDSync", package: "appmetrica-sdk-ios"),
+                .product(name: "AppMetricaAnalytics", package: "appmetrica-sdk-ios"),
                 .product(name: "AppMetricaLibraryAdapter", package: "appmetrica-sdk-ios"),
-                .product(name: "AppMetricaScreenshot", package: "appmetrica-sdk-ios"),
-                .product(name: "AppMetricaWebKit", package: "appmetrica-sdk-ios"),
             ],
             resources: [],
             cSettings: [

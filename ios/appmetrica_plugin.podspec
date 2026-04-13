@@ -13,14 +13,8 @@ Pod::Spec.new do |s|
   s.source_files = 'appmetrica_plugin/Sources/appmetrica_plugin/**/*.{h,m}'
   s.public_header_files = 'appmetrica_plugin/Sources/appmetrica_plugin/include/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'AppMetricaAdSupport', '~> 6.1'
-  s.dependency 'AppMetricaCore', '~> 6.1'
-  s.dependency 'AppMetricaCoreExtension', '~> 6.1'
-  s.dependency 'AppMetricaCrashes', '~> 6.1'
-  s.dependency 'AppMetricaIDSync', '~> 6.1'
-  s.dependency 'AppMetricaLibraryAdapter', '~> 6.1'
-  s.dependency 'AppMetricaScreenshot', '~> 6.1'
-  s.dependency 'AppMetricaWebKit', '~> 6.1'
+  s.dependency 'AppMetricaAnalytics', '~> 6.2'
+  s.dependency 'AppMetricaLibraryAdapter', '~> 6.2'
   s.static_framework = true
   s.platform = :ios, '13.0'
 
