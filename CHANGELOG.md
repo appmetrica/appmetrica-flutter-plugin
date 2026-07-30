@@ -1,5 +1,6 @@
 ## 4.1.0
 
+- Fix iOS UIScene conflict with other plugins: `scene:willConnectToSession:options:` no longer returns `YES`, so `connectionOptions` are not consumed and remain available to subsequent plugins.
 - The minimum supported iOS version has been increased to 6.2.0.
 
 ## 4.0.0

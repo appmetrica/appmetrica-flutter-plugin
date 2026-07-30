@@ -87,7 +87,9 @@
     if (url != nil) {
         [self.deeplinkHolder setInitialDeeplink:[url absoluteString]];
     }
-    return YES;
+    // Always NO: we only observe connection options and must not consume them
+    // so other plugins still receive connectionOptions.
+    return NO;
 }
 
 @end
