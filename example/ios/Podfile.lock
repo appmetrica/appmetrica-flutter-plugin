@@ -1,102 +1,102 @@
 PODS:
   - appmetrica_plugin (4.1.0):
-    - AppMetricaAnalytics (~> 6.2)
-    - AppMetricaLibraryAdapter (~> 6.2)
+    - AppMetricaAnalytics (~> 6.6)
+    - AppMetricaLibraryAdapter (~> 6.6)
     - Flutter
-  - AppMetricaAdSupport (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCoreExtension (= 6.2.0)
-  - AppMetricaAnalytics (6.2.0):
-    - AppMetricaAdSupport (= 6.2.0)
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCrashes (= 6.2.0)
-    - AppMetricaIDSync (= 6.2.0)
-    - AppMetricaScreenshot (= 6.2.0)
-    - AppMetricaWebKit (= 6.2.0)
-  - AppMetricaCore (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaEncodingUtils (= 6.2.0)
-    - AppMetricaFMDB (= 6.2.0)
-    - AppMetricaHostState (= 6.2.0)
-    - AppMetricaIdentifiers (= 6.2.0)
-    - AppMetricaKeychain (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-    - AppMetricaNetwork (= 6.2.0)
-    - AppMetricaPlatform (= 6.2.0)
-    - AppMetricaProtobuf (= 6.2.0)
-    - AppMetricaProtobufUtils (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
-  - AppMetricaCoreExtension (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
-  - AppMetricaCoreUtils (6.2.0):
-    - AppMetricaLog (= 6.2.0)
-  - AppMetricaCrashes (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCoreExtension (= 6.2.0)
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaEncodingUtils (= 6.2.0)
-    - AppMetricaHostState (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-    - AppMetricaPlatform (= 6.2.0)
-    - AppMetricaProtobufUtils (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
+  - AppMetricaAdSupport (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCoreExtension (= 6.6.0)
+  - AppMetricaAnalytics (6.6.0):
+    - AppMetricaAdSupport (= 6.6.0)
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCrashes (= 6.6.0)
+    - AppMetricaIDSync (= 6.6.0)
+    - AppMetricaScreenshot (= 6.6.0)
+    - AppMetricaWebKit (= 6.6.0)
+  - AppMetricaCore (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaEncodingUtils (= 6.6.0)
+    - AppMetricaFMDB (= 6.6.0)
+    - AppMetricaHostState (= 6.6.0)
+    - AppMetricaIdentifiers (= 6.6.0)
+    - AppMetricaKeychain (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+    - AppMetricaNetwork (= 6.6.0)
+    - AppMetricaPlatform (= 6.6.0)
+    - AppMetricaProtobuf (= 6.6.0)
+    - AppMetricaProtobufUtils (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
+  - AppMetricaCoreExtension (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
+  - AppMetricaCoreUtils (6.6.0):
+    - AppMetricaLog (= 6.6.0)
+  - AppMetricaCrashes (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCoreExtension (= 6.6.0)
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaEncodingUtils (= 6.6.0)
+    - AppMetricaHostState (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+    - AppMetricaPlatform (= 6.6.0)
+    - AppMetricaProtobufUtils (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
     - KSCrash/Recording (< 2.6.0, >= 2.5.1)
-  - AppMetricaEncodingUtils (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-    - AppMetricaPlatform (= 6.2.0)
-  - AppMetricaFMDB (6.2.0)
-  - AppMetricaHostState (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-  - AppMetricaIdentifiers (6.2.0):
-    - AppMetricaKeychain (= 6.2.0)
-    - AppMetricaLogSwift (= 6.2.0)
-    - AppMetricaPlatform (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
-    - AppMetricaSynchronization (= 6.2.0)
-  - AppMetricaIDSync (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCoreExtension (= 6.2.0)
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-    - AppMetricaNetwork (= 6.2.0)
-    - AppMetricaPlatform (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
-  - AppMetricaKeychain (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
-  - AppMetricaLibraryAdapter (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCoreExtension (= 6.2.0)
-  - AppMetricaLog (6.2.0)
-  - AppMetricaLogSwift (6.2.0):
-    - AppMetricaLog (= 6.2.0)
-  - AppMetricaNetwork (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-    - AppMetricaPlatform (= 6.2.0)
-  - AppMetricaPlatform (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-  - AppMetricaProtobuf (6.2.0)
-  - AppMetricaProtobufUtils (6.2.0):
-    - AppMetricaProtobuf (= 6.2.0)
-  - AppMetricaScreenshot (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCoreExtension (= 6.2.0)
-    - AppMetricaStorageUtils (= 6.2.0)
-  - AppMetricaStorageUtils (6.2.0):
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
-  - AppMetricaSynchronization (6.2.0):
-    - AppMetricaLogSwift (= 6.2.0)
-  - AppMetricaWebKit (6.2.0):
-    - AppMetricaCore (= 6.2.0)
-    - AppMetricaCoreUtils (= 6.2.0)
-    - AppMetricaLog (= 6.2.0)
+  - AppMetricaEncodingUtils (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+    - AppMetricaPlatform (= 6.6.0)
+  - AppMetricaFMDB (6.6.0)
+  - AppMetricaHostState (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+  - AppMetricaIdentifiers (6.6.0):
+    - AppMetricaKeychain (= 6.6.0)
+    - AppMetricaLogSwift (= 6.6.0)
+    - AppMetricaPlatform (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
+    - AppMetricaSynchronization (= 6.6.0)
+  - AppMetricaIDSync (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCoreExtension (= 6.6.0)
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+    - AppMetricaNetwork (= 6.6.0)
+    - AppMetricaPlatform (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
+  - AppMetricaKeychain (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
+  - AppMetricaLibraryAdapter (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCoreExtension (= 6.6.0)
+  - AppMetricaLog (6.6.0)
+  - AppMetricaLogSwift (6.6.0):
+    - AppMetricaLog (= 6.6.0)
+  - AppMetricaNetwork (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+    - AppMetricaPlatform (= 6.6.0)
+  - AppMetricaPlatform (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+  - AppMetricaProtobuf (6.6.0)
+  - AppMetricaProtobufUtils (6.6.0):
+    - AppMetricaProtobuf (= 6.6.0)
+  - AppMetricaScreenshot (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCoreExtension (= 6.6.0)
+    - AppMetricaStorageUtils (= 6.6.0)
+  - AppMetricaStorageUtils (6.6.0):
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
+  - AppMetricaSynchronization (6.6.0):
+    - AppMetricaLogSwift (= 6.6.0)
+  - AppMetricaWebKit (6.6.0):
+    - AppMetricaCore (= 6.6.0)
+    - AppMetricaCoreUtils (= 6.6.0)
+    - AppMetricaLog (= 6.6.0)
   - Flutter (1.0.0)
   - KSCrash/Core (2.5.1)
   - KSCrash/Recording (2.5.1):
@@ -142,30 +142,30 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  appmetrica_plugin: 20b31c0253e63d1a143d467ebf8293fcded728b8
-  AppMetricaAdSupport: 9b40f5c455c31a2b673923d51a4d067d78d5d722
-  AppMetricaAnalytics: e70df5941e82072b3f981156e8660672e57ac53e
-  AppMetricaCore: 0653dd08a23e09c985073aa74c65bdf146b90f44
-  AppMetricaCoreExtension: 00d77082353e6a90bcb894a7c7dc2ade43c61fb3
-  AppMetricaCoreUtils: 6eca8f9951f2c187600198f5f1e165d9a06fff7c
-  AppMetricaCrashes: 829d5e6e23b6e66186a4a82cb35a83ebb5f98d43
-  AppMetricaEncodingUtils: f2e2a3b880298fec73c0553dd147a02c614f594f
-  AppMetricaFMDB: 315149e1a8d9d6051e90f2372e111bd74f90eb78
-  AppMetricaHostState: d0e1d122b2a4048ea39e73cb9cebebc85b74217b
-  AppMetricaIdentifiers: ade5457349c264462171550eed706d9fbbf3a413
-  AppMetricaIDSync: 3fa9ea4fbffa9ddf96eb0030f52fa52375928074
-  AppMetricaKeychain: c83b9ccf30bf6bc13e8a31cf57f9f755c14cc6da
-  AppMetricaLibraryAdapter: ec78a52c94e5506bff768c14c62838bf7e07623a
-  AppMetricaLog: a0e029791c36c42ccbcb445d61c6cbb4cf1699aa
-  AppMetricaLogSwift: 333baae69e3bfd64e95a15f73642591145b23e74
-  AppMetricaNetwork: b3be5ee938aee7fdc44933a9cff40766fc1e2eae
-  AppMetricaPlatform: 5e8a7c99873259d6d12cd3fc44f2216358a5e642
-  AppMetricaProtobuf: 0c3df56f9ad47fe5789ca614f3af2241ffd5357d
-  AppMetricaProtobufUtils: ab22d740498601fc3df0a4ff5fd976ad6cf44fdb
-  AppMetricaScreenshot: cb2fe9c061592eaa4d382cf480df523ca2a091fe
-  AppMetricaStorageUtils: 5d4ced36335b4c516abd35829b2ddf39cd3cf464
-  AppMetricaSynchronization: 55fa0b8e73377618dd9cf23e9f1bd5b323a00ec2
-  AppMetricaWebKit: 40d268f7dc868cb834c674fe7c39cefa25b87919
+  appmetrica_plugin: 40f755226f4f78dca1dd6e87d28555bd3e51e1d5
+  AppMetricaAdSupport: d7b09222d59c2b43555e9fe55ff290467e13f1cf
+  AppMetricaAnalytics: bf418145051d4753918e052be720b86d98d27283
+  AppMetricaCore: ee40e9eae7c7e8a060f4b05c973210c3ec837e07
+  AppMetricaCoreExtension: 197bfaa429c87b4ff3e8f9be873876f3b92179a1
+  AppMetricaCoreUtils: a3c50fa386b163f1ce5bcdec830db89d9f436302
+  AppMetricaCrashes: 71b39289ef6779ecebee7e40b0abc01829f60238
+  AppMetricaEncodingUtils: 5b3826ab7b542fc3a89599d5fb6828b9999adb58
+  AppMetricaFMDB: 51552a8ddf618f94e180d000d0d1cbb71a436572
+  AppMetricaHostState: 5b4893ac02f8cf91d9ccf35651f973436494945c
+  AppMetricaIdentifiers: 172675383cd2ea5a1cee8dcf7d8fbde3a692d0c6
+  AppMetricaIDSync: 21e093b8b9b48a0c4487503326905dcd20a76603
+  AppMetricaKeychain: eda7cd31463ef2e866d759b84b5f8e15d98fb94a
+  AppMetricaLibraryAdapter: 0e3a1617f4542869eae2b46ab72cc9d0f657427c
+  AppMetricaLog: 0966451d6a00b1bd137b7f45c6db5422989cedbe
+  AppMetricaLogSwift: a10f76cfce1f874313c067481d7259061e045b52
+  AppMetricaNetwork: 531abb5e03e689a6d4dfb2fca119b47e5465aa9a
+  AppMetricaPlatform: a26ccc81cea64ba7467c9fe6d28d6047c05784b1
+  AppMetricaProtobuf: eaeb5c658c3bae23ff96a885232ee2ebe6217ce8
+  AppMetricaProtobufUtils: f6560ef1796495666cbeb3a5adafaa1febce7ba7
+  AppMetricaScreenshot: 86855d4b9b9b8b309508bbe2a726198ae8f27064
+  AppMetricaStorageUtils: 1fff51169752ab3c1874da4007484eb008ae5e3d
+  AppMetricaSynchronization: 788685a4273a36dcf9566085c0b1af6d436f861c
+  AppMetricaWebKit: 80bb806df6b863c36c7324df5805dfd03ca97cb5
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   KSCrash: 8c4464fd5da7de520f2ce4a00fdf63f169a80f18
 
