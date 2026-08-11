@@ -3,6 +3,8 @@
 * Versions are sorted by semver (newest to oldest)
 ```
 
+## `4.2.0`
+
 ## `4.1.0`
 
 - Fix iOS UIScene conflict with other plugins: `scene:willConnectToSession:options:` no longer returns `YES`, so `connectionOptions` are not consumed and remain available to subsequent plugins.

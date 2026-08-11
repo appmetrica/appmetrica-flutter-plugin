@@ -1,5 +1,5 @@
 PODS:
-  - appmetrica_plugin (4.1.0):
+  - appmetrica_plugin (4.2.0):
     - AppMetricaAnalytics (~> 6.6)
     - AppMetricaLibraryAdapter (~> 6.6)
     - Flutter
@@ -142,7 +142,7 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  appmetrica_plugin: 40f755226f4f78dca1dd6e87d28555bd3e51e1d5
+  appmetrica_plugin: fc5fb713075b6a0482708842e5b1470eeb87ba74
   AppMetricaAdSupport: d7b09222d59c2b43555e9fe55ff290467e13f1cf
   AppMetricaAnalytics: bf418145051d4753918e052be720b86d98d27283
   AppMetricaCore: ee40e9eae7c7e8a060f4b05c973210c3ec837e07
