@@ -5,6 +5,9 @@ analyzer:
     - "lib/**/*pigeon.dart"
     - "pigeons/*.dart"
     - "test/*.mocks.dart"
+    - build/**
+    - android/**
+    - ios/**
 
 linter:
   rules:
