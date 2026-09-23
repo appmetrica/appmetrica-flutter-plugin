@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.dependency 'AppMetricaAnalytics', '~> 6.6'
   s.dependency 'AppMetricaLibraryAdapter', '~> 6.6'
   s.static_framework = true
-  s.platform = :ios, '13.0'
+  s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

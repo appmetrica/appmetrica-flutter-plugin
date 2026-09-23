@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "appmetrica_plugin",
     platforms: [
-        .iOS("13.0"),
+        .iOS("15.0"),
     ],
     products: [
         .library(name: "appmetrica-plugin", targets: ["appmetrica_plugin"]),
