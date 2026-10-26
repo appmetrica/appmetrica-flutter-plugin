@@ -5,6 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  setUp(() {
+    AppMetricaActivationConfigHolder.resetForTest();
+  });
+
+  tearDown(() {
+    AppMetricaActivationConfigHolder.resetForTest();
+  });
+
   group('AppMetricaBackgroundActivationCompleter', () {
     test('complete sets lastActivationConfig', () async {
       const AppMetricaConfig config = AppMetricaConfig(

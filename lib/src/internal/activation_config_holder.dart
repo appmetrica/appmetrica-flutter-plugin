@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../models/appmetrica_config.dart';
 
 class AppMetricaActivationConfigHolder {
@@ -17,4 +19,11 @@ class AppMetricaActivationConfigHolder {
   }
 
   static Function(AppMetricaConfig?)? activationListener;
+
+  @visibleForTesting
+  static void resetForTest() {
+    _isActivated = false;
+    _lastActivationConfig = null;
+    activationListener = null;
+  }
 }

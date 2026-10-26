@@ -289,6 +289,11 @@ class AppMetrica {
 
 bool _crashHandlingActivated = false;
 
+@visibleForTesting
+void resetCrashHandlingActivatedForTest() {
+  _crashHandlingActivated = false;
+}
+
 void setUpErrorHandlingWithAppMetrica(AppMetricaConfig config) {
   if (config.flutterCrashReporting == false) {
     return;

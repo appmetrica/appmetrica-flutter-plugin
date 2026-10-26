@@ -4,6 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  setUp(() {
+    AppMetricaActivationConfigHolder.resetForTest();
+  });
+
+  tearDown(() {
+    AppMetricaActivationConfigHolder.resetForTest();
+  });
+
   group('AppMetricaActivationConfigHolder', () {
     test('initial state is not activated', () {
       // Note: This test checks the expected behavior, but since activated is static

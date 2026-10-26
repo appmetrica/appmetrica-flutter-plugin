@@ -17,7 +17,8 @@ export 'src/appmetrica.dart'
     show
         AppMetrica,
         setUpErrorHandlingWithAppMetrica, // internal API
-        setUpAppMetricaLogger; // internal API
+        setUpAppMetricaLogger, // internal API
+        resetCrashHandlingActivatedForTest; // test-only API
 export 'src/models/appmetrica_config.dart'
     show
         AppMetricaConfig;

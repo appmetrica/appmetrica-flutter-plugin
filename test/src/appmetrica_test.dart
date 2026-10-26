@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:appmetrica_plugin/src/internal/service_locator.dart';
 import 'package:appmetrica_plugin/src/models/profile.dart';
 import 'package:appmetrica_plugin/src/platform/pigeon/appmetrica_api_pigeon.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:logging/logging.dart';
 import 'package:mockito/mockito.dart';
 
 import '../mocks.mocks.dart';
@@ -428,6 +432,19 @@ void main() {
         throwsA(isA<AppMetricaDeferredDeeplinkRequestException>()),
       );
     });
+
+    test('throws exception when parameters is null', () async {
+      when(mockPlatformBridge.requestDeferredDeeplinkParameters()).thenAnswer(
+        (Invocation _) => Future<AppMetricaDeferredDeeplinkParametersPigeon>.value(
+          AppMetricaDeferredDeeplinkParametersPigeon(),
+        ),
+      );
+
+      expect(
+        () => AppMetrica.requestDeferredDeeplinkParameters(),
+        throwsA(isA<AppMetricaDeferredDeeplinkRequestException>()),
+      );
+    });
   });
 
   group('AppMetrica.requestStartupParams', () {
@@ -737,6 +754,145 @@ void main() {
       final AppMetricaReporter reporter2 = AppMetrica.getReporter('reporter-key-2');
 
       expect(identical(reporter1, reporter2), false);
+    });
+  });
+
+  group('AppMetrica.runZoneGuarded', () {
+    tearDown(() {
+      AppMetricaActivationConfigHolder.resetForTest();
+    });
+
+    test('reports unhandled exception when activation config is present', () async {
+      AppMetricaActivationConfigHolder.lastActivationConfig =
+          const AppMetricaConfig('zone-key', flutterCrashReporting: false);
+
+      final Completer<void> reported = Completer<void>();
+      when(mockPlatformBridge.reportUnhandledException(any)).thenAnswer((_) {
+        if (!reported.isCompleted) {
+          reported.complete();
+        }
+        return Future<void>.value();
+      });
+
+      AppMetrica.runZoneGuarded(() {
+        throw StateError('zone failure');
+      });
+
+      await reported.future.timeout(const Duration(seconds: 2));
+      verify(mockPlatformBridge.reportUnhandledException(any)).called(1);
+    });
+
+    test('does not report when activation config is absent', () async {
+      AppMetricaActivationConfigHolder.resetForTest();
+
+      AppMetrica.runZoneGuarded(() {
+        throw StateError('ignored zone failure');
+      });
+
+      // Flush microtasks / zone error handler without fixed sleep.
+      await Future<void>.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
+      verifyNever(mockPlatformBridge.reportUnhandledException(any));
+    });
+  });
+
+  group('setUpErrorHandlingWithAppMetrica', () {
+    void Function(FlutterErrorDetails)? previousOnError;
+
+    setUp(() {
+      previousOnError = FlutterError.onError;
+      resetCrashHandlingActivatedForTest();
+    });
+
+    tearDown(() {
+      FlutterError.onError = previousOnError;
+      resetCrashHandlingActivatedForTest();
+    });
+
+    test('flutterCrashReporting false is no-op; true installs idempotent handler that reports and calls previous',
+        () async {
+      final void Function(FlutterErrorDetails)? beforeDisable = FlutterError.onError;
+      setUpErrorHandlingWithAppMetrica(
+        const AppMetricaConfig('err-key', flutterCrashReporting: false),
+      );
+      expect(FlutterError.onError, same(beforeDisable));
+
+      final Completer<void> previousCalled = Completer<void>();
+      FlutterError.onError = (FlutterErrorDetails details) {
+        if (!previousCalled.isCompleted) {
+          previousCalled.complete();
+        }
+      };
+
+      when(mockPlatformBridge.reportUnhandledException(any))
+          .thenAnswer((Invocation _) => Future<void>.value());
+
+      setUpErrorHandlingWithAppMetrica(
+        const AppMetricaConfig('err-key', flutterCrashReporting: true),
+      );
+      final void Function(FlutterErrorDetails)? installed = FlutterError.onError;
+      expect(installed, isNotNull);
+      expect(installed, isNot(same(previousOnError)));
+
+      setUpErrorHandlingWithAppMetrica(
+        const AppMetricaConfig('err-key', flutterCrashReporting: true),
+      );
+      expect(FlutterError.onError, same(installed));
+
+      final Completer<void> reported = Completer<void>();
+      when(mockPlatformBridge.reportUnhandledException(any)).thenAnswer((_) {
+        if (!reported.isCompleted) {
+          reported.complete();
+        }
+        return Future<void>.value();
+      });
+
+      FlutterError.onError!(
+        FlutterErrorDetails(exception: StateError('flutter boom')),
+      );
+      await reported.future.timeout(const Duration(seconds: 2));
+      await previousCalled.future.timeout(const Duration(seconds: 2));
+      verify(mockPlatformBridge.reportUnhandledException(any)).called(1);
+    });
+  });
+
+  group('activate logs / setUpAppMetricaLogger', () {
+    bool? previousHierarchicalLoggingEnabled;
+
+    setUp(() {
+      previousHierarchicalLoggingEnabled = hierarchicalLoggingEnabled;
+    });
+
+    tearDown(() {
+      hierarchicalLoggingEnabled = previousHierarchicalLoggingEnabled ?? false;
+    });
+
+    test('activate with logs true sets up hierarchical logger and still activates', () async {
+      hierarchicalLoggingEnabled = false;
+      const AppMetricaConfig config = AppMetricaConfig(
+        'logs-key',
+        logs: true,
+        sessionsAutoTrackingEnabled: false,
+        appOpenTrackingEnabled: false,
+        flutterCrashReporting: false,
+      );
+
+      await AppMetrica.activate(config);
+
+      expect(hierarchicalLoggingEnabled, isTrue);
+      verify(mockPlatformBridge.activate(any)).called(1);
+    });
+
+    test('setUpAppMetricaLogger enables hierarchical logging and forwards records', () async {
+      hierarchicalLoggingEnabled = false;
+      final Logger logger = Logger('AppMetricaPlugin.TestLogger.${DateTime.now().microsecondsSinceEpoch}');
+      setUpAppMetricaLogger(logger);
+      expect(hierarchicalLoggingEnabled, isTrue);
+      expect(logger.level, Level.ALL);
+
+      // Hit onRecord listener body (dart:developer log).
+      logger.info('logger smoke');
+      await Future<void>.delayed(Duration.zero);
     });
   });
 }

@@ -155,13 +155,17 @@
   "test/src/appmetrica_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/appmetrica_test.dart",
   "test/src/internal/activation_completer_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/activation_completer_test.dart",
   "test/src/internal/activation_config_holder_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/activation_config_holder_test.dart",
+  "test/src/internal/appmetrica_library_adapter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/appmetrica_library_adapter_test.dart",
   "test/src/internal/background_activation_completer_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/background_activation_completer_test.dart",
   "test/src/internal/reporter_impl_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/reporter_impl_test.dart",
   "test/src/internal/reporter_storage_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/reporter_storage_test.dart",
   "test/src/internal/service_locator_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/service_locator_test.dart",
   "test/src/internal/utils_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/internal/utils_test.dart",
+  "test/src/models/error_description_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/models/error_description_test.dart",
+  "test/src/models/tiny_models_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/models/tiny_models_test.dart",
   "test/src/platform/converters/ad_revenue_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/ad_revenue_converter_test.dart",
   "test/src/platform/converters/appmetrica_config_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/appmetrica_config_converter_test.dart",
+  "test/src/platform/converters/appmetrica_library_adapter_config_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/appmetrica_library_adapter_config_converter_test.dart",
   "test/src/platform/converters/deferred_deeplink_result_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/deferred_deeplink_result_converter_test.dart",
   "test/src/platform/converters/ecommerce_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/ecommerce_converter_test.dart",
   "test/src/platform/converters/error_description_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/error_description_converter_test.dart",
@@ -171,5 +175,7 @@
   "test/src/platform/converters/profile_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/profile_converter_test.dart",
   "test/src/platform/converters/reporter_config_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/reporter_config_converter_test.dart",
   "test/src/platform/converters/revenue_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/revenue_converter_test.dart",
-  "test/src/platform/converters/startup_params_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/startup_params_converter_test.dart"
+  "test/src/platform/converters/startup_params_converter_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/converters/startup_params_converter_test.dart",
+  "test/src/platform/platform_bridge_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/platform_bridge_test.dart",
+  "test/src/platform/reporter_platform_bridge_test.dart":"mobile/metrika/flutter/appmetrica_plugin/test/src/platform/reporter_platform_bridge_test.dart"
 }
