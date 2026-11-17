@@ -3,7 +3,7 @@
 * Versions are sorted by semver (newest to oldest)
 ```
 
-## `4.2.0`
+## `5.0.0`
 
 ## `4.1.0`
 
