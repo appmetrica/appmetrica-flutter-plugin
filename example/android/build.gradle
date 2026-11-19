@@ -15,6 +15,14 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
+subprojects { subproject ->
+    subproject.plugins.withId("com.android.library") {
+        subproject.androidComponents.finalizeDsl { ext ->
+            ext.compileSdk = rootProject.project(":app").android.compileSdk
+        }
+    }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.layout.buildDirectory
 }
