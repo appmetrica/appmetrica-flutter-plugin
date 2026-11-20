@@ -49,7 +49,7 @@ android {
 dependencies {
     implementation("io.appmetrica.analytics:analytics:8.5.0")
 
-    testImplementation("io.appmetrica.gradle:android-test-utils:2.0.0-beta+128")
+    testImplementation("io.appmetrica.gradle:android-test-utils:2.0.0-beta+131")
 }
 
 // Required for Robolectric on JDK 17+: https://robolectric.org/getting-started/
