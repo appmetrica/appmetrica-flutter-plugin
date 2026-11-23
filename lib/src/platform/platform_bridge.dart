@@ -40,6 +40,7 @@ abstract class PlatformBridge {
   // Environment
   Future<void> putAppEnvironmentValue(String key, String? value);
   Future<void> clearAppEnvironment();
+  Future<void> clearErrorEnvironment();
   Future<void> putErrorEnvironmentValue(String key, String? value);
 
   // Session
@@ -170,6 +171,9 @@ class PigeonPlatformBridge implements PlatformBridge {
 
   @override
   Future<void> clearAppEnvironment() => _pigeon.clearAppEnvironment();
+
+  @override
+  Future<void> clearErrorEnvironment() => _pigeon.clearErrorEnvironment();
 
   @override
   Future<void> putErrorEnvironmentValue(String key, String? value) =>

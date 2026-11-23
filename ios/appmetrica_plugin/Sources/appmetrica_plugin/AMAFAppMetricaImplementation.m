@@ -24,6 +24,11 @@
     [AMAAppMetrica clearAppEnvironment];
 }
 
+- (void)clearErrorEnvironmentWithError:(FlutterError **)error
+{
+    [[AMAAppMetricaCrashes crashes] clearErrorEnvironment];
+}
+
 - (void)enableActivityAutoTrackingWithError:(FlutterError **)error
 {
     // ?

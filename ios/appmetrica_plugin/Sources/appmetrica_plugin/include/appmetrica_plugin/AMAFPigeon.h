@@ -505,6 +505,7 @@ NSObject<FlutterMessageCodec> *AMAFAppMetricaPigeonGetCodec(void);
 - (void)activateConfig:(AMAFAppMetricaConfigPigeon *)config error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)activateReporterConfig:(AMAFReporterConfigPigeon *)config error:(FlutterError *_Nullable *_Nonnull)error;
 - (void)clearAppEnvironmentWithError:(FlutterError *_Nullable *_Nonnull)error;
+- (void)clearErrorEnvironmentWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (void)enableActivityAutoTrackingWithError:(FlutterError *_Nullable *_Nonnull)error;
 - (nullable NSString *)getDeviceIdWithError:(FlutterError *_Nullable *_Nonnull)error;
 /// @return `nil` only when `error != nil`.

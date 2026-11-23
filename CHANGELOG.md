@@ -5,6 +5,8 @@
 
 ## `5.0.0`
 
+- Add `AppMetrica.clearErrorEnvironment` method.
+
 ## `4.1.0`
 
 - Fix iOS UIScene conflict with other plugins: `scene:willConnectToSession:options:` no longer returns `YES`, so `connectionOptions` are not consumed and remain available to subsequent plugins.

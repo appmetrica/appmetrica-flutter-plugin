@@ -4076,6 +4076,8 @@ public class Pigeon {
 
     void clearAppEnvironment();
 
+    void clearErrorEnvironment();
+
     void enableActivityAutoTracking();
 
     @Nullable 
@@ -4206,6 +4208,28 @@ public class Pigeon {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 try {
                   api.clearAppEnvironment();
+                  wrapped.add(0, null);
+                }
+ catch (Throwable exception) {
+                  ArrayList<Object> wrappedError = wrapError(exception);
+                  wrapped = wrappedError;
+                }
+                reply.reply(wrapped);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.clearErrorEnvironment", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                try {
+                  api.clearErrorEnvironment();
                   wrapped.add(0, null);
                 }
  catch (Throwable exception) {

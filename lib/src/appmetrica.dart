@@ -84,6 +84,9 @@ class AppMetrica {
   static Future<void> clearAppEnvironment() =>
       _platform.clearAppEnvironment();
 
+  static Future<void> clearErrorEnvironment() =>
+      _platform.clearErrorEnvironment();
+
   static Future<void> enableActivityAutoTracking() =>
       _platform.enableActivityAutoTracking();
 

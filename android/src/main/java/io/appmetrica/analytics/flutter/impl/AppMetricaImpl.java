@@ -51,6 +51,11 @@ public class AppMetricaImpl implements Pigeon.AppMetricaPigeon {
     }
 
     @Override
+    public void clearErrorEnvironment() {
+        AppMetrica.clearErrorEnvironment();
+    }
+
+    @Override
     public void enableActivityAutoTracking() {
         if (activity != null) {
             AppMetrica.enableActivityAutoTracking(activity.getApplication());

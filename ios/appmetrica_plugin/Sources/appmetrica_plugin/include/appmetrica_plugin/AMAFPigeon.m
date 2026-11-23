@@ -1587,6 +1587,23 @@ void AMAFAppMetricaPigeonSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObj
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.clearErrorEnvironment"
+        binaryMessenger:binaryMessenger
+        codec:AMAFAppMetricaPigeonGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(clearErrorEnvironmentWithError:)], @"AMAFAppMetricaPigeon api (%@) doesn't respond to @selector(clearErrorEnvironmentWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        [api clearErrorEnvironmentWithError:&error];
+        callback(wrapResult(nil, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
         initWithName:@"dev.flutter.pigeon.appmetrica_plugin.AppMetricaPigeon.enableActivityAutoTracking"
         binaryMessenger:binaryMessenger
         codec:AMAFAppMetricaPigeonGetCodec()];

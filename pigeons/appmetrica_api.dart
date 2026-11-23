@@ -282,6 +282,8 @@ abstract class AppMetricaPigeon {
 
   void clearAppEnvironment();
 
+  void clearErrorEnvironment();
+
   void enableActivityAutoTracking();
 
   String? getDeviceId();
