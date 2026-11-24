@@ -6,6 +6,9 @@
 ## `5.0.0`
 
 - Add `AppMetrica.clearErrorEnvironment` method.
+- Native SDK versions:
+  - Android: 8.6.0
+  - iOS: 7.0
 
 ## `4.1.0`
 
